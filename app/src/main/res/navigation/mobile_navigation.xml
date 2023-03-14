@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/navigation_events"
-        android:name="com.sigma.sportsup.ui.events."
+        android:name="com.sigma.sportsup.ui.events.EventFragment"
         android:label="@string/title_events"
         tools:layout="@layout/fragment_events" />
     <fragment
