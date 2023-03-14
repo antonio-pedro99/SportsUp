@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">SportsUp</string>
+    <string name="title_home">Home</string>
+    <string name="title_search">Search</string>
+    <string name="title_events">Events</string>
+    <string name="title_profile">My profile</string>
+</resources>
