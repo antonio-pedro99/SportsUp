@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import com.sigma.sportsup.databinding.FragmentHomeBinding
+
 
 class HomeFragment : Fragment() {
 
@@ -28,9 +30,13 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+       // val textView: TextView = binding.textHome
+        val gameRecycler = binding.gamesRecyclerview
+        gameRecycler.setHasFixedSize(true)
+
+        homeViewModel.games.observe(viewLifecycleOwner) {
+            gameRecycler.adapter  = GamesItemAdapter(context = requireContext(), it)
+            gameRecycler.layoutManager = GridLayoutManager(requireContext(), 2, GridLayoutManager.HORIZONTAL, false)
         }
         return root
     }

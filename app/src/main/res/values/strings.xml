@@ -4,4 +4,8 @@
     <string name="title_search">Search</string>
     <string name="title_events">Events</string>
     <string name="title_profile">My profile</string>
+    <string name="headline_1">Games</string>
+    <string name="headline_2">Ongoing Sessions</string>
+    <string name="invited_sessions">Invited Sessions</string>
+    <string name="today_s_sessions">Today\'s Sessions</string>
 </resources>
