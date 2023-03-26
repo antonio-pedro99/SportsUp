@@ -8,4 +8,5 @@
     <string name="headline_2">Ongoing Sessions</string>
     <string name="invited_sessions">Invited Sessions</string>
     <string name="today_s_sessions">Today\'s Sessions</string>
+    <string name="tab1">tab1</string>
 </resources>

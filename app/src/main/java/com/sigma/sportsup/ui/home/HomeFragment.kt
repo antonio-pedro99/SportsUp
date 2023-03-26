@@ -39,7 +39,7 @@ class HomeFragment : Fragment() {
         gameRecycler.setHasFixedSize(true)
 
         homeViewModel.games.observe(viewLifecycleOwner) {
-            gameRecycler.adapter  = GamesItemAdapter(context = requireContext(), it)
+            gameRecycler.adapter  = GamesItemAdapter(context = requireContext(), it!!)
             gameRecycler.layoutManager = GridLayoutManager(requireContext(), 2, GridLayoutManager.HORIZONTAL, false)
         }
 

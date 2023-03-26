@@ -15,18 +15,20 @@
         android:layout_height="80dp"
         android:orientation="horizontal"
         app:cardCornerRadius="12sp"
-
         android:clickable="true"
         android:focusable="true"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            android:id="@+id/game_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:contentDescription="TODO"
+
             android:src="@drawable/icons8_basketball" />
     </com.google.android.material.card.MaterialCardView>
     <TextView
