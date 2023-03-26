@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "177626139495",
+    "project_id": "sports-up-88689",
+    "storage_bucket": "sports-up-88689.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:177626139495:android:3ec2ba3b8059448499fdc2",
+        "android_client_info": {
+          "package_name": "com.sigma.sportsup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "177626139495-ngfl3qv7fci3s7h47tm3346te1382o4g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAl0-gdoT2UPkU19csNWbLAvRscoMkeev8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "177626139495-ngfl3qv7fci3s7h47tm3346te1382o4g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

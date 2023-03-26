@@ -11,7 +11,6 @@ import com.sigma.sportsup.data.GameModel
 
 class EventsViewModel : ViewModel() {
 
-    val firestore = Firebase.firestore
     private val gameRef = FirestoreCollection().games
 
     private val _games = MutableLiveData<List<GameModel>?>().apply {

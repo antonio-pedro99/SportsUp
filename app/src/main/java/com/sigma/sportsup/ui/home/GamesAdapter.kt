@@ -27,11 +27,13 @@ class GamesItemAdapter(private val context:Context, private val games: List<Game
 
     override fun onBindViewHolder(holder: GamesItemAdapterViewHolder, position: Int) {
         val item = games.get(position)
-        holder.gameTextView.text = item.name
-        if (item.image.isNullOrEmpty()) {
-            holder.gameImageView.setImageResource(R.drawable.icons8_basketball)
-        } else {
-            Glide.with(context).load(item.image).into(holder.gameImageView)
+        if (item.name != "all") {
+            holder.gameTextView.text = item.name
+            if (item.image.isNullOrEmpty()) {
+                holder.gameImageView.setImageResource(R.drawable.icons8_basketball)
+            } else {
+                Glide.with(context).load(item.image).into(holder.gameImageView)
+            }
         }
     }
 }

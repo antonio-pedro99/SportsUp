@@ -1,14 +1,13 @@
 package com.sigma.sportsup.ui.events
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.sigma.sportsup.data.GameModel
 import com.sigma.sportsup.databinding.FragmentEventsBinding
 
 class EventFragment : Fragment() {
@@ -30,8 +29,10 @@ class EventFragment : Fragment() {
         _binding = FragmentEventsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textNotifications
-
+        eventsViewModel.games.observe(viewLifecycleOwner) { it ->
+            val gamesNames = it?.map { it.name }
+            buildGamesItem(gamesNames!!)
+        }
 
         return root
     }
@@ -39,5 +40,11 @@ class EventFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun buildGamesItem(data: List<String>){
+        val selectedGame = binding.edtiTextGame
+        val adapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_dropdown_item_1line, data);
+        selectedGame.setAdapter(adapter)
     }
 }

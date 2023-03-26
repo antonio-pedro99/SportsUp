@@ -1,22 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.events.EventFragment">
+    android:padding="24sp"
+    tools:context=".ui.events.EventFragment"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    >
+
+    <com.google.android.material.button.MaterialButton
+
+        style="@style/Widget.Material3.Button.IconButton.Filled"
+        android:layout_width="200dp"
+        android:layout_height="64sp"
+        android:enabled="true"
+        android:layout_gravity="center"
+        android:text="@string/create_new"
+        android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
+        app:icon="@drawable/baseline_add_24"
+        app:iconGravity="textStart"
+        app:iconPadding="8sp"
+       />
 
     <TextView
-        android:id="@+id/text_notifications"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+
         android:layout_marginEnd="8dp"
-        android:textAlignment="center"
+        android:text="@string/headline_2"
+        android:textAlignment="textStart"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_marginTop="8sp"
+        android:layout_marginBottom="8sp"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24sp"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:hint="@string/game">
+
+        <AutoCompleteTextView
+            android:id="@+id/edti_text_game"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/initial_game"
+            android:labelFor="@id/edti_text_game"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+</LinearLayout>
