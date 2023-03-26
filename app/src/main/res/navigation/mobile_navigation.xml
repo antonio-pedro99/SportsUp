@@ -22,10 +22,10 @@
         android:name="com.sigma.sportsup.ui.events.EventFragment"
         android:label="@string/title_events"
         tools:layout="@layout/fragment_events" />
+
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.sigma.sportsup.ui.profile.ProfileFragment"
-        android:label="ProfileFragment"
-        tools:layout="@layout/fragment_profile"
-        />
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.sigma.sportsup.databinding.FragmentSearchBinding
 
+
 class SearchFragment : Fragment() {
 
     private var _binding: FragmentSearchBinding? = null

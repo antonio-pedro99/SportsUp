@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.sigma.sportsup.R
 import com.sigma.sportsup.data.SessionEvent
 
 class SessionsItemAdapter(private val context: Context, private val sessions: List<SessionEvent>) : RecyclerView.Adapter<SessionsItemAdapter.SessionsItemAdapterViewHolder>() {
@@ -16,13 +17,14 @@ class SessionsItemAdapter(private val context: Context, private val sessions: Li
         parent: ViewGroup,
         viewType: Int
     ): SessionsItemAdapterViewHolder {
-      return  SessionsItemAdapterViewHolder(parent)
+      val view = LayoutInflater.from(parent.context).inflate(R.layout.session_recyclerview_item, parent, false)
+        return  SessionsItemAdapterViewHolder(view)
     }
 
     override fun getItemCount(): Int = sessions.size
 
     override fun onBindViewHolder(holder: SessionsItemAdapterViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        val item = sessions.get(position)
     }
 
 

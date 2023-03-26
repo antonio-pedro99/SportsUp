@@ -7,6 +7,7 @@
     android:gravity="center"
     android:paddingLeft="12sp"
     android:paddingRight="12sp"
+    style="?attr/materialCardViewFilledStyle"
     >
 
     <com.google.android.material.card.MaterialCardView
@@ -14,6 +15,7 @@
         android:layout_height="80dp"
         android:orientation="horizontal"
         app:cardCornerRadius="12sp"
+
         android:clickable="true"
         android:focusable="true"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:contentDescription="TODO"
-            android:src="@drawable/baseline_sports_cricket_24" />
+            android:src="@drawable/icons8_basketball" />
     </com.google.android.material.card.MaterialCardView>
     <TextView
         android:id="@+id/game_textview"

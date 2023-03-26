@@ -43,6 +43,16 @@
         android:layout_marginTop="8sp"
         android:layout_marginBottom="8sp"/>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/sessions_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:layout_marginTop="8sp"
+        android:layout_marginBottom="8sp"
+        android:scrollbars="horizontal"
+        />
+
    <!-- <com.google.android.material.tabs.TabLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

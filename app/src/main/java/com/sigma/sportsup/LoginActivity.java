@@ -93,7 +93,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             Toast.makeText(this, "Login Failed!", Toast.LENGTH_SHORT).show();
 
         }
+
     }
 
-
+    public void onSkipLogin(View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
 }
