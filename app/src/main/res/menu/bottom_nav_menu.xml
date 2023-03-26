@@ -12,12 +12,12 @@
         android:title="@string/title_search" />
 
     <item
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_events"
         android:icon="@drawable/baseline_event_24"
         android:title="@string/title_events" />
+
     <item
-        android:id="@+id/nav_profile"
+        android:id="@+id/navigation_profile"
         android:icon="@drawable/baseline_person_24"
         android:title="@string/title_profile" />
-
 </menu>
