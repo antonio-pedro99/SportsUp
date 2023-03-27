@@ -8,11 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -40,6 +42,8 @@ public class ProfileFragment extends Fragment {
     private List<String> sportsList;
 
     private GoogleSignInClient gsc;
+
+    private ImageView ivProfilePic;
 
 
     @Override
@@ -105,7 +109,14 @@ public class ProfileFragment extends Fragment {
                     TextView tvSportsList = view.findViewById(R.id.tvSportsList);
                     //convert sportsList to a comma-separated string and set it to the TextView
                     tvSportsList.setText(TextUtils.join(", ", sportsList));
-
+                    ivProfilePic = view.findViewById(R.id.ivProfilePic);
+                    String profilePicUrl = documentSnapshot.getString("photoUrl");
+                    if (profilePicUrl != null) {
+                        profilePicUrl.replaceAll("s96-c", "s384-c");
+                        Glide.with(requireContext())
+                                .load(profilePicUrl)
+                                .into(ivProfilePic);
+                    }
                 })
                 .addOnFailureListener(e -> {
                     //show a toast telling the user that something went wrong when fetching the data

@@ -3,6 +3,7 @@ package com.sigma.sportsup;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,6 +43,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private SignInButton mGoogleSignInButton;
 
     private FirebaseAuth mAuth;
+
     private EditText email;
     private EditText password;
     private Button signInorRegister;
@@ -205,6 +207,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 // You can get the user's name, email, profile photo URL, etc. using the following code:
                 String name = acct.getDisplayName();
                 String photoUrl = acct.getPhotoUrl() != null ? acct.getPhotoUrl().toString() : null;
+
                 // Implement your login logic here
                 AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
                 mAuth.signInWithCredential(credential)
@@ -229,6 +232,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                                 } else {
                                                     Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                                                     //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                    intent.putExtra("photoUrl", photoUrl);
+                                                    Log.i("photoUrl LoginActivity", photoUrl);
                                                     startActivity(intent);
                                                     finish();
                                                 }

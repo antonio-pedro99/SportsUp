@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,13 +24,23 @@ public class RegisterActivity extends AppCompatActivity {
 
     private EditText name, age, number, fav_sports;
     private FirebaseAuth mAuth;
-
+    private String photoUrl;
     private Button continue_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        Intent intent = getIntent();
+        //if intent contains photoUrl, then user is registering with google
+        if (intent.hasExtra("photoUrl"))
+            photoUrl = intent.getStringExtra("photoUrl");
+        else
+            //put a default photoUrl
+            photoUrl="https://www.pngarts.com/files/11/Avatar-Transparent-Images.png";
+
+        Log.i("photoUrl in RegisterActivity", photoUrl);
 
         name = findViewById(R.id.name);
         age = findViewById(R.id.age);
@@ -42,11 +53,11 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(mAuth.getCurrentUser() != null){
-
                     HashMap<String, Object> user = new HashMap<>();
                     user.put("name", name.getText().toString());
                     user.put("age", Integer.parseInt(age.getText().toString()));
                     user.put("phone", number.getText().toString());
+                    user.put("photoUrl", photoUrl);
                     String[] userSports = fav_sports.getText().toString().split(",");
                     //remove spaces
                     for(int i = 0; i < userSports.length; i++){
