@@ -18,25 +18,26 @@
         tools:layout="@layout/fragment_search" />
 
     <fragment
-        android:id="@+id/navigation_events"
-        android:name="com.sigma.sportsup.ui.events.EventFragment"
-        android:label="@string/title_events"
-        tools:layout="@layout/fragment_events" >
-        <action
-            android:id="@+id/action_navigation_events_to_navigation_game_create"
-            app:destination="@id/navigation_game_create"
-            />
-    </fragment>
-
-    <fragment
         android:id="@+id/navigation_profile"
         android:name="com.sigma.sportsup.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
 
-    <fragment
-        android:id="@+id/navigation_game_create"
-        android:name="com.sigma.sportsup.ui.game_creation.GameCreateFragment"
-        android:label="New Game"
-        tools:layout="@layout/activity_create_event" />
+    <navigation android:id="@+id/navigation_events"
+        app:startDestination="@id/nav_events">
+        <fragment
+            android:id="@+id/nav_events"
+            android:name="com.sigma.sportsup.ui.events.EventFragment"
+            android:label="@string/title_events"
+            tools:layout="@layout/fragment_events">
+            <action
+                android:id="@+id/action_navigation_events_to_navigation_game_create"
+                app:destination="@id/navigation_game_create" />
+        </fragment>
+        <fragment
+            android:id="@+id/navigation_game_create"
+            android:name="com.sigma.sportsup.ui.game_creation.GameCreateFragment"
+            android:label="New Game"
+            tools:layout="@layout/fragment_game_create_fragment" />
+    </navigation>
 </navigation>

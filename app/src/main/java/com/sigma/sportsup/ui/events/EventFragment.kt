@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import com.sigma.sportsup.R
 import com.sigma.sportsup.data.GameModel
 import com.sigma.sportsup.databinding.FragmentEventsBinding
@@ -50,7 +51,7 @@ class EventFragment : Fragment() {
         btnCreateNewEvent.setOnClickListener {
          /*  fragmentTransaction.replace(R.id.nav_host_fragment_activity_main,
                GameCreateFragment()).setReorderingAllowed(true).addToBackStack(null).commit()*/
-            view.findNavController().navigate(R.id.action_navigation_events_to_navigation_game_create)
+            findNavController(this).navigate(R.id.action_navigation_events_to_navigation_game_create)
 
         }
     }
