@@ -1,14 +1,18 @@
 package com.sigma.sportsup.ui.events
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.sigma.sportsup.R
 import com.sigma.sportsup.data.GameModel
 import com.sigma.sportsup.databinding.FragmentEventsBinding
@@ -35,6 +39,12 @@ class EventFragment : Fragment() {
 
         eventsViewModel.games.observe(viewLifecycleOwner) { it ->
             val gamesNames = it?.map { it.name }
+
+            val db = Firebase.firestore
+
+            db.collection("games").document(it?.last()?.name!!.lowercase()).collection("items").addSnapshotListener { value, error ->
+                value?.documents?.forEach { Log.d("G", it.id) }
+            }
             buildGamesItem(gamesNames!!)
         }
 
@@ -60,10 +70,9 @@ class EventFragment : Fragment() {
 
     private fun buildGamesItem(data: List<String>){
         val selectedGame = binding.edtiTextGame
-        val adapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_dropdown_item_1line, data);
+        val adapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_dropdown_item_1line, data)
         selectedGame.setAdapter(adapter)
-    }
-    fun onCreateNew(view:View){
+
 
     }
 }

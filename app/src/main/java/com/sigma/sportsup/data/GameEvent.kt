@@ -7,6 +7,8 @@ data class GameEvent(
     var time: String?,
     var date:String?,
     var number_of_players:String?,
+    var audience:String?,
+    var current_players:Int?
 ) {
-    constructor() : this(null, null, null, null, null, null)
+    constructor() : this(null, null, null, null, null, null, null, null)
 } 

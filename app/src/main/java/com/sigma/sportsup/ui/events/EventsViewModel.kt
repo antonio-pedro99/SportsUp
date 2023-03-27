@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.sigma.sportsup.FirestoreCollection
+import com.sigma.sportsup.data.GameEvent
 import com.sigma.sportsup.data.GameModel
 
 class EventsViewModel : ViewModel() {
@@ -22,6 +23,8 @@ class EventsViewModel : ViewModel() {
         }
 
     }
+
+   // private val _events = MutableLiveData<List<GameModel>?> = _
 
     val games : MutableLiveData<List<GameModel>?> = _games
 }

@@ -65,8 +65,11 @@ class GameCreateFragment:Fragment() {
         val edtVenue = binding.editVenue
         val edtGame = binding.edtGame
         val edtNumberOfPlayers = binding.edtNumberPlayers
-        var dateString = selectDate()
-        var timeString = selectTime()
+        val edtDate = binding.edtiDate
+        val edtTime = binding.editTime
+
+        selectDate()
+        selectTime()
         var audience = "Everyone"
 
         rgAudience.setOnCheckedChangeListener { _, checkedId ->
@@ -82,8 +85,9 @@ class GameCreateFragment:Fragment() {
                 "name" to edtGame.text.toString(),
                 "host" to "Antonio Pedro",
                 "venue" to edtVenue.text.toString(),
-                "date" to dateString,
-                "time" to timeString,
+                "date" to edtDate.text.toString(),
+                "time" to edtTime.text.toString(),
+                "current_players" to 1,
                 "number_of_players" to edtNumberOfPlayers.text.toString(),
                 "audience" to audience
             )
@@ -92,7 +96,8 @@ class GameCreateFragment:Fragment() {
                 .document(edtGame.text.toString().lowercase())
                 .collection("items")
                 .add(event)
-                .addOnSuccessListener { _ ->
+                .addOnSuccessListener { doc ->
+                    doc.collection("players") //add the current user to players list
                     clearForm()
                     showEventCreatedDialog()
                 }
