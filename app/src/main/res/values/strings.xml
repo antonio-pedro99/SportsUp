@@ -12,4 +12,13 @@
     <string name="game">Game</string>
     <string name="create_new">Create new</string>
     <string name="initial_game">All</string>
+    <string name="name">Name</string>
+    <string name="age">Age</string>
+    <string name="phone">Phone</string>
+    <string name="sports_list">Sports List</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="enter_phone_number">Enter phone number</string>
+    <string name="enter_favorite_sports">Enter favorite sports</string>
+    <string name="save">Save</string>
+    <string name="log_out">Log Out</string>
 </resources>
