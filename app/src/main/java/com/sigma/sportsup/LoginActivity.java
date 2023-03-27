@@ -89,6 +89,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 checkForExistingUser(txt_email, txt_password);
             }
         });
+
+        if(mAuth.getCurrentUser() != null){
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     private void loginUser(String email, String password) {
