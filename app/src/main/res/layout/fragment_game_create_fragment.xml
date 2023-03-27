@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+
+    android:padding="24sp"
+    tools:context=".ui.game_creation.GameCreateFragment">
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create a new session and invite friend"
+        android:textAlignment="textStart"
+        android:textSize="20sp"
+        android:layout_marginBottom="24dp"
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="230sp"
+        android:layout_height="61dp"
+        android:hint="@string/game"
+        android:layout_below="@id/textView2"
+        >
+        <AutoCompleteTextView
+            android:id="@+id/edt_game"
+            android:layout_width="230sp"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/edt_game" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/n_player_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/number_of_players_required"
+       android:layout_below="@id/textView2"
+        android:layout_toEndOf="@id/textInputLayout"
+        android:layout_marginStart="12sp"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_number_players"
+            android:layout_width="match_parent"
+            android:layout_height="56dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout2"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="61dp"
+        android:hint="@string/select_venue"
+        android:layout_below="@id/textInputLayout"
+        android:layout_marginBottom="12sp"
+        android:layout_marginTop="12sp"
+        >
+        <AutoCompleteTextView
+            android:id="@+id/edit_venue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/edt_game" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout3"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="180dp"
+        android:layout_height="61dp"
+        android:hint="Date"
+        android:layout_below="@id/layout2"
+        >
+        <AutoCompleteTextView
+            android:id="@+id/edti_date"
+            android:layout_width="180sp"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/edt_game" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout4"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:hint="Time"
+        android:layout_below="@id/layout2"
+        android:layout_toEndOf="@id/layout3"
+        android:layout_marginStart="12sp"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_time"
+            android:layout_width="match_parent"
+            android:layout_height="56dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Audience"
+        android:textAlignment="textStart"
+        android:textSize="20sp"
+        android:layout_marginBottom="12sp"
+        android:layout_marginTop="12sp"
+        android:layout_below="@id/layout3"
+        />
+
+
+    <RadioGroup
+        android:id="@+id/audience_group"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textView3"
+        android:layout_marginBottom="12sp"
+        >
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Everyone"
+            />
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="My Friends"
+            />
+    </RadioGroup>
+    <com.google.android.material.button.MaterialButton
+
+        android:id="@+id/btn_create_event"
+        style="@style/Widget.Material3.Button.IconButton.Filled"
+        android:layout_width="200dp"
+        android:layout_height="64sp"
+        android:layout_below="@id/audience_group"
+        android:layout_gravity="center"
+        android:layout_marginTop="48dp"
+        android:enabled="true"
+        android:gravity="center"
+        android:text="@string/done"
+        android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
+        app:icon="@drawable/baseline_done_24"
+        app:iconGravity="textStart"
+        app:iconPadding="8sp" />
+
+
+</RelativeLayout>

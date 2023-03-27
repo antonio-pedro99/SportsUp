@@ -7,8 +7,11 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import com.sigma.sportsup.R
 import com.sigma.sportsup.data.GameModel
 import com.sigma.sportsup.databinding.FragmentEventsBinding
+import com.sigma.sportsup.ui.game_creation.GameCreateFragment
 
 class EventFragment : Fragment() {
 
@@ -37,6 +40,20 @@ class EventFragment : Fragment() {
         return root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        var btnCreateNewEvent = binding.btnCreateEvent
+
+        val fragmentManager = parentFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+
+        btnCreateNewEvent.setOnClickListener {
+         /*  fragmentTransaction.replace(R.id.nav_host_fragment_activity_main,
+               GameCreateFragment()).setReorderingAllowed(true).addToBackStack(null).commit()*/
+            view.findNavController().navigate(R.id.action_navigation_events_to_navigation_game_create)
+
+        }
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -46,5 +63,8 @@ class EventFragment : Fragment() {
         val selectedGame = binding.edtiTextGame
         val adapter = ArrayAdapter<String>(requireContext(), android.R.layout.simple_dropdown_item_1line, data);
         selectedGame.setAdapter(adapter)
+    }
+    fun onCreateNew(view:View){
+
     }
 }

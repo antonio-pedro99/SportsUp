@@ -12,6 +12,7 @@
 
     <com.google.android.material.button.MaterialButton
 
+        android:id="@+id/btn_create_event"
         style="@style/Widget.Material3.Button.IconButton.Filled"
         android:layout_width="200dp"
         android:layout_height="64sp"

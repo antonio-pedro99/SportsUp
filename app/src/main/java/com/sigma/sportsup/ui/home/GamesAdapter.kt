@@ -27,7 +27,7 @@ class GamesItemAdapter(private val context:Context, private val games: List<Game
 
     override fun onBindViewHolder(holder: GamesItemAdapterViewHolder, position: Int) {
         val item = games.get(position)
-        if (item.name != "all") {
+        if (item.name != "All") {
             holder.gameTextView.text = item.name
             if (item.image.isNullOrEmpty()) {
                 holder.gameImageView.setImageResource(R.drawable.icons8_basketball)
