@@ -1,0 +1,43 @@
+package com.sigma.sportsup.ui.events
+
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import com.sigma.sportsup.R
+import com.sigma.sportsup.data.GameEvent
+import org.w3c.dom.Text
+
+class GameEventItemAdapter(private val context: Context, private val gamesEvents: List<GameEvent>) : RecyclerView.Adapter<GameEventItemAdapter.GameEventItemAdapterViewHolder>() {
+
+    class GameEventItemAdapterViewHolder(view: View): RecyclerView.ViewHolder(view){
+        val nameTextView: TextView = view.findViewById<TextView>(R.id.event_game)
+        val timeTextView: TextView = view.findViewById<TextView>(R.id.event_time)
+        val dateTextView: TextView = view.findViewById<TextView>(R.id.event_date)
+        val buddiesTextView: TextView = view.findViewById<TextView>(R.id.event_number_participants)
+        val venueTextView: TextView = view.findViewById<TextView>(R.id.event_venue)
+    }
+
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): GameEventItemAdapterViewHolder {
+        val root = LayoutInflater.from(parent.context).inflate(R.layout.event_recyclerview_item, parent, false)
+        return  GameEventItemAdapterViewHolder(root)
+    }
+
+    override fun getItemCount(): Int = gamesEvents.size
+
+    override fun onBindViewHolder(holder: GameEventItemAdapterViewHolder, position: Int) {
+        val item = gamesEvents[position]
+
+        //val numberOfBuddiesString = context.resources.getString(R.string.event_players)
+        holder.buddiesTextView.text = item.number_of_players
+        holder.dateTextView.text = item.date
+        holder.timeTextView.text = item.time
+        holder.venueTextView.text = item.venue
+        holder.nameTextView.text = item.name
+    }
+}

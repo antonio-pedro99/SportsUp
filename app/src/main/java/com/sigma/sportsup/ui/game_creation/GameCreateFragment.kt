@@ -82,9 +82,10 @@ class GameCreateFragment:Fragment() {
                 "name" to edtGame.text.toString(),
                 "host" to "Antonio Pedro",
                 "venue" to edtVenue.text.toString(),
-                "date" to binding.edtiDate.text.toString(),
-                "time" to binding.editTime.text.toString(),
-                "number_of_players" to edtNumberOfPlayers.text.toString()
+                "date" to dateString,
+                "time" to timeString,
+                "number_of_players" to edtNumberOfPlayers.text.toString(),
+                "audience" to audience
             )
 
             db.collection("games")
@@ -92,6 +93,7 @@ class GameCreateFragment:Fragment() {
                 .collection("items")
                 .add(event)
                 .addOnSuccessListener { _ ->
+                    clearForm()
                     showEventCreatedDialog()
                 }
                 .addOnFailureListener { exception -> Toast.makeText(mContext, "Failed with ${exception.message}", Toast.LENGTH_LONG)

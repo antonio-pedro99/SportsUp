@@ -26,7 +26,7 @@ class GameCreationViewModel: ViewModel() {
     private val _venues = MutableLiveData<List<VenueModel>?>().apply {
         venuesRef.addSnapshotListener { snapshot, exception ->
             if (exception !=null) return@addSnapshotListener
-            val items = snapshot?.documents?.takeWhile { doc->doc.id!="all"}?.mapNotNull { documentSnapshot -> documentSnapshot.toObject(VenueModel::class.java) }
+            val items = snapshot?.documents?.mapNotNull { documentSnapshot -> documentSnapshot.toObject(VenueModel::class.java) }
             value = items
         }
     }

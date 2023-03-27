@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:orientation="horizontal"
+    app:cardCornerRadius="12sp"
+    android:clickable="true"
+    android:focusable="true"
+    android:layout_margin="12sp"
+    style="?attr/materialCardViewFilledStyle"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <!-- Media -->
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:srcCompat="@drawable/image_1"
+            android:scaleType="centerCrop"
+            android:contentDescription="Todo"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginRight="4dp"
+            android:padding="8sp">
+
+            <!-- Title, secondary and supporting text -->
+            <TextView
+                android:id="@+id/event_game"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Title"
+                android:textAppearance="?attr/textAppearanceDisplayMedium"
+                android:textSize="18sp"
+                />
+          <LinearLayout
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal"
+              android:layout_marginTop="4dp"
+              android:gravity="clip_horizontal"
+              android:layout_gravity="clip_horizontal"
+              >
+              <TextView
+
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="When: "
+                  android:textAppearance="?attr/textAppearanceBodyMedium"
+                  android:textColor="?android:attr/textColorSecondary"
+                  android:textSize="12sp"
+                  android:textStyle="bold"
+                  />
+              <TextView
+                  android:id="@+id/event_date"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="Text"
+                  android:textAppearance="?attr/textAppearanceBodyMedium"
+                  android:textColor="?android:attr/textColorSecondary"
+                  android:textSize="12sp"
+                  />
+              <TextView
+                  android:id="@+id/event_time"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:text="Text 2"
+                  android:textAppearance="?attr/textAppearanceBodyMedium"
+                  android:textColor="?android:attr/textColorSecondary"
+                  android:textSize="12sp"
+                  />
+          </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="4dp"
+                android:gravity="clip_horizontal"
+                android:layout_gravity="clip_horizontal"
+                >
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Where: "
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    />
+                <TextView
+                    android:id="@+id/event_venue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Text"
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:textSize="12sp"
+                    />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/event_number_participants"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:text="@string/event_players"
+                android:textAppearance="?attr/textAppearanceBodyMedium"
+                android:textColor="?android:attr/colorPrimary"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <!-- Buttons -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:orientation="horizontal">
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="Join"
+                style="?attr/borderlessButtonStyle"
+                />
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Save"
+                style="?attr/borderlessButtonStyle"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
