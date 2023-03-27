@@ -14,7 +14,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "177626139495-ngfl3qv7fci3s7h47tm3346te1382o4g.apps.googleusercontent.com",
+          "client_id": "177626139495-so573p6urds77ilk333fbukld72p5j4o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sigma.sportsup",
+            "certificate_hash": "50deb2a25fdbe9a13b10f930bb49898f3acce58a"
+          }
+        },
+        {
+          "client_id": "177626139495-iopv9iddm1rikdi8t9jrpapet4fbbv4b.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -27,7 +35,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "177626139495-ngfl3qv7fci3s7h47tm3346te1382o4g.apps.googleusercontent.com",
+              "client_id": "177626139495-iopv9iddm1rikdi8t9jrpapet4fbbv4b.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

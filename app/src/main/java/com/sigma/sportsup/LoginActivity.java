@@ -23,8 +23,11 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.SignInMethodQueryResult;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -56,7 +59,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         // Configure sign-in to request the user's ID, email address, and basic profile
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                //.requestIdToken(getString(R.string.default_web_client_id))
+                .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
 
@@ -193,6 +196,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         if (result.isSuccess()) {
             // Signed in successfully
             GoogleSignInAccount acct = result.getSignInAccount();
+
+
             String email = acct.getEmail();
             // Check if the email domain is @iiitd.ac.in
             if (email != null && email.endsWith("@iiitd.ac.in")) {
@@ -201,13 +206,55 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 String name = acct.getDisplayName();
                 String photoUrl = acct.getPhotoUrl() != null ? acct.getPhotoUrl().toString() : null;
                 // Implement your login logic here
-                Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
+                AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+                mAuth.signInWithCredential(credential)
+                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    // Sign in success, update UI with the signed-in user's information
+                                    Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                                    DocumentReference documentReference = FirebaseFirestore.getInstance().collection("users").document(mAuth.getCurrentUser().getUid());
+                                    documentReference.get().addOnCompleteListener(new OnCompleteListener<com.google.firebase.firestore.DocumentSnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                            if (task.isSuccessful()) {
+                                                DocumentSnapshot document = task.getResult();
+                                                if (document.exists()) {
+                                                    Toast.makeText(LoginActivity.this, "DocumentSnapshot data: " + document.getData(), Toast.LENGTH_SHORT).show();
+                                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                                    //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                    startActivity(intent);
+                                                    finish();
+                                                } else {
+                                                    Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                                                    //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                    startActivity(intent);
+                                                    finish();
+                                                }
+                                            } else {
+                                                Toast.makeText(LoginActivity.this, "get failed with ", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+
+                                } else {
+                                    // If sign in fails, display a message to the user.
+                                    Toast.makeText(LoginActivity.this, "Authentication failed.",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+//                Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
+//                Intent intent = new Intent(this, MainActivity.class);
+//                startActivity(intent);
             } else {
                 // Show error message to user that only @iiitd.ac.in domain is allowed
                 Toast.makeText(this, "Login Failed. Only @iiitd.ac.in domain is allowed", Toast.LENGTH_SHORT).show();
+                mAuth.signOut();
+                gsc.signOut();
             }
+
         } else {
             // Signed out, show unauthenticated UI.
             Toast.makeText(this, "Login Failed!", Toast.LENGTH_SHORT).show();

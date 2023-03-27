@@ -12,6 +12,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.sigma.sportsup.EditProfileActivity;
@@ -22,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+
 import static com.google.firebase.firestore.FieldValue.arrayUnion;
 import static com.google.firebase.firestore.FieldValue.delete;
 
@@ -34,17 +39,30 @@ public class ProfileFragment extends Fragment {
 
     private List<String> sportsList;
 
+    private GoogleSignInClient gsc;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         mAuth = FirebaseAuth.getInstance();
         Button btnLogout = view.findViewById(R.id.btn_logout);
+        // Configure sign-in to request the user's ID, email address, and basic profile
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
+
+        // Build a GoogleSignInClient with the options specified by gso.
+        gsc = GoogleSignIn.getClient(getActivity(), gso);
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mAuth.getCurrentUser() != null)
+                if (mAuth.getCurrentUser() != null) {
                     mAuth.signOut();
+                    gsc.signOut();
+                }
+
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
