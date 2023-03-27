@@ -9,6 +9,7 @@ class FirestoreCollection {
 
     val games = db.collection("games")
     val users = db.collection("users")
+    val venues = db.collection("venues")
 
     val getGames = games.addSnapshotListener { value, error ->  }
 }

@@ -44,12 +44,14 @@
        android:layout_below="@id/textView2"
         android:layout_toEndOf="@id/textInputLayout"
         android:layout_marginStart="12sp"
+
         >
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edt_number_players"
             android:layout_width="match_parent"
-            android:layout_height="56dp" />
+            android:layout_height="56dp"
+            android:inputType="number" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -74,16 +76,18 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/layout3"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="180dp"
         android:layout_height="61dp"
         android:hint="Date"
         android:layout_below="@id/layout2"
         >
-        <AutoCompleteTextView
+
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edti_date"
             android:layout_width="180sp"
             android:layout_height="wrap_content"
+            android:inputType="date"
             android:labelFor="@id/edt_game" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -102,7 +106,8 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edit_time"
             android:layout_width="match_parent"
-            android:layout_height="56dp" />
+            android:layout_height="56dp"
+            android:inputType="time" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -124,14 +129,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/textView3"
+        android:checkedButton="@id/rb_everyone"
         android:layout_marginBottom="12sp"
         >
         <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/rb_everyone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Everyone"
             />
         <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/rb_my_friends"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="My Friends"
@@ -146,11 +154,30 @@
         android:layout_below="@id/audience_group"
         android:layout_gravity="center"
         android:layout_marginTop="48dp"
+        android:layout_marginRight="12sp"
         android:enabled="true"
         android:gravity="center"
         android:text="@string/done"
         android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
         app:icon="@drawable/baseline_done_24"
+        app:iconGravity="textStart"
+        app:iconPadding="8sp"
+        />
+    <com.google.android.material.button.MaterialButton
+
+        android:id="@+id/btn_cancel_creating"
+        style="@style/Widget.Material3.Button.IconButton.Filled"
+        android:layout_width="200dp"
+        android:layout_height="64sp"
+        android:layout_below="@id/audience_group"
+        android:layout_gravity="center"
+        android:layout_marginTop="48dp"
+        android:enabled="true"
+        android:gravity="center"
+        android:text="@string/cancel"
+
+        android:layout_toEndOf="@id/btn_create_event"
+        android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
         app:iconGravity="textStart"
         app:iconPadding="8sp" />
 

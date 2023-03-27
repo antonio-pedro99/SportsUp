@@ -49,8 +49,6 @@ class EventFragment : Fragment() {
         val fragmentTransaction = fragmentManager.beginTransaction()
 
         btnCreateNewEvent.setOnClickListener {
-         /*  fragmentTransaction.replace(R.id.nav_host_fragment_activity_main,
-               GameCreateFragment()).setReorderingAllowed(true).addToBackStack(null).commit()*/
             findNavController(this).navigate(R.id.action_navigation_events_to_navigation_game_create)
 
         }
