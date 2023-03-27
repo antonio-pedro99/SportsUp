@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.google.firebase.firestore.ktx.firestore
@@ -90,15 +91,11 @@ class GameCreateFragment:Fragment() {
                 .document(edtGame.text.toString().lowercase())
                 .collection("items")
                 .add(event)
-                .addOnSuccessListener { docRef ->
-                    Toast.makeText(mContext, "New Event ${docRef.id} Created", Toast.LENGTH_LONG)
-                        .show()
-
-                    //findNavController().navigateUp()
+                .addOnSuccessListener { _ ->
+                    showEventCreatedDialog()
                 }
                 .addOnFailureListener { exception -> Toast.makeText(mContext, "Failed with ${exception.message}", Toast.LENGTH_LONG)
                     .show()
-
                 }
         }
 
@@ -107,6 +104,24 @@ class GameCreateFragment:Fragment() {
         }
     }
 
+
+
+    private fun showEventCreatedDialog(){
+        MaterialAlertDialogBuilder(mContext)
+            .setTitle("Information")
+            .setMessage("Your Event has been created! Do you want to see it now?")
+            .setNegativeButton("No thanks"){_, _ -> findNavController().navigateUp()}
+            .setPositiveButton("Yes Please"){_, _-> }
+            .show()
+    }
+    private fun clearForm(){
+        binding.edtiDate.clearComposingText()
+        binding.editTime.clearComposingText()
+        binding.editVenue.clearListSelection()
+        binding.edtGame.clearListSelection()
+        binding.edtNumberPlayers.clearComposingText()
+        binding.audienceGroup.clearCheck()
+    }
     private fun selectDate():String{
         val edtDate = binding.edtiDate
         edtDate.setOnClickListener {
