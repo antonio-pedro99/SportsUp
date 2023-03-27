@@ -153,8 +153,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         // User already exists, log in the user
                         loginUser(email, password);
                     } else {
-                        // User does not exist, register the user
-                        registerUser(email, password);
+                        // User does not exist, register the user. But first check if the email is @iiitd.ac.in
+                        if(email.endsWith("@iiitd.ac.in"))
+                            registerUser(email, password);
+                        else
+                            Toast.makeText(LoginActivity.this, "Please use your IIITD email ID", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
