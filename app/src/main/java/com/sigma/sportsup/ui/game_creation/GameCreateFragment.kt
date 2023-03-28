@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.google.firebase.firestore.ktx.firestore
@@ -64,8 +65,11 @@ class GameCreateFragment:Fragment() {
         val edtVenue = binding.editVenue
         val edtGame = binding.edtGame
         val edtNumberOfPlayers = binding.edtNumberPlayers
-        var dateString = selectDate()
-        var timeString = selectTime()
+        val edtDate = binding.edtiDate
+        val edtTime = binding.editTime
+
+        selectDate()
+        selectTime()
         var audience = "Everyone"
 
         rgAudience.setOnCheckedChangeListener { _, checkedId ->
@@ -81,24 +85,24 @@ class GameCreateFragment:Fragment() {
                 "name" to edtGame.text.toString(),
                 "host" to "Antonio Pedro",
                 "venue" to edtVenue.text.toString(),
-                "date" to binding.edtiDate.text.toString(),
-                "time" to binding.editTime.text.toString(),
-                "number_of_players" to edtNumberOfPlayers.text.toString()
+                "date" to edtDate.text.toString(),
+                "time" to edtTime.text.toString(),
+                "current_players" to 1,
+                "number_of_players" to edtNumberOfPlayers.text.toString(),
+                "audience" to audience
             )
 
             db.collection("games")
                 .document(edtGame.text.toString().lowercase())
                 .collection("items")
                 .add(event)
-                .addOnSuccessListener { docRef ->
-                    Toast.makeText(mContext, "New Event ${docRef.id} Created", Toast.LENGTH_LONG)
-                        .show()
-
-                    //findNavController().navigateUp()
+                .addOnSuccessListener { doc ->
+                    doc.collection("players") //add the current user to players list
+                    clearForm()
+                    showEventCreatedDialog()
                 }
                 .addOnFailureListener { exception -> Toast.makeText(mContext, "Failed with ${exception.message}", Toast.LENGTH_LONG)
                     .show()
-
                 }
         }
 
@@ -107,6 +111,24 @@ class GameCreateFragment:Fragment() {
         }
     }
 
+
+
+    private fun showEventCreatedDialog(){
+        MaterialAlertDialogBuilder(mContext)
+            .setTitle("Information")
+            .setMessage("Your Event has been created! Do you want to see it now?")
+            .setNegativeButton("No thanks"){_, _ -> findNavController().navigateUp()}
+            .setPositiveButton("Yes Please"){_, _-> }
+            .show()
+    }
+    private fun clearForm(){
+        binding.edtiDate.clearComposingText()
+        binding.editTime.clearComposingText()
+        binding.editVenue.clearListSelection()
+        binding.edtGame.clearListSelection()
+        binding.edtNumberPlayers.clearComposingText()
+        binding.audienceGroup.clearCheck()
+    }
     private fun selectDate():String{
         val edtDate = binding.edtiDate
         edtDate.setOnClickListener {

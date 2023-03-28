@@ -25,5 +25,6 @@
     <string name="done">Invite</string>
     <string name="select_venue">Select Venue</string>
     <string name="cancel">Cancel</string>
+    <string name="event_players">%s/%s buddies required</string>
 
 </resources>

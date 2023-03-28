@@ -55,7 +55,7 @@
         android:scrollbars="horizontal"
         />
 
-     <com.google.android.material.tabs.TabLayout
+    <!-- <com.google.android.material.tabs.TabLayout
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
          app:tabIndicatorFullWidth="false"
@@ -77,5 +77,5 @@
             android:text="@string/today_s_sessions"
             android:contentDescription="@string/tab1"
             />
-    </com.google.android.material.tabs.TabLayout>
+    </com.google.android.material.tabs.TabLayout>-->
 </LinearLayout>

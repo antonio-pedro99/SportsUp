@@ -1,17 +1,25 @@
 package com.sigma.sportsup.ui.home
 
+import android.os.Build
 import android.se.omapi.Session
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.ktx.toObject
 import com.sigma.sportsup.FirestoreCollection
+import com.sigma.sportsup.data.GameEvent
 import com.sigma.sportsup.data.GameModel
 import com.sigma.sportsup.data.SessionEvent
+import java.text.DateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 class HomeViewModel : ViewModel() {
 
     private val gameRef = FirestoreCollection().games
+    private val eventRef = FirestoreCollection().events
 
     private val _games = MutableLiveData<List<GameModel>?>().apply {
         gameRef.addSnapshotListener { snapshot, error ->
@@ -21,17 +29,22 @@ class HomeViewModel : ViewModel() {
         }
     }
 
-    private val _sessions = MutableLiveData<List<SessionEvent>>().apply {
-        value = listOf(
-            SessionEvent(name = "Sigmas X", "Antonio Pedro", "Footbal Ground", "4:30 PM"),
-            SessionEvent(name = "Sigmas X", "Antonio Pedro", "Footbal Ground", "4:30 PM"),
-            SessionEvent(name = "Sigmas X", "Antonio Pedro", "Footbal Ground", "4:30 PM"),
-            SessionEvent(name = "Sigmas X", "Antonio Pedro", "Footbal Ground", "4:30 PM")
-        )
+    @RequiresApi(Build.VERSION_CODES.O)
+    private val _sessions = MutableLiveData<List<GameEvent>>().apply {
+        val currentDate = DateTimeFormatter
+            .ofPattern("dd/MM/yyyy", Locale.getDefault())
+            .format(LocalDate.now())
+        eventRef.whereEqualTo("date",currentDate).addSnapshotListener { snapshot, exception ->
+
+            if (exception != null) return@addSnapshotListener
+            val items = snapshot?.documents?.mapNotNull { doc-> doc.toObject(GameEvent::class.java)}
+            value = items
+        }
     }
 
     val games: LiveData<List<GameModel>?> = _games
-    val sessions:LiveData<List<SessionEvent>> = _sessions
+    @RequiresApi(Build.VERSION_CODES.O)
+    val sessions:LiveData<List<GameEvent>> = _sessions
 
 
 }

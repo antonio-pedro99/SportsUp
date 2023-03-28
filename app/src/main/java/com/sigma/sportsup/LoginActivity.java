@@ -233,7 +233,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                             if (task.isSuccessful()) {
                                                 DocumentSnapshot document = task.getResult();
                                                 if (document.exists()) {
-                                                    Toast.makeText(LoginActivity.this, "DocumentSnapshot data: " + document.getData(), Toast.LENGTH_SHORT).show();
                                                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                                     //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                                     startActivity(intent);
