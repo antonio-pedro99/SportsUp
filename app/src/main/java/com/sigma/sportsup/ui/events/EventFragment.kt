@@ -55,8 +55,6 @@ class EventFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         var btnCreateNewEvent = binding.btnCreateEvent
 
-        val fragmentManager = parentFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
 
         btnCreateNewEvent.setOnClickListener {
             findNavController(this).navigate(R.id.action_navigation_events_to_navigation_game_create)

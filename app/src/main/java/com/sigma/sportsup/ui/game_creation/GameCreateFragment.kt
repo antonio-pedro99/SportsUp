@@ -19,6 +19,7 @@ import com.google.android.material.timepicker.TimeFormat
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import com.sigma.sportsup.data.UserModel
 import com.sigma.sportsup.databinding.FragmentGameCreateFragmentBinding
 import com.sigma.sportsup.ui.events.EventsViewModel
 import java.text.SimpleDateFormat
@@ -31,6 +32,7 @@ class GameCreateFragment:Fragment() {
     private val binding get() = _binding!!
     private lateinit var mContext :Context
 
+    private lateinit var user:UserModel
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -50,6 +52,8 @@ class GameCreateFragment:Fragment() {
             val games = it?.map { it.name }
             buildGamesItems(games!!)
         }
+
+        gameCreateViewModel.currentUser.observe(viewLifecycleOwner){ user = it }
         val root: View = _binding!!.root
         return root
     }
@@ -83,7 +87,8 @@ class GameCreateFragment:Fragment() {
 
             val event = hashMapOf(
                 "name" to edtGame.text.toString(),
-                "host" to "Antonio Pedro",
+                "host" to user.name,
+                "host_ref" to  user.id,
                 "venue" to edtVenue.text.toString(),
                 "date" to edtDate.text.toString(),
                 "time" to edtTime.text.toString(),
