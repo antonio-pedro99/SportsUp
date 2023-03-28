@@ -251,6 +251,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                                     startActivity(intent);
                                                     finish();
                                                 } else {
+                                                    addUserToDatabase(email, mAuth.getCurrentUser().getUid());
                                                     Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                                                     //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                                     intent.putExtra("photoUrl", photoUrl);
