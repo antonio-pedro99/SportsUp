@@ -26,5 +26,5 @@
     <string name="select_venue">Select Venue</string>
     <string name="cancel">Cancel</string>
     <string name="event_players">%s/%s buddies required</string>
-
+    <string name="type_a_message">Type a Message</string>
 </resources>

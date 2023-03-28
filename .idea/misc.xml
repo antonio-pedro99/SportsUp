@@ -1,5 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/drawable/btn_background.xml" value="0.1205" />
+        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/drawable/msg_box_back.xml" value="0.1" />
+        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/activity_chat.xml" value="0.1" />
+        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/activity_chatbox.xml" value="0.12107396149949341" />
+        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/activity_login.xml" value="0.10989583333333333" />
+        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/activity_register.xml" value="0.2" />
+        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/fragment_all_sessions.xml" value="0.152" />
+        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/fragment_events.xml" value="0.264" />
+        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/fragment_game_create_fragment.xml" value="0.12158054711246201" />
+        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/fragment_invited_sessions.xml" value="0.10989583333333333" />
+        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/fragment_profile.xml" value="0.10989583333333333" />
+        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/fragment_search.xml" value="0.10989583333333333" />
+        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/game_recyclerview_item.xml" value="0.264" />
+        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/recieve.xml" value="0.1" />
+        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/session_recyclerview_item.xml" value="0.264" />
+        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/user_layout.xml" value="0.20512820512820512" />
+      </map>
+    </option>
+  </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
