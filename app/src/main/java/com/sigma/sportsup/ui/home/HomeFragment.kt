@@ -1,7 +1,10 @@
 package com.sigma.sportsup.ui.home
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.view.*
+import android.widget.Button
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sigma.sportsup.databinding.FragmentHomeBinding
+import com.sigma.sportsup.ui.chat.ChatBox
 
 
 class HomeFragment : Fragment() {
@@ -34,6 +38,8 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        val chat_but:Button = binding.chatBut
+
        // val textView: TextView = binding.textHome
         val gameRecycler = binding.gamesRecyclerview
         val sessionRecycler = binding.sessionsRecyclerview
@@ -50,7 +56,23 @@ class HomeFragment : Fragment() {
             sessionRecycler.adapter = SessionsItemAdapter(requireContext(), it)
             sessionRecycler.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
+
+        chat_but.setOnClickListener(View.OnClickListener {
+            val myIntent = Intent(this@HomeFragment.context, ChatBox::class.java)
+
+            this@HomeFragment.startActivity(myIntent)
+            println("this is working!")
+        })
+
         return root
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onDestroyView() {

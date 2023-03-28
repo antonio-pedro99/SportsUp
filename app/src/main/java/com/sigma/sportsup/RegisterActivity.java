@@ -52,6 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
         continue_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if(mAuth.getCurrentUser() != null){
                     HashMap<String, Object> user = new HashMap<>();
                     user.put("name", name.getText().toString());
@@ -81,6 +82,8 @@ public class RegisterActivity extends AppCompatActivity {
                             Toast.makeText(RegisterActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
+
+
 
                 }
                 else {

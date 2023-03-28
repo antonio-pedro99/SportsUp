@@ -8,33 +8,45 @@
     android:layout_marginBottom="16dp"
     android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/etPhone"
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/filledTextField2"
+        style="?attr/textInputOutlinedStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
         android:hint="@string/enter_phone_number"
-        android:inputType="phone"
         android:paddingTop="16dp"
-        android:paddingBottom="16dp"
-        android:autofillHints="" />
+        android:paddingBottom="16dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etPhone"
+            android:ems="10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
 
-    <EditText
-        android:id="@+id/etSportsList"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/filledTextField3"
+        style="?attr/textInputOutlinedStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
         android:hint="@string/enter_favorite_sports"
-        android:inputType="text"
         android:paddingTop="16dp"
-        android:paddingBottom="16dp"
-        android:autofillHints="" />
+        android:paddingBottom="16dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etSportsList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btnSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:text="@string/save"
-        android:layout_gravity="center_horizontal"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 </LinearLayout>

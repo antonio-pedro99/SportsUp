@@ -22,30 +22,33 @@
         android:id="@+id/tvName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
+        android:padding="8dp"
         android:textSize="18sp"
-        />
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
 
     <TextView
         android:id="@+id/tvAge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
 
     <TextView
         android:id="@+id/tvPhone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
 
     <TextView
         android:id="@+id/tvSportsList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
 
     <Button
         android:id="@+id/btnEdit"
@@ -53,7 +56,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="16dp"
-        android:text="@string/edit_profile" />
+        android:text="@string/edit_profile"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
 
     <Button
         android:id="@+id/btn_logout"
@@ -61,6 +65,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="16dp"
-        android:text="@string/log_out" />
+        android:text="@string/log_out"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
 
 </LinearLayout>

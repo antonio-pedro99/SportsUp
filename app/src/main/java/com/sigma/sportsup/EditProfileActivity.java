@@ -30,8 +30,9 @@ public class EditProfileActivity extends AppCompatActivity {
     private FirebaseFirestore mFirestore;
     private String userId;
     private EditText etPhone, etSportsList;
-
     private List<String> sportsList;
+
+    private Button btnSave;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 });
 
         // Set up save button click listener
-        Button btnSave = findViewById(R.id.btnSave);
+        btnSave = findViewById(R.id.btnSave);
         btnSave.setOnClickListener(v -> {
             // Get the updated phone number and sports list from the EditText fields
             String phone = etPhone.getText().toString().trim();
@@ -85,11 +86,6 @@ public class EditProfileActivity extends AppCompatActivity {
             DocumentReference userRef = mFirestore.collection("users").document(userId);
             userRef.update("phone", phone);
             userRef.update("sports_fav", sportsList);
-
-            // Navigate back to the profile activity
-            Intent resultIntent = new Intent();
-            resultIntent.putExtra("profile_updated", true);
-            setResult(Activity.RESULT_OK, resultIntent);
             finish();
         });
     }

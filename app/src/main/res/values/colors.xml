@@ -7,4 +7,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="logo_back">#fbfbeb</color>
+    <color name="logo_blue">#483574</color>
+    <color name="logo_red">#d5613e</color>
+    <color name="logo_mehroon">#b43d43</color>
+    <color name="back_main">#030829</color>
 </resources>

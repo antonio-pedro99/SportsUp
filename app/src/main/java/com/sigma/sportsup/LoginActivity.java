@@ -30,9 +30,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.auth.SignInMethodQueryResult;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.sigma.sportsup.ui.chat.User;
 
 import java.util.List;
 
@@ -47,6 +50,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private EditText email;
     private EditText password;
     private Button signInorRegister;
+    private DatabaseReference databaseRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,6 +176,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
+                    addUserToDatabase(email, mAuth.getCurrentUser().getUid());
                     Toast.makeText(LoginActivity.this, "Registration Successful", Toast.LENGTH_SHORT).show();
                     loginUser(email, password);
                 }
@@ -185,6 +190,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
 
 
+    }
+
+    private void addUserToDatabase(String email, String uid){
+        System.out.println("hello ji");
+        databaseRef = FirebaseDatabase.getInstance().getReference();
+        String short_name = email.substring(3);
+        databaseRef.child("user").child(uid).setValue(new User(email,uid));
+        System.out.println("added user");
     }
 
     @Override
