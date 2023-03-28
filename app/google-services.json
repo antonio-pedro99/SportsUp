@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "177626139495-so573p6urds77ilk333fbukld72p5j4o.apps.googleusercontent.com",
+          "client_id": "177626139495-gosgthfp6icl54nbvam2392oaiufq873.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.sigma.sportsup",
-            "certificate_hash": "50deb2a25fdbe9a13b10f930bb49898f3acce58a"
+            "certificate_hash": "e1e3fa566b882138c8e3171a62cbb96d7f7a3ffe"
           }
         },
         {

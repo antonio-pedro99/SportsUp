@@ -14,7 +14,6 @@
         android:layout_height="200dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="16dp"
-        android:background="@drawable/circle_background"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
         android:scaleType="centerCrop" />
@@ -24,16 +23,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
-        android:text="@string/name"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:textSize="18sp"
+        />
 
     <TextView
         android:id="@+id/tvAge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:text="@string/age"
         android:textSize="18sp" />
 
     <TextView
@@ -41,7 +38,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:text="@string/phone"
         android:textSize="18sp" />
 
     <TextView
@@ -49,7 +45,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        android:text="@string/sports_list"
         android:textSize="18sp" />
 
     <Button

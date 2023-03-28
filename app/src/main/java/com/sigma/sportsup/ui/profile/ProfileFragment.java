@@ -24,6 +24,7 @@ import com.sigma.sportsup.EditProfileActivity;
 import com.sigma.sportsup.LoginActivity;
 import com.sigma.sportsup.R;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -86,44 +87,6 @@ public class ProfileFragment extends Fragment {
 
         userId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
 
-        // Fetch user data from Firestore
-        mFirestore.collection("users")
-                .document(userId)
-                .get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    String name = documentSnapshot.getString("name");
-                    Long age = documentSnapshot.getLong("age");
-                    String phone = documentSnapshot.getString("phone");
-                    // Get sports list as an array of strings from Firestore
-                    sportsList = (List<String>) documentSnapshot.get("sports_fav");
-                    Log.d("ProfileFragment", "sportsList: " + sportsList);
-
-
-                    // Update UI with user data
-                    TextView tvName = view.findViewById(R.id.tvName);
-                    tvName.setText(name);
-                    TextView tvAge = view.findViewById(R.id.tvAge);
-                    tvAge.setText(String.valueOf(age));
-                    TextView tvPhone = view.findViewById(R.id.tvPhone);
-                    tvPhone.setText(phone);
-                    TextView tvSportsList = view.findViewById(R.id.tvSportsList);
-                    //convert sportsList to a comma-separated string and set it to the TextView
-                    tvSportsList.setText(TextUtils.join(", ", sportsList));
-                    ivProfilePic = view.findViewById(R.id.ivProfilePic);
-                    String profilePicUrl = documentSnapshot.getString("photoUrl");
-                    if (profilePicUrl != null) {
-                        profilePicUrl.replaceAll("s96-c", "s384-c");
-                        Glide.with(requireContext())
-                                .load(profilePicUrl)
-                                .into(ivProfilePic);
-                    }
-                })
-                .addOnFailureListener(e -> {
-                    //show a toast telling the user that something went wrong when fetching the data
-                    Toast.makeText(getContext(), "Something went wrong when fetching data in onViewCreated", Toast.LENGTH_SHORT).show();
-
-                });
-
         // Set up edit button click listener
         Button btnEdit = view.findViewById(R.id.btnEdit);
         btnEdit.setOnClickListener(v -> {
@@ -148,16 +111,26 @@ public class ProfileFragment extends Fragment {
                     // Get sports list as an array of strings from Firestore
                     sportsList = (List<String>) documentSnapshot.get("sports_fav");
                     Log.d("ProfileFragment", "sportsList: " + sportsList);
+
+
                     // Update UI with user data
                     TextView tvName = getView().findViewById(R.id.tvName);
-                    tvName.setText(name);
+                    tvName.setText(String.format("Name: %s", name));
                     TextView tvAge = getView().findViewById(R.id.tvAge);
-                    tvAge.setText(String.valueOf(age));
+                    tvAge.setText(MessageFormat.format("Age: {0}", String.valueOf(age)));
                     TextView tvPhone = getView().findViewById(R.id.tvPhone);
-                    tvPhone.setText(phone);
+                    tvPhone.setText(MessageFormat.format("Phone: {0}", phone));
                     TextView tvSportsList = getView().findViewById(R.id.tvSportsList);
                     //convert sportsList to a comma-separated string and set it to the TextView
-                    tvSportsList.setText(TextUtils.join(", ", sportsList));
+                    tvSportsList.setText(MessageFormat.format("Favourite Sports:{0}", TextUtils.join(", ", sportsList)));
+                    ivProfilePic = getView().findViewById(R.id.ivProfilePic);
+                    String profilePicUrl = documentSnapshot.getString("photoUrl");
+                    if (profilePicUrl != null) {
+                        profilePicUrl.replaceAll("s96-c", "s384-c");
+                        Glide.with(requireContext())
+                                .load(profilePicUrl)
+                                .into(ivProfilePic);
+                    }
                 })
                 .addOnFailureListener(e -> {
                     //show a toast telling the user that something went wrong when fetching the data

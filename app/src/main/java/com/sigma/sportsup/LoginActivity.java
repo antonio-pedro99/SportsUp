@@ -89,6 +89,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 checkForExistingUser(txt_email, txt_password);
             }
         });
+
+        if(mAuth.getCurrentUser() != null){
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     private void loginUser(String email, String password) {
@@ -147,8 +153,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         // User already exists, log in the user
                         loginUser(email, password);
                     } else {
-                        // User does not exist, register the user
-                        registerUser(email, password);
+                        // User does not exist, register the user. But first check if the email is @iiitd.ac.in
+                        if(email.endsWith("@iiitd.ac.in"))
+                            registerUser(email, password);
+                        else
+                            Toast.makeText(LoginActivity.this, "Please use your IIITD email ID", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -224,7 +233,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                             if (task.isSuccessful()) {
                                                 DocumentSnapshot document = task.getResult();
                                                 if (document.exists()) {
-                                                    Toast.makeText(LoginActivity.this, "DocumentSnapshot data: " + document.getData(), Toast.LENGTH_SHORT).show();
                                                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                                     //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                                     startActivity(intent);
