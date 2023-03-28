@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.sigma.sportsup.R
 import com.sigma.sportsup.databinding.FragmentHomeBinding
 import com.sigma.sportsup.ui.chat.ChatBox
 
@@ -32,13 +33,14 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        setHasOptionsMenu(true)
         val homeViewModel =
             ViewModelProvider(this).get(HomeViewModel::class.java)
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val chat_but:Button = binding.chatBut
+
 
        // val textView: TextView = binding.textHome
         val gameRecycler = binding.gamesRecyclerview
@@ -57,22 +59,31 @@ class HomeFragment : Fragment() {
             sessionRecycler.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
 
-        chat_but.setOnClickListener(View.OnClickListener {
+      /*  chat_but.setOnClickListener(View.OnClickListener {
             val myIntent = Intent(this@HomeFragment.context, ChatBox::class.java)
 
             this@HomeFragment.startActivity(myIntent)
             println("this is working!")
-        })
+        })*/
 
         return root
     }
 
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.home_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return super.onOptionsItemSelected(item)
+        return when(item.itemId){
+            R.id.chat_menu ->{
+                val myIntent = Intent(this@HomeFragment.context, ChatBox::class.java)
+                this@HomeFragment.startActivity(myIntent)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onDestroyView() {
