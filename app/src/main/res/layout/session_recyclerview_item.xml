@@ -40,25 +40,69 @@
                 android:textAppearance="?attr/textAppearanceDisplayMedium"
                 android:textSize="18sp"
                 />
-            <TextView
-                android:id="@+id/session_host"
+           <LinearLayout
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:orientation="horizontal">
+               <TextView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="4dp"
+                   android:text="When: "
+                   android:layout_marginRight="8sp"
+                   android:textAppearance="?attr/textAppearanceBodyMedium"
+                   android:textColor="?android:attr/textColorSecondary"
+                   android:textSize="12sp"
+                   />
+               <TextView
+                   android:id="@+id/session_date"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="4dp"
+                   android:text="Text 1"
+                   android:textAppearance="?attr/textAppearanceBodyMedium"
+                   android:textColor="?android:attr/textColorSecondary"
+                   android:textSize="12sp"
+                   android:layout_marginRight="8sp"
+                   />
+               <TextView
+                   android:id="@+id/session_time"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginTop="4dp"
+                   android:text="Text 1"
+                   android:textAppearance="?attr/textAppearanceBodyMedium"
+                   android:textColor="?android:attr/textColorSecondary"
+                   android:textSize="12sp"
+                   />
+           </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Text 1"
-                android:textAppearance="?attr/textAppearanceBodyMedium"
-                android:textColor="?android:attr/textColorSecondary"
-                android:textSize="12sp"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="Text 2"
-                android:textAppearance="?attr/textAppearanceBodyMedium"
-                android:textColor="?android:attr/textColorSecondary"
-                android:textSize="12sp"
-                />
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Where: "
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    />
+                <TextView
+                    android:id="@+id/session_venue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Text 1"
+                    android:textAppearance="?attr/textAppearanceBodyMedium"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:textSize="12sp"
+                    />
+            </LinearLayout>
+
 
         </LinearLayout>
 

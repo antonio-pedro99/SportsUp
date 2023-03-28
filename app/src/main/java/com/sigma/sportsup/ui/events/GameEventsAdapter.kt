@@ -33,8 +33,8 @@ class GameEventItemAdapter(private val context: Context, private val gamesEvents
     override fun onBindViewHolder(holder: GameEventItemAdapterViewHolder, position: Int) {
         val item = gamesEvents[position]
 
-        //val numberOfBuddiesString = context.resources.getString(R.string.event_players)
-        holder.buddiesTextView.text = item.number_of_players
+        val numberOfBuddiesString = context.resources.getString(R.string.event_players, item.current_players ?: "1",item.number_of_players)
+        holder.buddiesTextView.text = numberOfBuddiesString
         holder.dateTextView.text = item.date
         holder.timeTextView.text = item.time
         holder.venueTextView.text = item.venue
