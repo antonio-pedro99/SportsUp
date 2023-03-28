@@ -40,9 +40,6 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-
-
-       // val textView: TextView = binding.textHome
         val gameRecycler = binding.gamesRecyclerview
         val sessionRecycler = binding.sessionsRecyclerview
 
@@ -59,14 +56,14 @@ class HomeFragment : Fragment() {
             sessionRecycler.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         }
 
-      /*  chat_but.setOnClickListener(View.OnClickListener {
-            val myIntent = Intent(this@HomeFragment.context, ChatBox::class.java)
-
-            this@HomeFragment.startActivity(myIntent)
-            println("this is working!")
-        })*/
-
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val homeViewModel =
+            ViewModelProvider(this).get(HomeViewModel::class.java)
     }
 
 
