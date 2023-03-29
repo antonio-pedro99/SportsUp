@@ -125,7 +125,7 @@ public class ProfileFragment extends Fragment {
                     tvPhone.setText(MessageFormat.format("Phone: {0}", phone));
                     TextView tvSportsList = getView().findViewById(R.id.tvSportsList);
                     //convert sportsList to a comma-separated string and set it to the TextView
-                    tvSportsList.setText(MessageFormat.format("Favourite Sports:{0}", TextUtils.join(", ", sportsList)));
+                    tvSportsList.setText(MessageFormat.format("Favourite Sports: {0}", TextUtils.join(", ", sportsList)));
                     ivProfilePic = getView().findViewById(R.id.ivProfilePic);
                     String profilePicUrl = documentSnapshot.getString("photoUrl");
                     if (profilePicUrl != null) {

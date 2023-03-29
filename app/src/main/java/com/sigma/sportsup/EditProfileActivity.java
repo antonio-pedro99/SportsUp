@@ -69,6 +69,17 @@ public class EditProfileActivity extends AppCompatActivity {
             String sports = etSportsList.getText().toString().trim();
             Log.d("EditProfileActivity", "sports: " + sports);
 
+            if (!phone.matches("[0-9]+") || !(phone.length() == 10)) {
+                Toast.makeText(this, "Please enter a valid phone number", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (!sports.matches("[a-zA-Z,\\s]+")) {
+                // Sports list is invalid
+                Toast.makeText(this, "Please enter a valid sports list with sports names separated by commas", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             // Split the sports list string into an array of strings
             String[] sportsArray = sports.split(",");
             Log.d("EditProfileActivity", "sportsArray: " + Arrays.toString(sportsArray));
