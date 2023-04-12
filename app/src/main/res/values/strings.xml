@@ -6,6 +6,7 @@
     <string name="title_profile">My profile</string>
     <string name="headline_1">Games</string>
     <string name="headline_2">Ongoing Sessions</string>
+    <string name="headline_3">All sessions </string>
     <string name="invited_sessions">Invited Sessions</string>
     <string name="today_s_sessions">Today\'s Sessions</string>
     <string name="tab1">tab1</string>
@@ -27,4 +28,6 @@
     <string name="cancel">Cancel</string>
     <string name="event_players">%s/%s buddies required</string>
     <string name="type_a_message">Type a Message</string>
+    <string name="duration">Duration</string>
+    <string name="unit_of_time">Unit of Time</string>
 </resources>

@@ -70,17 +70,20 @@
             android:id="@+id/edit_venue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textAutoComplete"
             android:labelFor="@id/edt_game" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/layout3"
+        android:id="@+id/txtDateLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="180dp"
         android:layout_height="61dp"
         android:hint="Date"
         android:layout_below="@id/layout2"
+        app:endIconDrawable="@drawable/baseline_date_range_24"
+        app:endIconMode="custom"
         >
 
         <com.google.android.material.textfield.TextInputEditText
@@ -88,19 +91,22 @@
             android:layout_width="180sp"
             android:layout_height="wrap_content"
             android:inputType="date"
-            android:labelFor="@id/edt_game" />
+            android:labelFor="@id/edt_game"
+            />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/layout4"
+        android:id="@+id/txtTimeLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:hint="Time"
         android:layout_below="@id/layout2"
-        android:layout_toEndOf="@id/layout3"
+        android:layout_toEndOf="@id/txtDateLayout"
         android:layout_marginStart="12sp"
+        app:endIconDrawable="@drawable/baseline_access_time_filled_24"
+        app:endIconMode="custom"
         >
 
         <com.google.android.material.textfield.TextInputEditText
@@ -108,6 +114,46 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:inputType="time" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout3"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="150dp"
+        android:layout_height="61dp"
+        android:hint="@string/duration"
+        android:layout_below="@id/txtDateLayout"
+        android:layout_marginBottom="12sp"
+        android:layout_marginTop="12sp"
+        >
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_duration"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:inputType="number"
+            android:labelFor="@id/edt_game" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout4"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="200dp"
+        android:layout_height="61dp"
+        android:hint="@string/unit_of_time"
+        android:layout_below="@id/txtDateLayout"
+        android:layout_marginBottom="12sp"
+        android:layout_toEndOf="@id/layout3"
+        android:layout_marginTop="12sp"
+        android:layout_marginStart="12sp"
+        >
+        <AutoCompleteTextView
+            android:id="@+id/edit_duration_format"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textAutoComplete"
+            android:labelFor="@id/edt_game" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
