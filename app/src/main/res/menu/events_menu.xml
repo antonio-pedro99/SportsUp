@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:title="@string/menu_item_title_my_events"
+        app:showAsAction="always"
+        android:id="@+id/menu_my_events"
+        android:icon="@drawable/baseline_event_24"
+
+        />
+    <item android:title="@string/menu_item_title_invites"
+        android:icon="@drawable/baseline_event_available_24"
+        app:showAsAction="ifRoom"
+        android:id="@+id/menu_invited_event"
+        />
+    <item android:title="@string/menu_item_title_saved_events"
+        android:icon="@drawable/baseline_book_24"
+        android:id="@+id/menu_invited_saved"
+        />
+</menu>

@@ -9,16 +9,17 @@ data class GameEvent(
     var host:String?,
     var venue:String?,
     var host_ref:String?,
-    var time: String?,
+    var start_time: String?,
     var end_time:String?,
     var date:String?,
     var number_of_players:String?,
     var audience:String?,
-    var current_players:Int?
+    var current_players:Int?,
+    var waiting:Int?
 ) {
 
     constructor() : this(null, null, null, null, null, null,
-        null, null, null, null, null)
+        null, null, null, null, null, null)
 
 
 } 

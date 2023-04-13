@@ -33,11 +33,15 @@ public class EditProfileFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         mFirestore = FirebaseFirestore.getInstance();
         userId = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
+
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
+        setHasOptionsMenu(true);
+
         return inflater.inflate(R.layout.activity_edit_profile, container, false);
     }
 
@@ -45,6 +49,7 @@ public class EditProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         etPhone = view.findViewById(R.id.etPhone);
+
 //        etSportsList = view.findViewById(R.id.etSportsList);
 
         // Fetch user data from Firestore

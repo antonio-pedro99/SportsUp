@@ -36,13 +36,13 @@
                                 <LayoutPositions>
                                   <option name="myPosition">
                                     <Point>
-                                      <option name="x" value="-72" />
-                                      <option name="y" value="350" />
+                                      <option name="x" value="-128" />
+                                      <option name="y" value="281" />
                                     </Point>
                                   </option>
                                   <option name="myPositions">
                                     <map>
-                                      <entry key="action_nav_events_to_navigation_event_activity">
+                                      <entry key="action_nav_events_to_navigation_event_my_event">
                                         <value>
                                           <LayoutPositions />
                                         </value>
@@ -57,13 +57,13 @@
                                 </LayoutPositions>
                               </value>
                             </entry>
-                            <entry key="navigation_event_activity">
+                            <entry key="navigation_event_my_event">
                               <value>
                                 <LayoutPositions>
                                   <option name="myPosition">
                                     <Point>
-                                      <option name="x" value="143" />
-                                      <option name="y" value="35" />
+                                      <option name="x" value="246" />
+                                      <option name="y" value="141" />
                                     </Point>
                                   </option>
                                 </LayoutPositions>
@@ -94,15 +94,6 @@
                             <option name="x" value="12" />
                             <option name="y" value="368" />
                           </Point>
-                        </option>
-                        <option name="myPositions">
-                          <map>
-                            <entry key="action_navigation_home_to_navigation_event_activity">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
-                          </map>
                         </option>
                       </LayoutPositions>
                     </value>

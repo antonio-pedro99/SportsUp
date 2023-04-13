@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.sigma.sportsup.databinding.FragmentSearchBinding
@@ -23,6 +24,7 @@ class SearchFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        setHasOptionsMenu(true)
         val searchViewModel =
             ViewModelProvider(this).get(SearchViewModel::class.java)
 
@@ -33,6 +35,7 @@ class SearchFragment : Fragment() {
         searchViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
         return root
     }
 

@@ -32,7 +32,7 @@ class SessionsItemAdapter(private val context: Context, private val sessions: Li
     override fun onBindViewHolder(holder: SessionsItemAdapterViewHolder, position: Int) {
         val item = sessions.get(position)
         holder.txtDate.text = item.date
-        holder.txtTime.text = item.time
+        holder.txtTime.text = item.start_time
         holder.txtTitle.text = item.name
         holder.txtVenue.text = item.venue
     }

@@ -47,4 +47,11 @@
     <string name="txt_event_details_venue">%s</string>
     <string name="txt_event_details_fab_mark_as_done">Fab Mark as done</string>
     <string name="txt_event_details_edit_event">Edit Event</string>
+    <string name="menu_item_title_join">Join</string>
+    <string name="menu_item_title_save">Save</string>
+    <string name="menu_item_title_edit">Edit</string>
+    <string name="tab_item_waiting_room">Waiting Room</string>
+    <string name="menu_item_title_saved_events">Saved Event</string>
+    <string name="menu_item_title_invites">Invitations</string>
+    <string name="menu_item_title_my_events">My Events</string>
 </resources>

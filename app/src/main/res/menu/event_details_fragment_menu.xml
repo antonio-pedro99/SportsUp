@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:title="@string/menu_item_title_join"
+        app:showAsAction="always"
+        android:icon="@drawable/baseline_event_24"
+        android:id="@+id/menu_join"
+        />
+    <item android:title="@string/menu_item_title_save"
+        app:showAsAction="always"
+        android:id="@+id/menu_save"
+        android:icon="@drawable/baseline_bookmark_border_24"
+
+        />
+    <item android:title="@string/menu_item_title_edit"
+        android:icon="@drawable/baseline_edit_calendar_24"
+        app:showAsAction="always"
+        android:id="@+id/menu_edit"
+        />
+</menu>
