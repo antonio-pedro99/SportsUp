@@ -54,4 +54,5 @@
     <string name="menu_item_title_saved_events">Saved Event</string>
     <string name="menu_item_title_invites">Invitations</string>
     <string name="menu_item_title_my_events">My Events</string>
+    <string name="event_info">No events happening around</string>
 </resources>

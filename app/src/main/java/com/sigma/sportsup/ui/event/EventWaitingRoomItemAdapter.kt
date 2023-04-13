@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sigma.sportsup.R
 import com.sigma.sportsup.data.WaiterUserModel
 
-class EventWaitingRoomItemAdapter(private val context: Context, private  val players:List<WaiterUserModel>):RecyclerView.Adapter<EventWaitingRoomItemAdapter.EventPlayersItemAdapterViewHolder>() {
+class EventWaitingRoomItemAdapter(private val context: Context, private  val players:List<WaiterUserModel>, private val eventDetailsViewModel: EventDetailsViewModel):RecyclerView.Adapter<EventWaitingRoomItemAdapter.EventPlayersItemAdapterViewHolder>() {
 
     class EventPlayersItemAdapterViewHolder(view: View):RecyclerView.ViewHolder(view){
         val waiterNameTxt :TextView = view.findViewById(R.id.txt_waiter_name)

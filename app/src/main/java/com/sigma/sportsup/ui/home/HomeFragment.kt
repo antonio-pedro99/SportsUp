@@ -53,8 +53,13 @@ class HomeFragment : Fragment() {
         }
 
         homeViewModel.sessions.observe(viewLifecycleOwner){
-            sessionRecycler.adapter = SessionsItemAdapter(requireContext(), it)
-            sessionRecycler.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            if (it.isNotEmpty()){
+                sessionRecycler.adapter = SessionsItemAdapter(requireContext(), it)
+                sessionRecycler.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                binding.txtNoOngoingEvent.visibility = View.INVISIBLE
+            } else {
+                binding.txtNoOngoingEvent.visibility = View.VISIBLE
+            }
         }
 
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)

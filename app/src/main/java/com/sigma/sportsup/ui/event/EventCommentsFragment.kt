@@ -37,7 +37,7 @@ class EventCommentsFragment:Fragment() {
             eventName = arguments?.getString("eventName")
         }
 
-        binding.textDashboard.text = eventName
+        binding.textDashboard.text = "No Comments"
         return root
     }
 

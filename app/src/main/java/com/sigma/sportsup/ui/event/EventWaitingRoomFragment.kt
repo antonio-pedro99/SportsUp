@@ -45,7 +45,7 @@ class EventWaitingRoomFragment:Fragment() {
 
         eventsViewModel.gameWaitingListLiveData.observe(viewLifecycleOwner){
             if(it.isNotEmpty()){
-                val adapter = EventWaitingRoomItemAdapter(requireContext(), it)
+                val adapter = EventWaitingRoomItemAdapter(requireContext(), it, eventsViewModel)
                 binding.recyclerViewWaitingRoom.adapter = adapter
             }
         }
