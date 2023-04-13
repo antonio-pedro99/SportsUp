@@ -104,11 +104,13 @@ class EventDetailsFragment : Fragment() {
                             2-> {
                                 tab.text =
                                     activity?.resources?.getString(R.string.tab_item_waiting_room)
-                                if (it.waiting!! > 0) {
-                                    tab.orCreateBadge.number = it.waiting!!
-                                } else {
 
+                                it?.waiting.let {count->
+                                    tab.orCreateBadge.number = count!!
+                                    tab.orCreateBadge.isVisible = count > 0
                                 }
+
+
                             }
                         }
                     }.attach()
