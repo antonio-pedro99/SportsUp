@@ -1,6 +1,7 @@
 package com.sigma.sportsup.ui.event
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,10 +44,15 @@ class EventWaitingRoomFragment:Fragment() {
 
         eventId?.let { eventsViewModel.getWaitingList(it, eventName!!) }
 
-        eventsViewModel.gameWaitingListLiveData.observe(viewLifecycleOwner){
-            if(it.isNotEmpty()){
-                val adapter = EventWaitingRoomItemAdapter(requireContext(), it, eventsViewModel)
+        eventsViewModel.gameWaitingListLiveData.observe(viewLifecycleOwner){ waiters->
+            if(waiters.isNotEmpty()){
+                val adapter = EventWaitingRoomItemAdapter(requireContext(), waiters) {pos->
+                    eventsViewModel.confirmRsvp(eventId!!, eventName!!, waiters[pos])
+                }
+                Log.d("S", waiters.first().name.toString())
                 binding.recyclerViewWaitingRoom.adapter = adapter
+            } else {
+                Log.d("F", "Failed")
             }
         }
     }

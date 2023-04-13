@@ -29,36 +29,40 @@ class EventDetailsViewModel : ViewModel() {
             val query = getQuery(documentId, eventName)
             query.addSnapshotListener { q, _ ->
                 for (doc in q?.documents!!) {
-                    value = doc.toObject(GameEvent::class.java).also {it?.id = doc.id }
+                    value = doc.toObject(GameEvent::class.java).also { it?.id = doc.id }
                 }
             }
         }
     }
 
     fun checkRsvp(documentId: String, eventName: String, user: UserModel) {
-       rsvpAlreadySentLiveData.apply {
-           val query = getQuery(documentId, eventName)
-           query.get().addOnSuccessListener { snapshot->
-               for (doc in snapshot){
-                   doc.reference.collection("waiting_room").whereEqualTo("waiter_id",
-                       user.id).get().addOnSuccessListener {querySnapshot->
-                       value = !querySnapshot.isEmpty || querySnapshot == null
-                   }
-               }
-           }.addOnFailureListener {
-               value = false
-           }
-       }
+        rsvpAlreadySentLiveData.apply {
+            val query = getQuery(documentId, eventName)
+            query.get().addOnSuccessListener { snapshot ->
+                for (doc in snapshot) {
+                    doc.reference.collection("waiting_room").whereEqualTo(
+                        "id",
+                        user.id
+                    ).get().addOnSuccessListener { querySnapshot ->
+                        value = !querySnapshot.isEmpty || querySnapshot == null
+                    }
+                }
+            }.addOnFailureListener {
+                value = false
+            }
+        }
     }
 
-    fun getGamePlayers(documentId: String, eventName: String){
+    fun getGamePlayers(documentId: String, eventName: String) {
         playersLiveData.apply {
             val query = getQuery(documentId, eventName)
             query.get().addOnSuccessListener {
 
-                for (doc in it){
+                for (doc in it) {
                     doc.reference.collection("players").addSnapshotListener { snapshot, _ ->
-                        value = snapshot?.documents?.mapNotNull { document-> document.toObject(UserModel::class.java) }
+                        value = snapshot?.documents?.mapNotNull { document ->
+                            document.toObject(UserModel::class.java)
+                        }
                         Log.d("T", snapshot?.documents.toString())
                     }
                 }
@@ -68,13 +72,15 @@ class EventDetailsViewModel : ViewModel() {
         }
     }
 
-    fun getWaitingList(documentId: String, eventName: String){
+    fun getWaitingList(documentId: String, eventName: String) {
         _gameWaitingListLiveData.apply {
             val query = getQuery(documentId, eventName)
             query.get().addOnSuccessListener {
-                for (doc in it){
+                for (doc in it) {
                     doc.reference.collection("waiting_room").addSnapshotListener { snapshot, _ ->
-                        value = snapshot?.documents?.mapNotNull { document-> document.toObject(WaiterUserModel::class.java) }
+                        value = snapshot?.documents?.mapNotNull { document ->
+                            document.toObject(WaiterUserModel::class.java)
+                        }
                     }
                 }
             }.addOnFailureListener {
@@ -83,31 +89,42 @@ class EventDetailsViewModel : ViewModel() {
         }
     }
 
-    fun cancelRsvp(documentId: String, eventName: String, user: UserModel){
-        val query = getQuery(documentId, eventName)
-        query.get().addOnSuccessListener {
-            for (doc in it){
-                doc.reference.collection("waiting_room").whereEqualTo("waiter_id", user.id).get().addOnSuccessListener {q ->
-                   q.documents.forEach { waiter-> waiter.reference.delete()}
-                }
-                val toRemove = if (doc.data["waiting"] == null) 1 else doc.data["waiting"].toString().toInt() - 1
-                doc.reference.update("waiting", toRemove)
-            }
-        }
+    fun cancelRsvp(documentId: String, eventName: String, user: UserModel) {
+       gameWaitingListLiveData.apply {
+           val query = getQuery(documentId, eventName)
+           query.get().addOnSuccessListener {
+               for (doc in it) {
+                   doc.reference.collection("waiting_room").whereEqualTo("id", user.id).get()
+                       .addOnSuccessListener { q ->
+                           q.documents.forEach { waiter -> waiter.reference.delete() }
+                       }
+                   val toRemove =
+                       if (doc.data["waiting"] == null) 1 else doc.data["waiting"].toString()
+                           .toInt() - 1
+                   doc.reference.update("waiting", toRemove)
+                   doc.reference.collection("waiting_room").get().addOnSuccessListener {it->
+                     value = it?.documents?.mapNotNull { d-> d.toObject(WaiterUserModel::class.java)}
+                   }
+               }
+           }
+       }
     }
 
     fun rsvp(documentId: String, eventName: String, user: UserModel) {
         val query = getQuery(documentId, eventName)
         query.get().addOnSuccessListener {
-            for (doc in it){
-                val toAdd = if (doc.data["waiting"] == null) 1 else doc.data["waiting"].toString().toInt() + 1
+            for (doc in it) {
+                val toAdd = if (doc.data["waiting"] == null) 1 else doc.data["waiting"].toString()
+                    .toInt() + 1
                 doc.reference.update("waiting", toAdd)
-                doc.reference.collection("waiting_room").add(hashMapOf(
-                    "waiter_id" to user.id,
-                    "waiter_name" to user.name
-                )).addOnSuccessListener {
+                doc.reference.collection("waiting_room").add(
+                    hashMapOf(
+                        "id" to user.id,
+                        "name" to user.name
+                    )
+                ).addOnSuccessListener {
                     Log.d("S", "Success")
-                }.addOnFailureListener {ex->
+                }.addOnFailureListener { ex ->
                     Log.d("F", ex.message.toString())
                 }
             }
@@ -116,12 +133,54 @@ class EventDetailsViewModel : ViewModel() {
         }
     }
 
+    fun confirmRsvp(
+        documentId: String,
+        eventName: String,
+        userWaiterUserModel: WaiterUserModel
+    ) {
+        gameWaitingListLiveData.apply {
+            val query = getQuery(documentId, eventName)
+            query.get().addOnSuccessListener {
+                for (doc in it) {
+                    if (doc.data["current_players"].toString()
+                            .toInt() < doc.data["number_of_players"].toString().toInt()
+                    ) {
+                        val currentPlayersCount = doc.data["current_players"].toString().toInt() + 1
+                        val waitingRoomCount = doc.data["waiting"].toString().toInt()  - 1
+                        doc.reference.collection("players").add(userWaiterUserModel)
+                            .addOnSuccessListener {
+
+                                doc.reference.collection("waiting_room")
+                                    .whereEqualTo("id", userWaiterUserModel.id).get()
+                                    .addOnSuccessListener {q->
+                                        //delete the waiter from the collection
+                                        q.documents.forEach { d-> d.reference.delete().addOnSuccessListener {
+                                            Log.d("S", "Deleted")
+                                            doc.reference.update("waiting", waitingRoomCount)
+                                            doc.reference.update("current_players", currentPlayersCount)
+                                            doc.reference.collection("waiting_room").get().addOnSuccessListener {snapshot->
+                                                value = snapshot.documents.mapNotNull { doc-> doc.toObject(WaiterUserModel::class.java) }
+                                            }.addOnFailureListener { ex->
+                                                Log.d("F", ex.message.toString())
+                                            }
+                                        } }
+                                    }
+
+                            }.addOnFailureListener { ex->
+                                Log.d("F", ex.message.toString())
+                            }
+                    }
+                }
+            }
+        }
+    }
+
     val eventDetails = eventDetailsLiveData
     val rsvpLiveData = rsvpAlreadySentLiveData
     val gamePlayersLiveData = playersLiveData
     val gameWaitingListLiveData = _gameWaitingListLiveData
-    private fun getQuery(documentId:String, eventName:String): Query {
-        return  eventsRef.document(eventName.lowercase()).collection("items")
+    private fun getQuery(documentId: String, eventName: String): Query {
+        return eventsRef.document(eventName.lowercase()).collection("items")
             .whereEqualTo(FieldPath.documentId(), documentId)
     }
 }

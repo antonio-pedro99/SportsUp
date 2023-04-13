@@ -29,6 +29,5 @@ class EventPlayersItemAdapter(private val context: Context, private  val players
     override fun onBindViewHolder(holder: EventPlayersItemAdapterViewHolder, position: Int) {
         val item = players[position]
         holder.playerNameTxt.text = item.name
-        Log.d("T", item.name!!)
     }
 }

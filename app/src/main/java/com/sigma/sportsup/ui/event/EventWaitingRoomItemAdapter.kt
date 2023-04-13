@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sigma.sportsup.R
 import com.sigma.sportsup.data.WaiterUserModel
 
-class EventWaitingRoomItemAdapter(private val context: Context, private  val players:List<WaiterUserModel>, private val eventDetailsViewModel: EventDetailsViewModel):RecyclerView.Adapter<EventWaitingRoomItemAdapter.EventPlayersItemAdapterViewHolder>() {
+class EventWaitingRoomItemAdapter(private val context: Context, private  val players:List<WaiterUserModel>, private var callback : (Int)->Any):RecyclerView.Adapter<EventWaitingRoomItemAdapter.EventPlayersItemAdapterViewHolder>() {
 
     class EventPlayersItemAdapterViewHolder(view: View):RecyclerView.ViewHolder(view){
         val waiterNameTxt :TextView = view.findViewById(R.id.txt_waiter_name)
@@ -28,6 +28,9 @@ class EventWaitingRoomItemAdapter(private val context: Context, private  val pla
 
     override fun onBindViewHolder(holder: EventPlayersItemAdapterViewHolder, position: Int) {
         val item = players[position]
-        holder.waiterNameTxt.text = item.waiter_name
+        holder.waiterNameTxt.text = item.name
+        holder.itemView.setOnClickListener {
+            callback(position)
+        }
     }
 }
