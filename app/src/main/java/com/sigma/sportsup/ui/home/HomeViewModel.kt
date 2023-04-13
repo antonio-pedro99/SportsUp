@@ -2,6 +2,7 @@ package com.sigma.sportsup.ui.home
 
 import android.os.Build
 import android.se.omapi.Session
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -31,14 +32,17 @@ class HomeViewModel : ViewModel() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private val _sessions = MutableLiveData<List<GameEvent>>().apply {
-        val currentDate = DateTimeFormatter
-            .ofPattern("dd/MM/yyyy", Locale.getDefault())
-            .format(LocalDate.now())
-        eventRef.whereEqualTo("date",currentDate).addSnapshotListener { snapshot, exception ->
 
+        eventRef.addSnapshotListener { snapshot, exception ->
+            val currentDate = DateTimeFormatter
+                .ofPattern("dd/MM/yyyy", Locale.getDefault())
+                .format(LocalDate.now())
             if (exception != null) return@addSnapshotListener
+
+
+            Log.d("F", snapshot?.documents.toString())
             val items = snapshot?.documents?.mapNotNull { doc-> doc.toObject(GameEvent::class.java)}
-            value = items
+            value = items?.filter { it.date == currentDate }
         }
     }
 

@@ -112,8 +112,9 @@ class GameCreateFragment : Fragment() {
                 "end_time" to edtEndTime.text.toString(),
                 "current_players" to 1,
                 "status" to "planed",
-                "number_of_players" to edtNumberOfPlayers.text.toString(),
+                "number_of_players" to edtNumberOfPlayers.text.toString().toInt(),
                 "audience" to audience,
+                "waiting" to 0,
                 // "duration" to "${edtDuration.text.toString()} ${edtDurationFormat.text.toString()}"
             )
 

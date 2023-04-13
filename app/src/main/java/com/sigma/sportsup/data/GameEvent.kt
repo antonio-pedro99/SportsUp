@@ -12,7 +12,7 @@ data class GameEvent(
     var start_time: String?,
     var end_time:String?,
     var date:String?,
-    var number_of_players:String?,
+    var number_of_players:Int?,
     var audience:String?,
     var current_players:Int?,
     var waiting:Int?
@@ -20,6 +20,5 @@ data class GameEvent(
 
     constructor() : this(null, null, null, null, null, null,
         null, null, null, null, null, null)
-
 
 } 

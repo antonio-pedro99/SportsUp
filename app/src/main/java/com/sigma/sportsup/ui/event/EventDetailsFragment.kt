@@ -6,6 +6,8 @@ import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.sigma.sportsup.R
 import com.sigma.sportsup.UserViewModel
 import com.sigma.sportsup.data.GameEvent
@@ -26,7 +28,6 @@ class EventDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentEventBinding.inflate(inflater, container, false)
-
 
         return binding.root
     }
@@ -54,7 +55,11 @@ class EventDetailsFragment : Fragment() {
             binding.txtEventName.text =
                 resources?.getString(R.string.txt_event_details_name, it.name)
             binding.txtEventDetailsTime.text =
-                resources?.getString(R.string.txt_event_details_time_value, it.start_time, it.end_time)
+                resources?.getString(
+                    R.string.txt_event_details_time_value,
+                    it.start_time,
+                    it.end_time
+                )
             binding.txtEventDetailsDate.text =
                 resources?.getString(R.string.txt_event_details_date_value, it.date)
             binding.txtEventDetailsVenue.text =
@@ -66,10 +71,30 @@ class EventDetailsFragment : Fragment() {
             userViewModel.currentUser.observe(this) { user ->
                 if (it.host_ref == user.id) {
                     Log.d("Fab", user.id!!)
-                    binding.fabEdt.visibility  = View.VISIBLE
+                    binding.fabEdt.visibility = View.VISIBLE
+                    binding.fabAction.setImageResource(R.drawable.baseline_done_24)
+
+                    if (it.waiting!! > 0){
+                        val badgeWaiting = binding.tabLayout.getTabAt(2)?.orCreateBadge
+                        badgeWaiting?.number = it.waiting!!
+                    }  else{
+                    }
                 } else {
-                    binding.tabLayout.removeTabAt(2)
+                    if (binding.tabLayout.getTabAt(2) != null){
+                        binding.tabLayout.removeTabAt(2)
+                    }
+                    binding.fabAction.setOnClickListener {
+                        eventsViewModel.rsvp(eventId!!, eventName!!, user)
+
+                        MaterialAlertDialogBuilder(requireContext())
+                            .setTitle("All Done")
+                            .setMessage("Your RSVP has been sent the the event host\nYou are now in the waiting room")
+                            .setNegativeButton("Ok") { _, _ -> findNavController().navigateUp() }
+                            .setPositiveButton("See Event") { _, _ -> }
+                            .show()
+                    }
                 }
+
             }
         }
 
