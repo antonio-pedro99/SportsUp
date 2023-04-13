@@ -124,7 +124,6 @@ class GameCreateFragment : Fragment() {
                 .add(event)
                 .addOnSuccessListener { doc ->
 
-
                     //add a game snapshot to the venues
                     db.collection("venues").whereEqualTo("name", event["venue"]).get()
                         .addOnSuccessListener {

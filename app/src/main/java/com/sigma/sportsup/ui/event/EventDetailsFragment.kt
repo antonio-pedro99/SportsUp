@@ -3,6 +3,7 @@ package com.sigma.sportsup.ui.event
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -49,7 +50,7 @@ class EventDetailsFragment : Fragment() {
 
         eventId?.let { eventsViewModel.getEventById(it, eventName!!) }
 
-        eventsViewModel.eventDetails.observe(this) {
+        eventsViewModel.eventDetails.observe(viewLifecycleOwner) {
             val resources = activity?.resources
 
             binding.txtEventName.text =
@@ -68,30 +69,50 @@ class EventDetailsFragment : Fragment() {
             val badgePlayers = binding.tabLayout.getTabAt(0)?.orCreateBadge
             badgePlayers?.number = it.current_players!!
 
-            userViewModel.currentUser.observe(this) { user ->
+            userViewModel.currentUser.observe(viewLifecycleOwner) { user ->
+                eventId?.let {evId-> eventsViewModel.checkRsvp(evId, eventName!!, user) }
+
                 if (it.host_ref == user.id) {
                     Log.d("Fab", user.id!!)
                     binding.fabEdt.visibility = View.VISIBLE
                     binding.fabAction.setImageResource(R.drawable.baseline_done_24)
 
-                    if (it.waiting!! > 0){
+                    if (it.waiting!! > 0) {
                         val badgeWaiting = binding.tabLayout.getTabAt(2)?.orCreateBadge
                         badgeWaiting?.number = it.waiting!!
-                    }  else{
+                    } else {
                     }
                 } else {
-                    if (binding.tabLayout.getTabAt(2) != null){
+                    if (binding.tabLayout.getTabAt(2) != null) {
                         binding.tabLayout.removeTabAt(2)
                     }
-                    binding.fabAction.setOnClickListener {
-                        eventsViewModel.rsvp(eventId!!, eventName!!, user)
 
-                        MaterialAlertDialogBuilder(requireContext())
-                            .setTitle("All Done")
-                            .setMessage("Your RSVP has been sent the the event host\nYou are now in the waiting room")
-                            .setNegativeButton("Ok") { _, _ -> findNavController().navigateUp() }
-                            .setPositiveButton("See Event") { _, _ -> }
-                            .show()
+                    eventsViewModel.rsvpLiveData.observe(viewLifecycleOwner) { rsvpAlreadySent ->
+                        Log.d("V", rsvpAlreadySent.toString())
+                        if (rsvpAlreadySent) {
+                            binding.fabAction.setImageResource(R.drawable.baseline_event_available_24)
+                            binding.fabAction.setOnClickListener {
+                                MaterialAlertDialogBuilder(requireContext())
+                                    .setTitle("Confirmation")
+                                    .setMessage("You have already Sent RSVP, would you like to cancel it?")
+                                    .setNegativeButton("Yes") { _, _ ->
+                                        eventsViewModel.cancelRsvp(eventId!!, eventName!!, user)
+                                    }
+                                    .setPositiveButton("No") { _, _ -> }
+                                    .show()
+                            }
+
+                        } else {
+                            binding.fabAction.setImageResource(R.drawable.baseline_event_24)
+                            binding.fabAction.setOnClickListener {
+                                eventsViewModel.rsvp(eventId!!, eventName!!, user)
+                                MaterialAlertDialogBuilder(requireContext())
+                                    .setTitle("All Done")
+                                    .setMessage("Your RSVP has been sent the the event host\nYou are now in the waiting room")
+                                    .setPositiveButton("Sounds Good!") { _, _ -> }
+                                    .show()
+                            }
+                        }
                     }
                 }
 
