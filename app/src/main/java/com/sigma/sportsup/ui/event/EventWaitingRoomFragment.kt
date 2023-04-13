@@ -17,6 +17,7 @@ class EventWaitingRoomFragment:Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    private lateinit var eventsViewModel: EventDetailsViewModel
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -28,6 +29,27 @@ class EventWaitingRoomFragment:Fragment() {
         return root
     }
 
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        eventsViewModel = ViewModelProvider(this).get(EventDetailsViewModel::class.java)
+
+        var eventId: String? = null
+        var eventName: String? = null
+        if (arguments != null) {
+            eventId = arguments?.getString("eventId")
+            eventName = arguments?.getString("eventName")
+        }
+
+        eventId?.let { eventsViewModel.getWaitingList(it, eventName!!) }
+
+        eventsViewModel.gameWaitingListLiveData.observe(viewLifecycleOwner){
+            if(it.isNotEmpty()){
+                val adapter = EventWaitingRoomItemAdapter(requireContext(), it)
+                binding.recyclerViewWaitingRoom.adapter = adapter
+            }
+        }
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

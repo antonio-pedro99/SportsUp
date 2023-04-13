@@ -12,6 +12,7 @@ import com.google.firebase.ktx.Firebase
 import com.sigma.sportsup.FirestoreCollection
 import com.sigma.sportsup.data.GameEvent
 import com.sigma.sportsup.data.UserModel
+import com.sigma.sportsup.data.WaiterUserModel
 
 class EventDetailsViewModel : ViewModel() {
 
@@ -20,6 +21,7 @@ class EventDetailsViewModel : ViewModel() {
     private val eventDetailsLiveData = MutableLiveData<GameEvent>()
     private val rsvpAlreadySentLiveData = MutableLiveData<Boolean>()
     private val playersLiveData = MutableLiveData<List<UserModel>>()
+    private val _gameWaitingListLiveData = MutableLiveData<List<WaiterUserModel>>()
 
 
     fun getEventById(documentId: String, eventName: String) {
@@ -66,6 +68,21 @@ class EventDetailsViewModel : ViewModel() {
         }
     }
 
+    fun getWaitingList(documentId: String, eventName: String){
+        _gameWaitingListLiveData.apply {
+            val query = getQuery(documentId, eventName)
+            query.get().addOnSuccessListener {
+                for (doc in it){
+                    doc.reference.collection("waiting_room").addSnapshotListener { snapshot, _ ->
+                        value = snapshot?.documents?.mapNotNull { document-> document.toObject(WaiterUserModel::class.java) }
+                    }
+                }
+            }.addOnFailureListener {
+                Log.d("F1", it.message.toString())
+            }
+        }
+    }
+
     fun cancelRsvp(documentId: String, eventName: String, user: UserModel){
         val query = getQuery(documentId, eventName)
         query.get().addOnSuccessListener {
@@ -102,7 +119,7 @@ class EventDetailsViewModel : ViewModel() {
     val eventDetails = eventDetailsLiveData
     val rsvpLiveData = rsvpAlreadySentLiveData
     val gamePlayersLiveData = playersLiveData
-
+    val gameWaitingListLiveData = _gameWaitingListLiveData
     private fun getQuery(documentId:String, eventName:String): Query {
         return  eventsRef.document(eventName.lowercase()).collection("items")
             .whereEqualTo(FieldPath.documentId(), documentId)

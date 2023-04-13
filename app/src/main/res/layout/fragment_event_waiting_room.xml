@@ -6,16 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".ui.event.EventWaitingRoomFragment">
 
-    <TextView
-        android:id="@+id/text_dashboard"
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_waiting_room"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:text="Fragment Waiting Room"
-        android:textSize="20sp"
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
