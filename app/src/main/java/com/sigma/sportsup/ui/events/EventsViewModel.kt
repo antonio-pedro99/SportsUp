@@ -35,7 +35,7 @@ class EventsViewModel : ViewModel() {
 
            val items = snapshot?.documents?.mapNotNull { doc -> doc.toObject(GameEvent::class.java)
                .also { gameEvent -> gameEvent?.id = doc.id } }
-           value = items
+           value = items?.filter { it.audience =="Everyone"}
        }
    }
 

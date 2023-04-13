@@ -18,8 +18,8 @@ class EventDetailsFragment: Fragment() {
 
     private val binding get() = _binding!!
 
-   // private lateinit var eventsViewModel:EventDetailsViewModel
-    //private lateinit var userViewModel: UserViewModel
+     private lateinit var eventsViewModel:EventDetailsViewModel
+     private lateinit var userViewModel: UserViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,8 +27,18 @@ class EventDetailsFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentEventBinding.inflate(inflater, container, false)
-        val eventsViewModel = ViewModelProvider(this).get(EventDetailsViewModel::class.java)
-        val userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+
+
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        eventsViewModel = ViewModelProvider(this).get(EventDetailsViewModel::class.java)
+        userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+
 
         var eventId: String? = null
         var eventName:String? = null
@@ -46,14 +56,10 @@ class EventDetailsFragment: Fragment() {
             binding.txtEventDetailsTime.text = resources?.getString(R.string.txt_event_details_time_value, it.time, it.end_time)
             binding.txtEventDetailsDate.text = resources?.getString(R.string.txt_event_details_date_value, it.date)
             binding.txtEventDetailsVenue.text = resources?.getString(R.string.txt_event_details_venue, it.venue)
+
+            val badgePlayers = binding.tabLayout.getTabAt(0)?.orCreateBadge
+            badgePlayers?.number = it.current_players!!
         }
-
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
 
     }
 
