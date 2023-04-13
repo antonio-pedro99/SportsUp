@@ -11,6 +11,8 @@ import com.sigma.sportsup.data.GameModel
 import com.sigma.sportsup.databinding.FragmentEventsBinding
 import com.sigma.sportsup.databinding.FragmentMyEventsBinding
 import com.sigma.sportsup.ui.events.EventsViewModel
+import com.sigma.sportsup.ui.events.GameEventItemAdapter
+import com.sigma.sportsup.ui.events.MyEventsViewModel
 
 class MyEventsFragment : Fragment(){
 
@@ -28,11 +30,17 @@ class MyEventsFragment : Fragment(){
         savedInstanceState: Bundle?
     ): View {
         val eventsViewModel =
-            ViewModelProvider(this).get(EventsViewModel::class.java)
+            ViewModelProvider(this).get(MyEventsViewModel::class.java)
         setHasOptionsMenu(true)
 
         _binding = FragmentMyEventsBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+        eventsViewModel.events.observe(this){
+            binding.eventsRecyclerView.setHasFixedSize(true)
+            val eventsAdapter = GameEventItemAdapter(requireContext(), it)
+            binding.eventsRecyclerView.adapter = eventsAdapter
+        }
 
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         return root

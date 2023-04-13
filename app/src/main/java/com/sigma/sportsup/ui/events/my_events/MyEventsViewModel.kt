@@ -16,18 +16,6 @@ class MyEventsViewModel : ViewModel() {
     private val eventsCollection = Firebase.firestore.collection("games")
 
     private val _currentUser = Firebase.auth.currentUser
-    private val _games = MutableLiveData<List<GameModel>?>().apply {
-
-        gameRef.addSnapshotListener { snapshot, exception ->
-            if (exception != null) return@addSnapshotListener
-            val items = snapshot?.documents?.mapNotNull { documentSnapshot ->
-                documentSnapshot.toObject(GameModel::class.java)
-            }
-            value = items
-        }
-
-    }
-
 
     private val eventsLiveData = MutableLiveData<List<GameEvent>>()
 
@@ -39,7 +27,7 @@ class MyEventsViewModel : ViewModel() {
                 doc.toObject(GameEvent::class.java)
                     .also { gameEvent -> gameEvent?.id = doc.id }
             }
-            value = items?.filter { it.audience == "Everyone" && it.host_ref != _currentUser?.uid }
+            value = items?.filter { it.host_ref == _currentUser?.uid }
         }
     }
 
@@ -57,6 +45,5 @@ class MyEventsViewModel : ViewModel() {
         }
     }
 
-    val games: MutableLiveData<List<GameModel>?> = _games
     val events: MutableLiveData<List<GameEvent>> = _events
 }

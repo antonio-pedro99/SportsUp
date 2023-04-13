@@ -66,7 +66,7 @@ class EventDetailsFragment : Fragment() {
             userViewModel.currentUser.observe(this) { user ->
                 if (it.host_ref == user.id) {
                     Log.d("Fab", user.id!!)
-                    binding.fabEdt.visibility - View.VISIBLE
+                    binding.fabEdt.visibility  = View.VISIBLE
                 } else {
                     binding.tabLayout.removeTabAt(2)
                 }
