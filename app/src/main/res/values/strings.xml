@@ -30,4 +30,21 @@
     <string name="type_a_message">Type a Message</string>
     <string name="duration">Duration</string>
     <string name="unit_of_time">Unit of Time</string>
+    <string name="start_time">Start Time</string>
+    <string name="end_time">End Time</string>
+    <string name="date">Date</string>
+    <string name="image_title_description">Image Title</string>
+    <string name="tab_item_players">Players</string>
+    <string name="tab_item_comments">Comments</string>
+    <string name="tab_layout">Tab Layout</string>
+    <string name="tab_item_about">About</string>
+    <string name="txt_event_details_date">Date</string>
+    <string name="txt_event_details_date_value">%s</string>
+    <string name="txt_event_details_time">Time</string>
+    <string name="txt_event_details_time_value">%s - %s</string>
+    <string name="txt_event_details_name">%s</string>
+    <string name="location_image_description">location image description</string>
+    <string name="txt_event_details_venue">%s</string>
+    <string name="txt_event_details_fab_mark_as_done">Fab Mark as done</string>
+    <string name="txt_event_details_edit_event">Edit Event</string>
 </resources>

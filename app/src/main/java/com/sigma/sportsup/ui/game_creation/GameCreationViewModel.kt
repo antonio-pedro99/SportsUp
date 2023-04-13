@@ -15,7 +15,6 @@ class GameCreationViewModel: ViewModel() {
 
     private val gameRef = FirestoreCollection().games
     private val venuesRef = FirestoreCollection().venues
-    private val usersRef = FirestoreCollection().users
 
     private val _games = MutableLiveData<List<GameModel>?>().apply {
 
@@ -36,19 +35,6 @@ class GameCreationViewModel: ViewModel() {
         }
     }
 
-    private val _currentUser = MutableLiveData<UserModel>().apply {
-        val authUser = Firebase.auth.currentUser
-        usersRef.document(authUser?.uid.toString()).get().addOnSuccessListener { snapshot->
-            val user = snapshot?.toObject(UserModel::class.java)?.apply { id = authUser?.uid }
-            value = user
-
-        }.addOnFailureListener {
-            exception -> {
-            }
-        }
-
-    }
     val games : MutableLiveData<List<GameModel>?> = _games
     val venues : MutableLiveData<List<VenueModel>?> = _venues
-    val currentUser: MutableLiveData<UserModel> = _currentUser
 }

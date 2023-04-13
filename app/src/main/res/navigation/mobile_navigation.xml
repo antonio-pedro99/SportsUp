@@ -33,6 +33,10 @@
             <action
                 android:id="@+id/action_navigation_events_to_navigation_game_create"
                 app:destination="@id/navigation_game_create" />
+            <action
+                android:id="@+id/action_nav_events_to_navigation_event_activity"
+                app:destination="@id/navigation_event_activity" />
+
         </fragment>
         <fragment
             android:id="@+id/navigation_game_create"
@@ -40,4 +44,15 @@
             android:label="New Game"
             tools:layout="@layout/fragment_game_create_fragment" />
     </navigation>
+
+
+    <activity
+        android:id="@+id/navigation_event_activity"
+        android:name="com.sigma.sportsup.EventDetailsActivity"
+        tools:layout="@layout/activity_event_details"
+        >
+        <argument
+            android:name="event_id"
+            app:argType="string" />
+    </activity>
 </navigation>

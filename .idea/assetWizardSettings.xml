@@ -23,7 +23,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="file:$USER_HOME$/Android/Sdk/icons/material/materialicons/access_time_filled/baseline_access_time_filled_24.xml" />
+                                      <entry key="url" value="file:$USER_HOME$/Android/Sdk/icons/material/materialicons/edit_calendar/baseline_edit_calendar_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -33,7 +33,8 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="baseline_access_time_filled_24" />
+                            <entry key="color" value="ffffff" />
+                            <entry key="outputName" value="baseline_edit_calendar_24" />
                           </map>
                         </option>
                       </PersistentState>

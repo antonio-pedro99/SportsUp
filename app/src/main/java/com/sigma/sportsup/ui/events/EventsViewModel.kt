@@ -33,7 +33,8 @@ class EventsViewModel : ViewModel() {
        eventsRef.addSnapshotListener { snapshot, exception ->
            if (exception != null) return@addSnapshotListener
 
-           val items = snapshot?.documents?.mapNotNull { doc -> doc.toObject(GameEvent::class.java) }
+           val items = snapshot?.documents?.mapNotNull { doc -> doc.toObject(GameEvent::class.java)
+               .also { gameEvent -> gameEvent?.id = doc.id } }
            value = items
        }
    }

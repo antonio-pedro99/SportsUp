@@ -1,11 +1,15 @@
 package com.sigma.sportsup.ui.events
 
 import android.content.Context
+import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.sigma.sportsup.EventDetailsActivity
 import com.sigma.sportsup.R
 import com.sigma.sportsup.data.GameEvent
 import org.w3c.dom.Text
@@ -39,5 +43,14 @@ class GameEventItemAdapter(private val context: Context, private val gamesEvents
         holder.timeTextView.text = item.time
         holder.venueTextView.text = item.venue
         holder.nameTextView.text = item.name
+
+        holder.itemView.setOnClickListener {
+            val intent = Intent(context, EventDetailsActivity::class.java)
+            intent.putExtra("eventId", item.id!!)
+            intent.putExtra("eventName", item.name)
+            context.startActivity(intent)
+
+           // it.findNavController().navigate(R.id.action_nav_events_to_navigation_event_activity)
+        }
     }
 }

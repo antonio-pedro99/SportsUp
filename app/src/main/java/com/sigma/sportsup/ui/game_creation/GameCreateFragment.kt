@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -20,6 +21,7 @@ import com.google.android.material.timepicker.TimeFormat
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import com.sigma.sportsup.UserViewModel
 import com.sigma.sportsup.data.UserModel
 import com.sigma.sportsup.databinding.FragmentGameCreateFragmentBinding
 import com.sigma.sportsup.ui.events.EventsViewModel
@@ -34,12 +36,15 @@ class GameCreateFragment : Fragment() {
     private lateinit var mContext: Context
 
     private lateinit var user: UserModel
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val gameCreateViewModel = ViewModelProvider(this).get(GameCreationViewModel::class.java)
+
+         val gameCreateViewModel = ViewModelProvider(this).get(GameCreationViewModel::class.java)
+        val userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
 
         _binding = FragmentGameCreateFragmentBinding.inflate(inflater, container, false)
 
@@ -54,7 +59,7 @@ class GameCreateFragment : Fragment() {
             buildGamesItems(games!!)
         }
 
-        gameCreateViewModel.currentUser.observe(viewLifecycleOwner) { user = it }
+        userViewModel.currentUser.observe(viewLifecycleOwner) { user = it }
         val root: View = _binding!!.root
         return root
     }
@@ -70,13 +75,15 @@ class GameCreateFragment : Fragment() {
         val edtVenue = binding.editVenue
         val edtGame = binding.edtGame
         val edtNumberOfPlayers = binding.edtNumberPlayers
-        val edtDate = binding.edtiDate
+        val edtDate = binding.edtDate
         val edtTime = binding.editTime
-        val edtDurationFormat = binding.editDurationFormat
-        val edtDuration = binding.edtDuration
+        val edtEndTime = binding.edtEndTime
+       // val edtDurationFormat = binding.editDurationFormat
+        //val edtDuration = binding.edtDuration
 
         selectDate()
-        selectTime()
+        selectTime(binding.editTime)
+        selectTime(binding.edtEndTime)
         var audience = "Everyone"
 
         rgAudience.setOnCheckedChangeListener { _, checkedId ->
@@ -86,7 +93,7 @@ class GameCreateFragment : Fragment() {
             }
         }
 
-        buildUnitOfTime()
+      //  buildUnitOfTime()
         showAvailableVenues()
         btnInvite.setOnClickListener {
             val db = Firebase.firestore
@@ -97,12 +104,13 @@ class GameCreateFragment : Fragment() {
                 "host_ref" to user.id,
                 "venue" to edtVenue.text.toString(),
                 "date" to edtDate.text.toString(),
-                "time" to edtTime.text.toString(),
+                "start_time" to edtTime.text.toString(),
+                "end_time" to edtEndTime.text.toString(),
                 "current_players" to 1,
                 "status" to "planed",
                 "number_of_players" to edtNumberOfPlayers.text.toString(),
                 "audience" to audience,
-                "duration" to "${edtDuration.text.toString()} ${edtDurationFormat.text.toString()}"
+               // "duration" to "${edtDuration.text.toString()} ${edtDurationFormat.text.toString()}"
             )
 
             db.collection("games")
@@ -110,6 +118,7 @@ class GameCreateFragment : Fragment() {
                 .collection("items")
                 .add(event)
                 .addOnSuccessListener { doc ->
+
 
                     //add a game snapshot to the venues
                     db.collection("venues").whereEqualTo("name", event["venue"]).get()
@@ -119,9 +128,10 @@ class GameCreateFragment : Fragment() {
                                 val gameSessionVenue = hashMapOf(
                                     "session" to doc.id,
                                     "date" to edtDate.text.toString(),
-                                    "time" to event["time"],
+                                    "start_time" to event["start_time"],
+                                    "end_time" to event["end_time"],
                                     "status" to event["status"],
-                                    "duration" to event["duration"]
+                                   // "duration" to event["duration"]
                                 )
                                 val ref = document.reference.collection("games").document()
                                 ref.set(gameSessionVenue).addOnFailureListener { exception ->
@@ -193,7 +203,7 @@ class GameCreateFragment : Fragment() {
     }
 
     private fun clearForm() {
-        binding.edtiDate.clearComposingText()
+        binding.edtDate.clearComposingText()
         binding.editTime.clearComposingText()
         binding.editVenue.clearListSelection()
         binding.edtGame.clearListSelection()
@@ -202,7 +212,7 @@ class GameCreateFragment : Fragment() {
     }
 
     private fun selectDate(): String {
-        val edtDate = binding.edtiDate
+        val edtDate = binding.edtDate
         edtDate.setOnClickListener {
             val datePicker = MaterialDatePicker.Builder.datePicker().setTitleText("Select Date")
                 .setSelection(System.currentTimeMillis())
@@ -226,9 +236,9 @@ class GameCreateFragment : Fragment() {
         return edtDate.text.toString()
     }
 
-    private fun selectTime(): String {
-        val edtTime = binding.editTime
-        edtTime.setOnClickListener {
+    private fun selectTime(editTime: EditText): String {
+
+        editTime.setOnClickListener {
             val timePicker = MaterialTimePicker.Builder()
                 .setTimeFormat(TimeFormat.CLOCK_24H)
                 .setInputMode(MaterialTimePicker.INPUT_MODE_CLOCK)
@@ -238,13 +248,13 @@ class GameCreateFragment : Fragment() {
 
             timePicker.addOnPositiveButtonClickListener {
                 val selectedTime = "${timePicker.hour}:${timePicker.minute}"
-                edtTime.setText(selectedTime)
+                editTime.setText(selectedTime)
             }
 
             timePicker.show(parentFragmentManager, "time")
         }
 
-        return edtTime.text.toString()
+        return editTime.text.toString()
     }
 
     private fun buildVenuesItem(data: List<String>) {
@@ -254,7 +264,7 @@ class GameCreateFragment : Fragment() {
         selectedGame.setAdapter(adapter)
     }
 
-    private fun buildUnitOfTime() {
+   /* private fun buildUnitOfTime() {
         val unitOfTimeEditText = binding.editDurationFormat
         val adapter = ArrayAdapter<String>(
             mContext, android.R.layout.simple_dropdown_item_1line, listOf<String>(
@@ -262,7 +272,7 @@ class GameCreateFragment : Fragment() {
             )
         )
         unitOfTimeEditText.setAdapter(adapter)
-    }
+    }*/
 
     private fun buildGamesItems(data: List<String>) {
         val selectedGame = binding.edtGame
