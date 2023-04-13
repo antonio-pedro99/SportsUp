@@ -156,7 +156,7 @@
                 app:tabMode="scrollable"
                 app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget">
 
-                <com.google.android.material.tabs.TabItem
+              <!--  <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/tab_item_players"
@@ -172,9 +172,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/tab_item_waiting_room"
-                    />
+                    />-->
 
             </com.google.android.material.tabs.TabLayout>
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/view_pager_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
 
         </LinearLayout>
 

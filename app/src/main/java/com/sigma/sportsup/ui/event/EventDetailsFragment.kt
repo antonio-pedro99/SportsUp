@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.tabs.TabLayoutMediator
 import com.sigma.sportsup.R
 import com.sigma.sportsup.UserViewModel
 import com.sigma.sportsup.data.GameEvent
@@ -22,6 +23,12 @@ class EventDetailsFragment : Fragment() {
 
     private lateinit var eventsViewModel: EventDetailsViewModel
     private lateinit var userViewModel: UserViewModel
+
+    private val pages =  listOf(
+        EventPlayersFragment(),
+        EventCommentsFragment(),
+        EventWaitingRoomFragment()
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,6 +57,7 @@ class EventDetailsFragment : Fragment() {
 
         eventId?.let { eventsViewModel.getEventById(it, eventName!!) }
 
+
         eventsViewModel.eventDetails.observe(viewLifecycleOwner) {
             val resources = activity?.resources
 
@@ -66,8 +74,13 @@ class EventDetailsFragment : Fragment() {
             binding.txtEventDetailsVenue.text =
                 resources?.getString(R.string.txt_event_details_venue, it.venue)
 
-            val badgePlayers = binding.tabLayout.getTabAt(0)?.orCreateBadge
-            badgePlayers?.number = it.current_players!!
+            //add arguments to each Page
+            pages.forEach{page ->
+                val args = Bundle()
+                args.putString("eventId", it.id)
+                args.putString("eventName", it.name)
+                page.arguments = args
+            }
 
             userViewModel.currentUser.observe(viewLifecycleOwner) { user ->
                 eventId?.let {evId-> eventsViewModel.checkRsvp(evId, eventName!!, user) }
@@ -77,18 +90,43 @@ class EventDetailsFragment : Fragment() {
                     binding.fabEdt.visibility = View.VISIBLE
                     binding.fabAction.setImageResource(R.drawable.baseline_done_24)
 
-                    if (it.waiting!! > 0) {
-                        val badgeWaiting = binding.tabLayout.getTabAt(2)?.orCreateBadge
-                        badgeWaiting?.number = it.waiting!!
-                    } else {
-                    }
+                    val adapter = EventDetailsPagerAdapter(requireActivity(), pages.subList(0, 3))
+
+                    binding.viewPagerContent.adapter = adapter
+
+                    TabLayoutMediator(binding.tabLayout, binding.viewPagerContent){tab, position ->
+                        when(position){
+                            0-> {
+                                tab.text = activity?.resources?.getString(R.string.tab_item_players)
+                                tab.orCreateBadge.number = it.current_players!!
+                            }
+                            1-> tab.text = activity?.resources?.getString(R.string.tab_item_comments)
+                            2-> {
+                                tab.text =
+                                    activity?.resources?.getString(R.string.tab_item_waiting_room)
+                                if (it.waiting!! > 0) {
+                                    tab.orCreateBadge.number = it.waiting!!
+                                } else {
+
+                                }
+                            }
+                        }
+                    }.attach()
+
                 } else {
-                    if (binding.tabLayout.getTabAt(2) != null) {
-                        binding.tabLayout.removeTabAt(2)
-                    }
+                    val adapter = EventDetailsPagerAdapter(requireActivity(), pages.subList(0, 2))
+                    binding.viewPagerContent.adapter = adapter
+                    TabLayoutMediator(binding.tabLayout, binding.viewPagerContent){tab, position ->
+                        when(position){
+                            0-> {
+                                tab.text = activity?.resources?.getString(R.string.tab_item_players)
+                                tab.orCreateBadge.number = it.current_players!!
+                            }
+                            1-> tab.text = activity?.resources?.getString(R.string.tab_item_comments)
+                        }
+                    }.attach()
 
                     eventsViewModel.rsvpLiveData.observe(viewLifecycleOwner) { rsvpAlreadySent ->
-                        Log.d("V", rsvpAlreadySent.toString())
                         if (rsvpAlreadySent) {
                             binding.fabAction.setImageResource(R.drawable.baseline_event_available_24)
                             binding.fabAction.setOnClickListener {

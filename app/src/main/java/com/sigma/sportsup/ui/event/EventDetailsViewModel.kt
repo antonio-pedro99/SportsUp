@@ -7,6 +7,7 @@ import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.sigma.sportsup.FirestoreCollection
 import com.sigma.sportsup.data.GameEvent
@@ -18,12 +19,15 @@ class EventDetailsViewModel : ViewModel() {
 
     private val eventDetailsLiveData = MutableLiveData<GameEvent>()
     private val rsvpAlreadySentLiveData = MutableLiveData<Boolean>()
+    private val playersLiveData = MutableLiveData<List<UserModel>>()
+
+
     fun getEventById(documentId: String, eventName: String) {
         eventDetailsLiveData.apply {
             val query = getQuery(documentId, eventName)
             query.addSnapshotListener { q, _ ->
                 for (doc in q?.documents!!) {
-                    value = doc.toObject(GameEvent::class.java)
+                    value = doc.toObject(GameEvent::class.java).also {it?.id = doc.id }
                 }
             }
         }
@@ -43,6 +47,23 @@ class EventDetailsViewModel : ViewModel() {
                value = false
            }
        }
+    }
+
+    fun getGamePlayers(documentId: String, eventName: String){
+        playersLiveData.apply {
+            val query = getQuery(documentId, eventName)
+            query.get().addOnSuccessListener {
+
+                for (doc in it){
+                    doc.reference.collection("players").addSnapshotListener { snapshot, _ ->
+                        value = snapshot?.documents?.mapNotNull { document-> document.toObject(UserModel::class.java) }
+                        Log.d("T", snapshot?.documents.toString())
+                    }
+                }
+            }.addOnFailureListener {
+                Log.d("F1", it.message.toString())
+            }
+        }
     }
 
     fun cancelRsvp(documentId: String, eventName: String, user: UserModel){
@@ -80,7 +101,7 @@ class EventDetailsViewModel : ViewModel() {
 
     val eventDetails = eventDetailsLiveData
     val rsvpLiveData = rsvpAlreadySentLiveData
-
+    val gamePlayersLiveData = playersLiveData
 
     private fun getQuery(documentId:String, eventName:String): Query {
         return  eventsRef.document(eventName.lowercase()).collection("items")
