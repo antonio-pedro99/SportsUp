@@ -20,6 +20,7 @@ class EventDetailsViewModel : ViewModel() {
 
     private val eventDetailsLiveData = MutableLiveData<GameEvent>()
     private val rsvpAlreadySentLiveData = MutableLiveData<Boolean>()
+    private val playerCnofirmedLiveData = MutableLiveData<Boolean>()
     private val playersLiveData = MutableLiveData<List<UserModel>>()
     private val _gameWaitingListLiveData = MutableLiveData<List<WaiterUserModel>>()
 
@@ -41,6 +42,24 @@ class EventDetailsViewModel : ViewModel() {
             query.get().addOnSuccessListener { snapshot ->
                 for (doc in snapshot) {
                     doc.reference.collection("waiting_room").whereEqualTo(
+                        "id",
+                        user.id
+                    ).get().addOnSuccessListener { querySnapshot ->
+                        value = !querySnapshot.isEmpty || querySnapshot == null
+                    }
+                }
+            }.addOnFailureListener {
+                value = false
+            }
+        }
+    }
+
+    fun checkParticipation(documentId: String, eventName: String, user: UserModel) {
+        playerCnofirmedLiveData.apply {
+            val query = getQuery(documentId, eventName)
+            query.get().addOnSuccessListener { snapshot ->
+                for (doc in snapshot) {
+                    doc.reference.collection("players").whereEqualTo(
                         "id",
                         user.id
                     ).get().addOnSuccessListener { querySnapshot ->

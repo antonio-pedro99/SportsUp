@@ -56,7 +56,7 @@ class EventDetailsFragment : Fragment() {
         }
 
         eventId?.let { eventsViewModel.getEventById(it, eventName!!) }
-
+        eventId?.let { eventsViewModel.getGamePlayers(it, eventName!!) }
 
         eventsViewModel.eventDetails.observe(viewLifecycleOwner) {
             val resources = activity?.resources
@@ -143,14 +143,29 @@ class EventDetailsFragment : Fragment() {
                             }
 
                         } else {
-                            binding.fabAction.setImageResource(R.drawable.baseline_event_24)
-                            binding.fabAction.setOnClickListener {
-                                eventsViewModel.rsvp(eventId!!, eventName!!, user)
-                                MaterialAlertDialogBuilder(requireContext())
-                                    .setTitle("All Done")
-                                    .setMessage("Your RSVP has been sent the the event host\nYou are now in the waiting room")
-                                    .setPositiveButton("Sounds Good!") { _, _ -> }
-                                    .show()
+
+                            eventsViewModel.gamePlayersLiveData.observe(viewLifecycleOwner){
+                                currentPlayers->
+                                if (!currentPlayers.any{player-> player.id == user.id}){
+                                    binding.fabAction.setImageResource(R.drawable.baseline_event_24)
+                                    binding.fabAction.setOnClickListener {
+                                        eventsViewModel.rsvp(eventId!!, eventName!!, user)
+                                        MaterialAlertDialogBuilder(requireContext())
+                                            .setTitle("All Done")
+                                            .setMessage("Your RSVP has been sent the the event host\nYou are now in the waiting room")
+                                            .setPositiveButton("Sounds Good!") { _, _ -> }
+                                            .show()
+                                    }
+                                } else {
+                                    binding.fabAction.setImageResource(R.drawable.baseline_event_available_24)
+                                    binding.fabAction.setOnClickListener {
+                                        MaterialAlertDialogBuilder(requireContext())
+                                            .setTitle("Confirmation")
+                                            .setMessage("You are part of the game")
+                                            .setPositiveButton("Sounds Good!") { _, _ -> }
+                                            .show()
+                                    }
+                                }
                             }
                         }
                     }
