@@ -23,7 +23,7 @@ import com.sigma.sportsup.data.GameModel
 import com.sigma.sportsup.databinding.FragmentEventsBinding
 import com.sigma.sportsup.ui.game_creation.GameCreateFragment
 
-class EventFragment : Fragment(), OnItemSelectedListener {
+class EventFragment : Fragment() {
 
     private var _binding: FragmentEventsBinding? = null
 
@@ -42,31 +42,44 @@ class EventFragment : Fragment(), OnItemSelectedListener {
             ViewModelProvider(this).get(EventsViewModel::class.java)
         setHasOptionsMenu(true)
 
+        val gameNames = mutableListOf<String>("All")
         _binding = FragmentEventsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         eventsViewModel.games.observe(viewLifecycleOwner) { it ->
-            val gamesNames = it?.map { it.name }
-            buildGamesItem(gamesNames!!)
+            gameNames.addAll(1, it?.map { it.name } as MutableList<String>)
+            buildGamesItem(gameNames!!)
+
         }
 
         eventsViewModel.events.observe(viewLifecycleOwner) {it->
 
             buildEventsList(it)
+            binding.edtiTextGame.setOnItemClickListener { _, _, position, _ ->
+                if (position == 0){
+                    buildEventsList(it)
+                } else {
+                    buildEventsList(it.filter { event-> event.name == gameNames[position] })
+                    it.forEach {
+                        Log.d("IT", it.name!!)
+                    }
+                }
+            }
+
         }
 
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
-        binding.edtiTextGame.onItemSelectedListener
         return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var btnCreateNewEvent = binding.btnCreateEvent
+        val btnCreateNewEvent = binding.btnCreateEvent
 
         btnCreateNewEvent.setOnClickListener {
             findNavController(this).navigate(R.id.action_navigation_events_to_navigation_game_create)
         }
+
     }
 
     override fun onDestroyView() {
@@ -102,20 +115,5 @@ class EventFragment : Fragment(), OnItemSelectedListener {
             }
             else-> super.onOptionsItemSelected(item)
         }
-    }
-
-    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        val eventsViewModel =
-            ViewModelProvider(this).get(EventsViewModel::class.java)
-
-        eventsViewModel.getEvents(gameEvents[position].name!!.lowercase())
-
-        eventsViewModel.events.observe(viewLifecycleOwner) {it->
-            buildEventsList(it)
-        }
-    }
-
-    override fun onNothingSelected(parent: AdapterView<*>?) {
-
     }
 }
