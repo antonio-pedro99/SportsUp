@@ -27,7 +27,7 @@ class EventDetailsFragment : Fragment() {
     private val pages =  listOf(
         EventPlayersFragment(),
         EventCommentsFragment(),
-        EventWaitingRoomFragment()
+        //EventWaitingRoomFragment()
     )
 
     override fun onCreateView(
@@ -82,6 +82,29 @@ class EventDetailsFragment : Fragment() {
                 page.arguments = args
             }
 
+            val adapter = EventDetailsPagerAdapter(requireActivity(), pages.subList(0, 2))
+
+            binding.viewPagerContent.adapter = adapter
+
+            TabLayoutMediator(binding.tabLayout, binding.viewPagerContent){tab, position ->
+                when(position){
+                    0-> {
+                        tab.text = activity?.resources?.getString(R.string.tab_item_players)
+                        tab.orCreateBadge.number = it.current_players!!
+                    }
+                    1-> tab.text = activity?.resources?.getString(R.string.tab_item_comments)
+                    /* 2-> {
+                         tab.text =
+                             activity?.resources?.getString(R.string.tab_item_waiting_room)
+
+                         it?.waiting.let {count->
+                             tab.orCreateBadge.number = count!!
+                             tab.orCreateBadge.isVisible = count > 0
+                         }
+                     }*/
+                }
+            }.attach()
+
             userViewModel.currentUser.observe(viewLifecycleOwner) { user ->
                 eventId?.let {evId-> eventsViewModel.checkRsvp(evId, eventName!!, user) }
 
@@ -89,83 +112,31 @@ class EventDetailsFragment : Fragment() {
                     Log.d("Fab", user.id!!)
                     binding.fabEdt.visibility = View.VISIBLE
                     binding.fabAction.setImageResource(R.drawable.baseline_done_24)
-
-                    val adapter = EventDetailsPagerAdapter(requireActivity(), pages.subList(0, 3))
-
-                    binding.viewPagerContent.adapter = adapter
-
-                    TabLayoutMediator(binding.tabLayout, binding.viewPagerContent){tab, position ->
-                        when(position){
-                            0-> {
-                                tab.text = activity?.resources?.getString(R.string.tab_item_players)
-                                tab.orCreateBadge.number = it.current_players!!
-                            }
-                            1-> tab.text = activity?.resources?.getString(R.string.tab_item_comments)
-                            2-> {
-                                tab.text =
-                                    activity?.resources?.getString(R.string.tab_item_waiting_room)
-
-                                it?.waiting.let {count->
-                                    tab.orCreateBadge.number = count!!
-                                    tab.orCreateBadge.isVisible = count > 0
-                                }
-
-
-                            }
-                        }
-                    }.attach()
-
                 } else {
-                    val adapter = EventDetailsPagerAdapter(requireActivity(), pages.subList(0, 2))
-                    binding.viewPagerContent.adapter = adapter
-                    TabLayoutMediator(binding.tabLayout, binding.viewPagerContent){tab, position ->
-                        when(position){
-                            0-> {
-                                tab.text = activity?.resources?.getString(R.string.tab_item_players)
-                                tab.orCreateBadge.number = it.current_players!!
-                            }
-                            1-> tab.text = activity?.resources?.getString(R.string.tab_item_comments)
-                        }
-                    }.attach()
 
-                    eventsViewModel.rsvpLiveData.observe(viewLifecycleOwner) { rsvpAlreadySent ->
-                        if (rsvpAlreadySent) {
-                            binding.fabAction.setImageResource(R.drawable.baseline_event_available_24)
+                    eventsViewModel.gamePlayersLiveData.observe(viewLifecycleOwner) { players ->
+                        if (players.any { playerUser -> playerUser.id == user.id }) {
+                            binding.fabAction.setImageResource(R.drawable.baseline_free_cancellation_24)
                             binding.fabAction.setOnClickListener {
                                 MaterialAlertDialogBuilder(requireContext())
                                     .setTitle("Confirmation")
-                                    .setMessage("You have already Sent RSVP, would you like to cancel it?")
+                                    .setMessage("You already part of the Game! Would you like to leave?")
                                     .setNegativeButton("Yes") { _, _ ->
-                                        eventsViewModel.cancelRsvp(eventId!!, eventName!!, user)
+                                       eventsViewModel.leaveEvent(eventId!!, eventName!!, user)
                                     }
                                     .setPositiveButton("No") { _, _ -> }
                                     .show()
                             }
 
                         } else {
-
-                            eventsViewModel.gamePlayersLiveData.observe(viewLifecycleOwner){
-                                currentPlayers->
-                                if (!currentPlayers.any{player-> player.id == user.id}){
-                                    binding.fabAction.setImageResource(R.drawable.baseline_event_24)
-                                    binding.fabAction.setOnClickListener {
-                                        eventsViewModel.rsvp(eventId!!, eventName!!, user)
-                                        MaterialAlertDialogBuilder(requireContext())
-                                            .setTitle("All Done")
-                                            .setMessage("Your RSVP has been sent the the event host\nYou are now in the waiting room")
-                                            .setPositiveButton("Sounds Good!") { _, _ -> }
-                                            .show()
-                                    }
-                                } else {
-                                    binding.fabAction.setImageResource(R.drawable.baseline_event_available_24)
-                                    binding.fabAction.setOnClickListener {
-                                        MaterialAlertDialogBuilder(requireContext())
-                                            .setTitle("Confirmation")
-                                            .setMessage("You are part of the game")
-                                            .setPositiveButton("Sounds Good!") { _, _ -> }
-                                            .show()
-                                    }
-                                }
+                            binding.fabAction.setImageResource(R.drawable.baseline_event_24)
+                            binding.fabAction.setOnClickListener {
+                                eventsViewModel.joinEvent(eventId!!, eventName!!, user)
+                                MaterialAlertDialogBuilder(requireContext())
+                                    .setTitle("Congratulations")
+                                    .setMessage("You are no part of the game")
+                                    .setPositiveButton("Sounds Good!") { _, _ -> }
+                                    .show()
                             }
                         }
                     }

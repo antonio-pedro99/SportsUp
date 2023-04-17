@@ -20,7 +20,7 @@ class EventDetailsViewModel : ViewModel() {
 
     private val eventDetailsLiveData = MutableLiveData<GameEvent>()
     private val rsvpAlreadySentLiveData = MutableLiveData<Boolean>()
-    private val playerCnofirmedLiveData = MutableLiveData<Boolean>()
+    private val playerConfirmedLiveData = MutableLiveData<Boolean>()
     private val playersLiveData = MutableLiveData<List<UserModel>>()
     private val _gameWaitingListLiveData = MutableLiveData<List<WaiterUserModel>>()
 
@@ -55,7 +55,7 @@ class EventDetailsViewModel : ViewModel() {
     }
 
     fun checkParticipation(documentId: String, eventName: String, user: UserModel) {
-        playerCnofirmedLiveData.apply {
+        playerConfirmedLiveData.apply {
             val query = getQuery(documentId, eventName)
             query.get().addOnSuccessListener { snapshot ->
                 for (doc in snapshot) {
@@ -127,6 +127,39 @@ class EventDetailsViewModel : ViewModel() {
                }
            }
        }
+    }
+
+
+    fun joinEvent(documentId:String, eventName:String, user:UserModel){
+        playersLiveData.apply {
+            val query = getQuery(documentId, eventName)
+            query.get().addOnSuccessListener {
+                for (event in it){
+                    val currentPlayers = if (event.data["current_players"] == null) 1 else event.data["current_players"].toString()
+                        .toInt() + 1
+                    event.reference.update("current_players", currentPlayers)
+
+                    event.reference.collection("players").add(user).addOnFailureListener { ex->
+                        Log.d("E", ex.message.toString())
+                    }
+                }
+            }
+        }
+    }
+
+    fun leaveEvent(documentId: String, eventName: String, user: UserModel){
+        val query = getQuery(documentId, eventName)
+        query.get().addOnSuccessListener {
+            for (event in it){
+                val currentPlayers = if (event.data["current_players"] == null) 1 else event.data["current_players"].toString()
+                    .toInt() - 1
+                event.reference.update("current_players", currentPlayers)
+                event.reference.collection("players").whereEqualTo("id", user.id).get().addOnSuccessListener {
+                    playerQuerySnapshot->
+                    playerQuerySnapshot.documents.forEach {d-> d.reference.delete() }
+                }
+            }
+        }
     }
 
     fun rsvp(documentId: String, eventName: String, user: UserModel) {
