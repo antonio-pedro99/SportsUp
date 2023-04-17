@@ -48,7 +48,7 @@ class EventFragment : Fragment() {
 
         eventsViewModel.games.observe(viewLifecycleOwner) { it ->
             gameNames.addAll(1, it?.map { it.name } as MutableList<String>)
-            buildGamesItem(gameNames!!)
+            buildGamesItem(gameNames)
 
         }
 

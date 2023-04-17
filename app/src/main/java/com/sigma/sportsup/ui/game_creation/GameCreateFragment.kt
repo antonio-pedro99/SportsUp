@@ -1,6 +1,5 @@
 package com.sigma.sportsup.ui.game_creation
 
-import android.R
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -9,11 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -21,11 +18,10 @@ import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.ktx.storage
 import com.sigma.sportsup.UserViewModel
+import com.sigma.sportsup.data.GameEvent
 import com.sigma.sportsup.data.UserModel
 import com.sigma.sportsup.databinding.FragmentGameCreateFragmentBinding
-import com.sigma.sportsup.ui.events.EventsViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -100,75 +96,27 @@ class GameCreateFragment : Fragment() {
         //  buildUnitOfTime()
         showAvailableVenues()
         btnInvite.setOnClickListener {
-            val db = Firebase.firestore
 
-            val event = hashMapOf(
-                "name" to edtGame.text.toString(),
-                "host" to user.name,
-                "host_ref" to user.id,
-                "venue" to edtVenue.text.toString(),
-                "date" to edtDate.text.toString(),
-                "start_time" to edtTime.text.toString(),
-                "end_time" to edtEndTime.text.toString(),
-                "current_players" to 1,
-                "status" to "planed",
-                "number_of_players" to edtNumberOfPlayers.text.toString().toInt(),
-                "audience" to audience,
-                "waiting" to 0,
-                // "duration" to "${edtDuration.text.toString()} ${edtDurationFormat.text.toString()}"
-            )
 
-            db.collection("games")
-                .document(edtGame.text.toString().lowercase())
-                .collection("items")
-                .add(event)
-                .addOnSuccessListener { doc ->
+            val eventsViewModel = ViewModelProvider(this).get(GameCreationViewModel::class.java)
 
-                    //add a game snapshot to the venues
-                    db.collection("venues").whereEqualTo("name", event["venue"]).get()
-                        .addOnSuccessListener {
-                            // Toast.makeText(requireContext(), it.documents.toString(), Toast.LENGTH_LONG).show()
-                            for (document in it) {
-                                val gameSessionVenue = hashMapOf(
-                                    "session" to doc.id,
-                                    "date" to edtDate.text.toString(),
-                                    "start_time" to event["start_time"],
-                                    "end_time" to event["end_time"],
-                                    "status" to event["status"],
-                                    // "duration" to event["duration"]
-                                )
-                                val ref = document.reference.collection("games").document()
-                                ref.set(gameSessionVenue).addOnFailureListener { exception ->
-                                    Toast.makeText(
-                                        requireContext(),
-                                        exception.message,
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                                    .addOnSuccessListener {
-                                        print("Done")
-                                    }
-                            }
-                        }
-
-                    //add players to game, the first player will always be the host
-                    doc.collection("players").add(
-                        hashMapOf(
-                            "name" to user.name,
-                            "id" to user.id
-                        )
-                    )
-                        .addOnFailureListener {
-                            Toast.makeText(requireContext(), it.toString(), Toast.LENGTH_LONG)
-                                .show()
-                        }
-                    clearForm()
-                    showEventCreatedDialog()
-                }
-                .addOnFailureListener { exception ->
-                    Toast.makeText(mContext, "Failed with ${exception.message}", Toast.LENGTH_LONG)
-                        .show()
-                }
+            val eventName = if (!edtGame.text.toString().contains("")) edtGame.text.toString()
+            else edtGame.text.replace(Regex("\\s"), "_").lowercase()
+            val event = GameEvent()
+            event.name = eventName
+            event.host = user.name
+            event.host_ref = user.id
+            event.venue = edtVenue.text.toString()
+            event.date = edtDate.text.toString()
+            event.start_time = edtTime.text.toString()
+            event.end_time = edtEndTime.text.toString()
+            event.number_of_players = edtNumberOfPlayers.text.toString().toInt()
+            event.audience = audience
+            event.current_players = 1
+            eventsViewModel.createEvent(requireContext(), user = user, event = event, onDone = {
+                clearForm()
+                showEventCreatedDialog()
+            })
         }
 
         btnCancel.setOnClickListener {
