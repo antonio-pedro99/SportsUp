@@ -1,16 +1,23 @@
 package com.sigma.sportsup.ui.game_creation
 
 import android.content.Context
+import android.os.Build
+import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.type.DateTime
 import com.sigma.sportsup.FirestoreCollection
 import com.sigma.sportsup.data.GameEvent
 import com.sigma.sportsup.data.GameModel
 import com.sigma.sportsup.data.UserModel
+import com.sigma.sportsup.data.VenueEvent
 import com.sigma.sportsup.data.VenueModel
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 
 class GameCreationViewModel : ViewModel() {
 
@@ -30,6 +37,28 @@ class GameCreationViewModel : ViewModel() {
         }
     }
 
+    private val venueAvailabilityMutableLiveData = MutableLiveData<Boolean>()
+
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun checkVenueAvailability(event: GameEvent){
+        val db = Firebase.firestore
+        venueAvailabilityMutableLiveData.apply {
+            db.collection("venues").whereEqualTo("name", event.venue).get().addOnSuccessListener {
+                for (document in it){
+                    document.reference.collection("games").get().addOnSuccessListener {eventGameSnapshots->
+                        value = !eventGameSnapshots.documents.any { eventSnapshot->
+                            val venueEvent = eventSnapshot.toObject(VenueEvent::class.java)
+                            Log.d("G", venueEvent.toString())
+
+                            venueIsBusy(event, venueEvent!!)
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     fun createEvent(context: Context, event: GameEvent, user: UserModel, onDone: ()->Any) {
         val db = Firebase.firestore
@@ -95,6 +124,21 @@ class GameCreationViewModel : ViewModel() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun venueIsBusy(createGame: GameEvent, gameDB:VenueEvent):Boolean{
+
+        return createGame.date == gameDB.date && getTimeLong(gameDB.start_time!!) >= getTimeLong(createGame.start_time!!) && getTimeLong(createGame.start_time!!) <= getTimeLong(gameDB.end_time!!)
+    }
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun getTimeLong(time:String):Long {
+        val formatter = DateTimeFormatter.ofPattern("HH:mm")
+        return LocalTime.parse(formatStringTime(time), formatter).toNanoOfDay()/1_000_000
+    }
+    private fun formatStringTime(time: String):String {
+        return time.split(":").joinToString(":") { it.padStart(2, '0') }
+    }
+
     val games: MutableLiveData<List<GameModel>?> = _games
     val venues: MutableLiveData<List<VenueModel>?> = _venues
+    val venueAvailability:MutableLiveData<Boolean> = venueAvailabilityMutableLiveData
 }

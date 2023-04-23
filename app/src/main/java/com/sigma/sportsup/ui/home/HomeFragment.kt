@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -16,8 +17,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sigma.sportsup.R
+import com.sigma.sportsup.UserViewModel
 import com.sigma.sportsup.databinding.FragmentHomeBinding
 import com.sigma.sportsup.ui.chat.ChatBox
+import com.sigma.sportsup.ui.events.EventsViewModel
 
 
 class HomeFragment : Fragment() {
@@ -37,6 +40,8 @@ class HomeFragment : Fragment() {
         setHasOptionsMenu(true)
         val homeViewModel =
             ViewModelProvider(this).get(HomeViewModel::class.java)
+        val eventsViewModel = ViewModelProvider(this).get(EventsViewModel::class.java)
+        val userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -48,14 +53,18 @@ class HomeFragment : Fragment() {
         gameRecycler.setHasFixedSize(true)
 
         homeViewModel.games.observe(viewLifecycleOwner) {
-            gameRecycler.adapter  = GamesItemAdapter(context = requireContext(), it!!)
-            gameRecycler.layoutManager = GridLayoutManager(requireContext(), 2, GridLayoutManager.HORIZONTAL, false)
+            gameRecycler.adapter = GamesItemAdapter(context = requireContext(), it!!)
+            gameRecycler.layoutManager =
+                GridLayoutManager(requireContext(), 2, GridLayoutManager.HORIZONTAL, false)
         }
 
-        homeViewModel.sessions.observe(viewLifecycleOwner){
-            if (it.isNotEmpty()){
-                sessionRecycler.adapter = SessionsItemAdapter(requireContext(), it)
-                sessionRecycler.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        homeViewModel.sessions.observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
+                sessionRecycler.adapter = SessionsItemAdapter(requireContext(), it, { index ->
+                    Toast.makeText(requireContext(), it[index].toString(), Toast.LENGTH_LONG).show()
+                }, {})
+                sessionRecycler.layoutManager =
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
                 binding.txtNoOngoingEvent.visibility = View.INVISIBLE
             } else {
                 binding.txtNoOngoingEvent.visibility = View.VISIBLE
@@ -81,12 +90,13 @@ class HomeFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId){
-            R.id.chat_menu ->{
+        return when (item.itemId) {
+            R.id.chat_menu -> {
                 val myIntent = Intent(this@HomeFragment.context, ChatBox::class.java)
                 this@HomeFragment.startActivity(myIntent)
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }

@@ -1,6 +1,7 @@
 package com.sigma.sportsup.ui.game_creation
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.EditText
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -65,9 +68,10 @@ class GameCreateFragment : Fragment() {
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        val eventsViewModel = ViewModelProvider(this).get(GameCreationViewModel::class.java)
         val btnInvite = binding.btnCreateEvent
 
         val rgAudience = binding.audienceGroup
@@ -93,12 +97,11 @@ class GameCreateFragment : Fragment() {
             }
         }
 
-        //  buildUnitOfTime()
-        showAvailableVenues()
+        eventsViewModel.venueAvailability.observe(viewLifecycleOwner){
+            Toast.makeText(requireContext(), "$it", Toast.LENGTH_LONG).show()
+        }
+
         btnInvite.setOnClickListener {
-
-
-            val eventsViewModel = ViewModelProvider(this).get(GameCreationViewModel::class.java)
 
             val eventName = if (!edtGame.text.toString().contains("")) edtGame.text.toString()
             else edtGame.text.replace(Regex("\\s"), "_").lowercase()
@@ -113,6 +116,10 @@ class GameCreateFragment : Fragment() {
             event.number_of_players = edtNumberOfPlayers.text.toString().toInt()
             event.audience = audience
             event.current_players = 1
+
+            //eventsViewModel.checkVenueAvailability(event)
+
+
             eventsViewModel.createEvent(requireContext(), user = user, event = event, onDone = {
                 clearForm()
                 showEventCreatedDialog()
@@ -124,26 +131,6 @@ class GameCreateFragment : Fragment() {
         }
     }
 
-
-    private fun showAvailableVenues() {
-        val db = Firebase.firestore
-
-        val date = Date(System.currentTimeMillis())
-        db.collectionGroup("venues").whereEqualTo(
-            "date", SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                .format(date)
-        ).get().addOnSuccessListener { query ->
-            if (!query.isEmpty) {
-                val doc = query.documents[0]
-                val path = doc.reference.path
-
-                Log.d("LOG", path)
-
-            } else {
-                Log.d("LOG", "Venue is free")
-            }
-        }
-    }
 
     private fun showEventCreatedDialog() {
         MaterialAlertDialogBuilder(mContext)

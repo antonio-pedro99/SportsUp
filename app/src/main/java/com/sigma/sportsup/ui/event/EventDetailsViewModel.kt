@@ -135,12 +135,14 @@ class EventDetailsViewModel : ViewModel() {
             val query = getQuery(documentId, eventName)
             query.get().addOnSuccessListener {
                 for (event in it){
-                    val currentPlayers = if (event.data["current_players"] == null) 1 else event.data["current_players"].toString()
-                        .toInt() + 1
-                    event.reference.update("current_players", currentPlayers)
+                    if (event.data["current_players"] != event.data["number_of_players"]){
+                        val currentPlayers = if (event.data["current_players"] == null) 1 else event.data["current_players"].toString()
+                            .toInt() + 1
+                        event.reference.update("current_players", currentPlayers)
 
-                    event.reference.collection("players").add(user).addOnFailureListener { ex->
-                        Log.d("E", ex.message.toString())
+                        event.reference.collection("players").add(user).addOnFailureListener { ex->
+                            Log.d("E", ex.message.toString())
+                        }
                     }
                 }
             }

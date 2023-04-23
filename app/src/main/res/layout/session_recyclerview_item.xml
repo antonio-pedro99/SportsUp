@@ -112,19 +112,21 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:orientation="horizontal">
+
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_joing_session"
+                style="?attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:text="Join"
-                style="?attr/borderlessButtonStyle"
-                />
+                android:text="Join" />
+
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_save_session"
+                style="?attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Save"
-                style="?attr/borderlessButtonStyle"
-                />
+                android:text="Save" />
         </LinearLayout>
 
     </LinearLayout>
