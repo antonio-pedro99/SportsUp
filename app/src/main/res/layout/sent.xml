@@ -16,10 +16,10 @@
             android:id="@+id/txt_sent_msg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="10dp"
             android:text="This is sent message"
-            android:textSize="18sp"
             android:textColor="@color/white"
-            android:padding="10dp"/>
+            android:textSize="18sp" />
 
 
     </RelativeLayout>

@@ -13,4 +13,7 @@
     <color name="logo_mehroon">#b43d43</color>
     <color name="back_main">#030829</color>
     <color name="grey">#f6f7f9</color>
+    <color name="chat_back">#EDEBC9</color>
+    <color name="light_green">#52B137</color>
+    <color name="red">#FF0000</color>
 </resources>
