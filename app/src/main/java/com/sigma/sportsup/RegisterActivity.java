@@ -1,6 +1,7 @@
 package com.sigma.sportsup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -24,6 +25,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     private EditText name, age, number, fav_sports;
     private FirebaseAuth mAuth;
+
+    private ActionBar actionBar;
     private String photoUrl;
     private Button continue_button;
 
@@ -31,6 +34,14 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        // Get a reference to the action bar
+        actionBar = getSupportActionBar();
+
+        // Hide the action bar
+        if (actionBar != null) {
+            actionBar.hide();
+        }
 
         Intent intent = getIntent();
         //if intent contains photoUrl, then user is registering with google

@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.auth.api.Auth;
@@ -46,6 +47,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private GoogleSignInClient gsc;
     private SignInButton mGoogleSignInButton;
 
+    private ActionBar actionBar;
+
     private FirebaseAuth mAuth;
 
     private EditText email;
@@ -57,6 +60,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        // Get a reference to the action bar
+        actionBar = getSupportActionBar();
+
+        // Hide the action bar
+        if (actionBar != null) {
+            actionBar.hide();
+        }
 
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
