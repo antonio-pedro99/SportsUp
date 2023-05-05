@@ -128,7 +128,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                     finish();
                                 }
                             } else {
-                                Toast.makeText(LoginActivity.this, "get failed with ", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(LoginActivity.this, "get failed with ", Toast.LENGTH_SHORT).show();
+                                //show toast of error
+                                Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -195,7 +197,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private void addUserToDatabase(String email, String uid){
         System.out.println("hello ji");
         databaseRef = FirebaseDatabase.getInstance().getReference();
-        String short_name = email.substring(3);
+        //String short_name = email.substring(3);
         databaseRef.child("user").child(uid).setValue(new User(email,uid));
         System.out.println("added user");
     }
