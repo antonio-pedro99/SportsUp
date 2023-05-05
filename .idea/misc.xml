@@ -5,6 +5,8 @@
       <map>
         <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/drawable/btn_background.xml" value="0.1205" />
         <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/drawable/msg_box_back.xml" value="0.1" />
+        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/drawable/receive_btn_background.xml" value="0.116" />
+        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/drawable/venue_background.xml" value="0.116" />
         <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/activity_chat.xml" value="0.1" />
         <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/activity_chatbox.xml" value="0.12107396149949341" />
         <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/activity_login.xml" value="0.10989583333333333" />
@@ -17,7 +19,8 @@
         <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/fragment_profile.xml" value="0.10989583333333333" />
         <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/fragment_search.xml" value="0.10989583333333333" />
         <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/game_recyclerview_item.xml" value="0.264" />
-        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/recieve.xml" value="0.1" />
+        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/recieve.xml" value="0.536" />
+        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/sent.xml" value="0.25" />
         <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/session_recyclerview_item.xml" value="0.264" />
         <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/user_layout.xml" value="0.20512820512820512" />
       </map>

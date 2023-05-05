@@ -35,6 +35,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.sigma.sportsup.ui.chat.User;
 
 import java.util.List;
@@ -197,8 +198,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private void addUserToDatabase(String email, String uid){
         System.out.println("hello ji");
         databaseRef = FirebaseDatabase.getInstance().getReference();
-        //String short_name = email.substring(3);
-        databaseRef.child("user").child(uid).setValue(new User(email,uid));
+        String deviceToken = FirebaseMessaging.getInstance().getToken().toString();
+        String short_name = email.substring(3);
+        databaseRef.child("user").child(uid).setValue(new User(email,uid, deviceToken));
         System.out.println("added user");
     }
 
