@@ -17,6 +17,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 import com.sigma.sportsup.R
 import com.sigma.sportsup.data.GameEvent
 import com.sigma.sportsup.data.GameModel
@@ -111,6 +112,12 @@ class EventFragment : Fragment() {
 
             R.id.menu_my_events -> {
                  findNavController().navigate(R.id.action_nav_events_to_navigation_event_my_event)
+                true
+            }
+            R.id.menu_invited_saved -> {
+                FirebaseMessaging.getInstance().token.addOnSuccessListener { token ->
+                    Log.d("TOKEN", token)
+                }
                 true
             }
             else-> super.onOptionsItemSelected(item)

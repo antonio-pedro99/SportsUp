@@ -4,20 +4,64 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.event.EventCommentsFragment">
+    tools:context=".ui.event.EventCommentsFragment"
+    >
 
-    <TextView
-        android:id="@+id/text_dashboard"
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/comment_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:text="Fragment Comments"
-        android:textSize="20sp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/new_comment_text_input_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="250dp"
+        android:layout_height="56dp"
+        android:hint="Type your comment here"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.099"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/comment_recycler_view"
+        app:layout_constraintVertical_bias="0.965">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/new_comment_text_input_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_send_comment"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:text="Send"
+        android:textSize="10sp"
+        app:layout_constraintBottom_toBottomOf="@+id/new_comment_text_input_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.55"
+        app:layout_constraintStart_toEndOf="@+id/new_comment_text_input_layout"
+        app:layout_constraintTop_toTopOf="@+id/new_comment_text_input_layout" />
+
+    <TextView
+        android:id="@+id/txt_no_comments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="No Comments yet"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/new_comment_text_input_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

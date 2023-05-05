@@ -10,6 +10,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import com.sigma.sportsup.FirestoreCollection
+import com.sigma.sportsup.data.Comment
 import com.sigma.sportsup.data.GameEvent
 import com.sigma.sportsup.data.UserModel
 import com.sigma.sportsup.data.WaiterUserModel
@@ -23,7 +24,7 @@ class EventDetailsViewModel : ViewModel() {
     private val playerConfirmedLiveData = MutableLiveData<Boolean>()
     private val playersLiveData = MutableLiveData<List<UserModel>>()
     private val _gameWaitingListLiveData = MutableLiveData<List<WaiterUserModel>>()
-
+    private val gameEventCommentsLiveData = MutableLiveData<List<Comment>>()
 
     fun getEventById(documentId: String, eventName: String) {
         eventDetailsLiveData.apply {
@@ -51,6 +52,36 @@ class EventDetailsViewModel : ViewModel() {
             }.addOnFailureListener {
                 value = false
             }
+        }
+    }
+
+
+    fun getEventComments(documentId: String, eventName: String) {
+        gameEventCommentsLiveData.apply {
+            val query = getQuery(documentId, eventName)
+            query.get().addOnSuccessListener { snapshot ->
+                for (doc in snapshot) {
+                    doc.reference.collection("comments").orderBy("date").addSnapshotListener { querySnapshot, _ ->
+                        value = querySnapshot?.documents?.mapNotNull { document ->
+                            Log.d("CC", document.toString())
+                            document.toObject(Comment::class.java)
+                        }
+                    }
+                }
+            }.addOnFailureListener {
+                Log.d("F1", it.message.toString())
+            }
+        }
+    }
+
+    fun addComment(documentId: String, eventName: String, comment: Comment) {
+        val query = getQuery(documentId, eventName)
+        query.get().addOnSuccessListener { snapshot ->
+            for (doc in snapshot) {
+                doc.reference.collection("comments").add(comment)
+            }
+        }.addOnFailureListener {
+            Log.d("F1", it.message.toString())
         }
     }
 
@@ -233,6 +264,7 @@ class EventDetailsViewModel : ViewModel() {
     val rsvpLiveData = rsvpAlreadySentLiveData
     val gamePlayersLiveData = playersLiveData
     val gameWaitingListLiveData = _gameWaitingListLiveData
+    val gameCommentsLiveData = gameEventCommentsLiveData
     private fun getQuery(documentId: String, eventName: String): Query {
         return eventsRef.document(eventName.lowercase()).collection("items")
             .whereEqualTo(FieldPath.documentId(), documentId)
