@@ -9,6 +9,7 @@ import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.ktx.messaging
 import com.sigma.sportsup.FirestoreCollection
 import com.sigma.sportsup.data.Comment
 import com.sigma.sportsup.data.GameEvent
@@ -174,6 +175,8 @@ class EventDetailsViewModel : ViewModel() {
                         event.reference.collection("players").add(user).addOnFailureListener { ex->
                             Log.d("E", ex.message.toString())
                         }
+                        Log.d("E", event.id)
+                        Firebase.messaging.subscribeToTopic(event.id)
                     }
                 }
             }

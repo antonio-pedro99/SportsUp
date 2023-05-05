@@ -38,8 +38,9 @@ class SessionsItemAdapter(private val context: Context, private val sessions: Li
         val item = sessions.get(position)
         holder.txtDate.text = item.date
         holder.txtTime.text = item.start_time
-        holder.txtTitle.text = item.name
+        holder.txtTitle.text =  item.game_event_name?: item.name
         holder.txtVenue.text = item.venue
+
         
         holder.itemView.setOnClickListener { onItemClicked(position) }
 

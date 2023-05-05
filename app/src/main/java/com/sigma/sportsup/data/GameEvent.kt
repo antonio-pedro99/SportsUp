@@ -15,10 +15,11 @@ data class GameEvent(
     var number_of_players:Int?,
     var audience:String?,
     var current_players:Int?,
-    var waiting:Int?
+    var waiting:Int?,
+    var game_event_name: String? = null,
 ) {
 
-    constructor() : this(null, null, null, null, null, null,
+    constructor() : this(null, null, null, null, null, null,null,
         null, null, null, null, null, null)
 
 } 

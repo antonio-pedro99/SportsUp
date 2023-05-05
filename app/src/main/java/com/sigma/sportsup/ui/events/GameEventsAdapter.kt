@@ -42,7 +42,7 @@ class GameEventItemAdapter(private val context: Context, private val gamesEvents
         holder.dateTextView.text = item.date
         holder.timeTextView.text = item.start_time
         holder.venueTextView.text = item.venue
-        holder.nameTextView.text = item.name
+        holder.nameTextView.text = item.game_event_name ?: item.name
 
         holder.itemView.setOnClickListener {
             val intent = Intent(context, EventDetailsActivity::class.java)

@@ -20,12 +20,32 @@
         />
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/txt_event_game_name_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="61dp"
+        android:hint="@string/event_name"
+        android:layout_below="@id/textView2"
+        android:layout_marginBottom="12sp"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_event_game_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:labelFor="@id/edt_event_game_name"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="230sp"
         android:layout_height="61dp"
         android:hint="@string/game"
-        android:layout_below="@id/textView2"
+        android:layout_below="@id/txt_event_game_name_layout"
         >
         <AutoCompleteTextView
             android:id="@+id/edt_game"
@@ -41,7 +61,7 @@
         android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:hint="@string/number_of_players_required"
-       android:layout_below="@id/textView2"
+       android:layout_below="@id/txt_event_game_name_layout"
         android:layout_toEndOf="@id/textInputLayout"
         android:layout_marginStart="12sp"
 

@@ -82,6 +82,7 @@ class GameCreateFragment : Fragment() {
         val edtDate = binding.edtDate
         val edtTime = binding.editTime
         val edtEndTime = binding.edtEndTime
+        val edtGameEventName = binding.edtEventGameName
         // val edtDurationFormat = binding.editDurationFormat
         //val edtDuration = binding.edtDuration
 
@@ -116,6 +117,7 @@ class GameCreateFragment : Fragment() {
             event.number_of_players = edtNumberOfPlayers.text.toString().toInt()
             event.audience = audience
             event.current_players = 1
+            event.game_event_name = edtGameEventName.text.toString()
 
             //eventsViewModel.checkVenueAvailability(event)
 

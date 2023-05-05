@@ -14,6 +14,7 @@ import com.sigma.sportsup.R
 import com.sigma.sportsup.UserViewModel
 import com.sigma.sportsup.data.GameEvent
 import com.sigma.sportsup.databinding.FragmentEventBinding
+import com.sigma.sportsup.system.NotificationUtils
 
 class EventDetailsFragment : Fragment() {
 
@@ -58,27 +59,27 @@ class EventDetailsFragment : Fragment() {
         eventId?.let { eventsViewModel.getEventById(it, eventName!!) }
         eventId?.let { eventsViewModel.getGamePlayers(it, eventName!!) }
 
-        eventsViewModel.eventDetails.observe(viewLifecycleOwner) {
+        eventsViewModel.eventDetails.observe(viewLifecycleOwner) {eventGame ->
             val resources = activity?.resources
 
             binding.txtEventName.text =
-                resources?.getString(R.string.txt_event_details_name, it.name)
+                resources?.getString(R.string.txt_event_details_name, eventGame.game_event_name ?: eventGame.name)
             binding.txtEventDetailsTime.text =
                 resources?.getString(
                     R.string.txt_event_details_time_value,
-                    it.start_time,
-                    it.end_time
+                    eventGame.start_time,
+                    eventGame.end_time
                 )
             binding.txtEventDetailsDate.text =
-                resources?.getString(R.string.txt_event_details_date_value, it.date)
+                resources?.getString(R.string.txt_event_details_date_value, eventGame.date)
             binding.txtEventDetailsVenue.text =
-                resources?.getString(R.string.txt_event_details_venue, it.venue)
+                resources?.getString(R.string.txt_event_details_venue, eventGame.venue)
 
             //add arguments to each Page
             pages.forEach{page ->
                 val args = Bundle()
-                args.putString("eventId", it.id)
-                args.putString("eventName", it.name)
+                args.putString("eventId", eventGame.id)
+                args.putString("eventName", eventGame.name)
                 page.arguments = args
             }
 
@@ -90,25 +91,16 @@ class EventDetailsFragment : Fragment() {
                 when(position){
                     0-> {
                         tab.text = activity?.resources?.getString(R.string.tab_item_players)
-                        tab.orCreateBadge.number = it.current_players!!
+                        tab.orCreateBadge.number = eventGame.current_players!!
                     }
                     1-> tab.text = activity?.resources?.getString(R.string.tab_item_comments)
-                    /* 2-> {
-                         tab.text =
-                             activity?.resources?.getString(R.string.tab_item_waiting_room)
-
-                         it?.waiting.let {count->
-                             tab.orCreateBadge.number = count!!
-                             tab.orCreateBadge.isVisible = count > 0
-                         }
-                     }*/
                 }
             }.attach()
 
             userViewModel.currentUser.observe(viewLifecycleOwner) { user ->
                 eventId?.let {evId-> eventsViewModel.checkRsvp(evId, eventName!!, user) }
 
-                if (it.host_ref == user.id) {
+                if (eventGame.host_ref == user.id) {
                     Log.d("Fab", user.id!!)
                     binding.fabEdt.visibility = View.VISIBLE
                     binding.fabAction.setImageResource(R.drawable.baseline_done_24)
@@ -132,9 +124,13 @@ class EventDetailsFragment : Fragment() {
                             binding.fabAction.setImageResource(R.drawable.baseline_event_24)
                             binding.fabAction.setOnClickListener {
                                 eventsViewModel.joinEvent(eventId!!, eventName!!, user)
+                                NotificationUtils().sendNotificationToTopic(
+                                    eventGame.id!!,
+                                    "New Player Joined the Game",
+                                    "A new player has joined the game ${eventGame.game_event_name?: eventGame.name}")
                                 MaterialAlertDialogBuilder(requireContext())
                                     .setTitle("Congratulations")
-                                    .setMessage("You are no part of the game")
+                                    .setMessage("You are now part of the game")
                                     .setPositiveButton("Sounds Good!") { _, _ -> }
                                     .show()
                             }
