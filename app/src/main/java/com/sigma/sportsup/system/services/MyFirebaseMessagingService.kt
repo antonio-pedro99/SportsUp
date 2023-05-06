@@ -3,7 +3,7 @@ package com.sigma.sportsup.system.services
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
-import android.content.SharedPreferences
+
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
@@ -13,6 +13,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.sigma.sportsup.R
+import com.sigma.sportsup.system.NotificationUtils
 import kotlin.random.Random
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
@@ -58,24 +59,11 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)
-        Log.d(TAG, token)
-        val db = Firebase.firestore
 
-        val currentUserId =  getUserCurrentId()
-
-        db.collection("users").document(currentUserId!!).update("token", token)
-            .addOnSuccessListener { Log.d(TAG, "Token updated") }.addOnFailureListener {
-            Log.d(TAG, "Token update failed")
-        }
-
-
+        NotificationUtils.saveDeviceToken(this, token)
     }
-    private fun getUserCurrentId(): String? {
-        val prefs = getSharedPreferences("USER_ID", MODE_PRIVATE)
-        val restoredText = prefs.getString("currentuser", null)
-        return if (restoredText != null) {
-            prefs.getString("currentuser", "No name defined")
-        } else null
-    }
+
+
+
 
 }
