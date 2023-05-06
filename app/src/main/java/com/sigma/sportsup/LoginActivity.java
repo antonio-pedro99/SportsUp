@@ -1,6 +1,7 @@
 package com.sigma.sportsup;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -122,6 +123,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
 
                     DocumentReference documentReference = FirebaseFirestore.getInstance().collection("users").document(mAuth.getCurrentUser().getUid());
+
                     documentReference.get().addOnCompleteListener(new OnCompleteListener<com.google.firebase.firestore.DocumentSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -133,6 +135,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                     //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     startActivity(intent);
                                     finish();
+                                    saveUserCurrentId(mAuth.getCurrentUser().getUid());
                                 } else {
                                     Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                                     //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -159,6 +162,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         });
 
     }
+
+    private void saveUserCurrentId(String id){
+        SharedPreferences.Editor editor = getSharedPreferences("USER_ID", MODE_PRIVATE).edit();
+        editor.putString("currentuser", id);
+        editor.apply();
+    }
+
+
 
     private void checkForExistingUser(String email, String password) {
         mAuth.fetchSignInMethodsForEmail(email).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
@@ -261,6 +272,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                             if (task.isSuccessful()) {
                                                 DocumentSnapshot document = task.getResult();
                                                 if (document.exists()) {
+                                                    saveUserCurrentId(mAuth.getCurrentUser().getUid());
                                                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                                     //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                                     startActivity(intent);

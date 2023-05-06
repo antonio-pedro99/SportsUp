@@ -2,24 +2,17 @@ package com.sigma.sportsup.system.services
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.Service
 import android.content.Context
-import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Build
-import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.ktx.app
-import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import com.google.firebase.messaging.ktx.messaging
-import com.google.firebase.storage.ktx.storage
 import com.sigma.sportsup.R
-import java.lang.Exception
 import kotlin.random.Random
 
 class MyFirebaseMessagingService : FirebaseMessagingService() {
@@ -67,11 +60,22 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         super.onNewToken(token)
         Log.d(TAG, token)
         val db = Firebase.firestore
-        val auth = Firebase.auth
-        db.collection("users").document(auth.currentUser!!.uid).update("token", token)
+
+        val currentUserId =  getUserCurrentId()
+
+        db.collection("users").document(currentUserId!!).update("token", token)
             .addOnSuccessListener { Log.d(TAG, "Token updated") }.addOnFailureListener {
             Log.d(TAG, "Token update failed")
         }
+
+
+    }
+    private fun getUserCurrentId(): String? {
+        val prefs = getSharedPreferences("USER_ID", MODE_PRIVATE)
+        val restoredText = prefs.getString("currentuser", null)
+        return if (restoredText != null) {
+            prefs.getString("currentuser", "No name defined")
+        } else null
     }
 
 }
