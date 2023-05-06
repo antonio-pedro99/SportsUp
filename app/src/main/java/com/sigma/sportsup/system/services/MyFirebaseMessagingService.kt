@@ -59,8 +59,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)
-
         NotificationUtils.saveDeviceToken(this, token)
+        Log.d(TAG, "Refreshed token: $token")
     }
 
 

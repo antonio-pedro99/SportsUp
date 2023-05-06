@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_home, R.id.navigation_search, R.id.navigation_events, R.id.navigation_profile
             )
         )
-        FirebaseMessaging.getInstance().subscribeToTopic("nothing")
+
         val fcmServiceIntent = Intent(this, MyFirebaseMessagingService::class.java)
         startService(fcmServiceIntent)
 

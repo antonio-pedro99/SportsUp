@@ -9,7 +9,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.google.type.DateTime
 import com.sigma.sportsup.FirestoreCollection
 import com.sigma.sportsup.data.GameEvent
 import com.sigma.sportsup.data.GameModel

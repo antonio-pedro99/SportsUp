@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.sigma.sportsup.R
@@ -34,6 +35,12 @@ class GamesItemAdapter(private val context:Context, private val games: List<Game
             } else {
                 Glide.with(context).load(item.image).into(holder.gameImageView)
             }
+        }
+        holder.itemView.setOnClickListener {
+
+            //GamesFragmentArgs(item.id, item.name).toBundle()
+
+            it.findNavController().navigate(R.id.action_navigation_home_to_navigation_events)
         }
     }
 }

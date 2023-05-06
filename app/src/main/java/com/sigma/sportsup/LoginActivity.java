@@ -231,8 +231,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
         });
 
-
-
     }
 
     private void addUserToDatabase(String email, String uid){
