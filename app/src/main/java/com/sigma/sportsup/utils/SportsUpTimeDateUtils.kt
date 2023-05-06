@@ -5,6 +5,7 @@ import android.os.Build
 import android.text.format.DateFormat
 import android.util.Log
 import android.widget.EditText
+import android.widget.SimpleExpandableListAdapter
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -25,13 +26,19 @@ class SportsUpTimeDateUtils {
             val end = SimpleDateFormat("hh:mm a", Locale.getDefault()).parse(endTime)!!
 
             Log.d("TIME", "Time: $start $end")
-            return end.before(start) && durationBetweenTimes(startTime, endTime) >= 30 && durationBetweenTimes(startTime, endTime) <= 120
+            return end.before(start)
         }
 
-        @RequiresApi(Build.VERSION_CODES.O)
-        fun validateDate(startDate: String): Boolean {
-            val start = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(startDate)!!
-            return start.after(Date.from(Instant.now()))
+
+        fun validateDate(eventDate: String): Boolean {
+            val date = SimpleDateFormat("dd/MM/yyyy", Locale.US).parse(eventDate)!!
+            val currentDateFormatter = SimpleDateFormat("dd/MM/yyyy", Locale.US)
+            val currentDate = currentDateFormatter.parse(currentDateFormatter.format(Date()))!!
+            return currentDate.before(date) || currentDate == date
+        }
+
+        fun validEventDurationTime(startTime: String, endTime: String): Boolean {
+            return durationBetweenTimes(startTime, endTime) in 30..120
         }
 
         private fun formatTime(time: String): String {
@@ -42,7 +49,7 @@ class SportsUpTimeDateUtils {
             val formattedHour = if (hour > 12) hour - 12 else hour
 
             return "${if (formattedHour.toString().length > 2) formattedHour else "0$formattedHour"}:" +
-                    "${if (minute.toString().length > 2) minute else "0$minute"} $period"
+                    "${if (minute.toString().length < 2) "0$minute" else minute } $period"
         }
         fun showTimePickerDialog(context:Context, parentFragmentManager: FragmentManager, editTime: EditText, title: String): String {
           editTime.setOnClickListener {
@@ -95,6 +102,18 @@ class SportsUpTimeDateUtils {
             val end = SimpleDateFormat("hh:mm a", Locale.getDefault()).parse(endTime)!!
             val duration = end.time - start.time
             return (duration / 1000 / 60).toInt()
+        }
+
+
+
+        //two events with (start time, end time) can't be created at the same time or between the start and end time of the other event
+        fun validateTimeBetweenEvents(startTime: String, endTime: String, startTime2: String, endTime2: String): Boolean {
+            val start = SimpleDateFormat("hh:mm a", Locale.getDefault()).parse(startTime)!!
+            val end = SimpleDateFormat("hh:mm a", Locale.getDefault()).parse(endTime)!!
+            val start2 = SimpleDateFormat("hh:mm a", Locale.getDefault()).parse(startTime2)!!
+            val end2 = SimpleDateFormat("hh:mm a", Locale.getDefault()).parse(endTime2)!!
+
+            return (start.before(start2) && end.before(start2)) || (start.after(end2) && end.after(end2))
         }
     }
 }

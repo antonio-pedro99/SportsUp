@@ -3,6 +3,7 @@ package com.sigma.sportsup.ui.game_creation
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -65,7 +66,7 @@ class GameCreateFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val eventsViewModel = ViewModelProvider(this).get(GameCreationViewModel::class.java)
+        val gameCreationViewModel = ViewModelProvider(this).get(GameCreationViewModel::class.java)
         val btnInvite = binding.btnCreateEvent
 
         val rgAudience = binding.audienceGroup
@@ -102,10 +103,6 @@ class GameCreateFragment : Fragment() {
             }
         }
 
-        eventsViewModel.venueAvailability.observe(viewLifecycleOwner) {
-            Toast.makeText(requireContext(), "$it", Toast.LENGTH_LONG).show()
-        }
-
         btnInvite.setOnClickListener {
 
             if (edtDate.text.isNullOrEmpty() && edtGameEventName.text.isNullOrEmpty() &&
@@ -135,9 +132,19 @@ class GameCreateFragment : Fragment() {
                 event.game_event_name = edtGameEventName.text.toString()
 
                 val eventStatus = SportsUpEventUtils.isEventValid(event)
-                if (eventStatus == "valid"
+                gameCreationViewModel.checkVenueAvailability(event)
+                val venueIsBusy = gameCreationViewModel.venueAvailability.value
+
+
+                Log.d("G", "onViewCreated: $venueIsBusy")
+                if (venueIsBusy != true && eventStatus == "valid"
                 ) {
-                    eventsViewModel.createEvent(
+                   /* Toast.makeText(
+                        requireContext(),
+                        "Event created successfully",
+                        Toast.LENGTH_LONG
+                    ).show()*/
+                    gameCreationViewModel.createEvent(
                         requireContext(),
                         user = user,
                         event = event,
@@ -145,6 +152,12 @@ class GameCreateFragment : Fragment() {
                             clearForm()
                             showEventCreatedDialog()
                         })
+                } else if (venueIsBusy == true) {
+                    Toast.makeText(
+                        requireContext(),
+                        "This venue is not available at this time",
+                        Toast.LENGTH_LONG
+                    ).show()
                 } else {
                     Toast.makeText(
                         requireContext(),
