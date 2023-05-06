@@ -1,5 +1,6 @@
 package com.sigma.sportsup;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -38,6 +39,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingService;
 import com.sigma.sportsup.ui.chat.User;
 
 import java.util.List;
@@ -124,18 +126,21 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
                     DocumentReference documentReference = FirebaseFirestore.getInstance().collection("users").document(mAuth.getCurrentUser().getUid());
 
+
+
                     documentReference.get().addOnCompleteListener(new OnCompleteListener<com.google.firebase.firestore.DocumentSnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                             if (task.isSuccessful()) {
                                 DocumentSnapshot document = task.getResult();
                                 if (document.exists()) {
-                                    Toast.makeText(LoginActivity.this, "DocumentSnapshot data: " + document.getData(), Toast.LENGTH_SHORT).show();
+                                    saveOrRestoreToken(documentReference);
+
                                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                     //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     startActivity(intent);
                                     finish();
-                                    saveUserCurrentId(mAuth.getCurrentUser().getUid());
+
                                 } else {
                                     Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                                     //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -169,7 +174,21 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         editor.apply();
     }
 
+    private String getDeviceTokenFromSharedPreferences(){
+        SharedPreferences sharedPreferences = getSharedPreferences("USER_ID", MODE_PRIVATE);
+        return sharedPreferences.getString("token", "");
+    }
 
+
+    private void saveOrRestoreToken(DocumentReference documentReference) {
+        String token = getDeviceTokenFromSharedPreferences();
+        if (token != null) {
+            documentReference.update("token", token);
+        } else {
+            documentReference.update("token", FirebaseMessaging.getInstance().getToken().toString());
+        }
+        saveUserCurrentId(mAuth.getCurrentUser().getUid());
+    }
 
     private void checkForExistingUser(String email, String password) {
         mAuth.fetchSignInMethodsForEmail(email).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
@@ -195,7 +214,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         });
     }
     private void registerUser(String email, String password) {
-
 
         mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -223,7 +241,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         String deviceToken = FirebaseMessaging.getInstance().getToken().toString();
         String short_name = email.substring(3);
         databaseRef.child("user").child(uid).setValue(new User(email,uid, deviceToken));
-        System.out.println("added user");
+
+        DocumentReference documentReference = FirebaseFirestore.getInstance().collection("users").document(uid);
+        saveOrRestoreToken(documentReference);
     }
 
     @Override
