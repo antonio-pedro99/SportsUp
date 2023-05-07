@@ -9,15 +9,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.google.type.DateTime
 import com.sigma.sportsup.FirestoreCollection
 import com.sigma.sportsup.data.GameEvent
 import com.sigma.sportsup.data.GameModel
 import com.sigma.sportsup.data.UserModel
 import com.sigma.sportsup.data.VenueEvent
 import com.sigma.sportsup.data.VenueModel
-import java.time.LocalTime
-import java.time.format.DateTimeFormatter
+import com.sigma.sportsup.utils.SportsUpEventUtils
+import com.sigma.sportsup.utils.SportsUpTimeDateUtils
 
 class GameCreationViewModel : ViewModel() {
 
@@ -40,7 +39,6 @@ class GameCreationViewModel : ViewModel() {
     private val venueAvailabilityMutableLiveData = MutableLiveData<Boolean>()
 
 
-
     @RequiresApi(Build.VERSION_CODES.O)
     fun checkVenueAvailability(event: GameEvent){
         val db = Firebase.firestore
@@ -48,9 +46,8 @@ class GameCreationViewModel : ViewModel() {
             db.collection("venues").whereEqualTo("name", event.venue).get().addOnSuccessListener {
                 for (document in it){
                     document.reference.collection("games").get().addOnSuccessListener {eventGameSnapshots->
-                        value = !eventGameSnapshots.documents.any { eventSnapshot->
+                        value = eventGameSnapshots.documents.any { eventSnapshot->
                             val venueEvent = eventSnapshot.toObject(VenueEvent::class.java)
-                            Log.d("G", venueEvent.toString())
 
                             venueIsBusy(event, venueEvent!!)
                         }
@@ -67,7 +64,6 @@ class GameCreationViewModel : ViewModel() {
             .collection("items")
             .add(event)
             .addOnSuccessListener { doc ->
-
                 //add a game snapshot to the venues
                 db.collection("venues").whereEqualTo("name", event.venue).get()
                     .addOnSuccessListener {
@@ -124,18 +120,16 @@ class GameCreationViewModel : ViewModel() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun venueIsBusy(createGame: GameEvent, gameDB:VenueEvent):Boolean{
+    private fun venueIsBusy(createGame: GameEvent, gameDB: VenueEvent): Boolean {
 
-        return createGame.date == gameDB.date && getTimeLong(gameDB.start_time!!) >= getTimeLong(createGame.start_time!!) && getTimeLong(createGame.start_time!!) <= getTimeLong(gameDB.end_time!!)
-    }
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun getTimeLong(time:String):Long {
-        val formatter = DateTimeFormatter.ofPattern("HH:mm")
-        return LocalTime.parse(formatStringTime(time), formatter).toNanoOfDay()/1_000_000
-    }
-    private fun formatStringTime(time: String):String {
-        return time.split(":").joinToString(":") { it.padStart(2, '0') }
+        if (createGame.date != gameDB.date) return false
+      /*  if (createGame.start_time!! >= gameDB.start_time!! && createGame.start_time!! <= gameDB.end_time!!) return true
+        if (createGame.end_time!! >= gameDB.start_time!! && createGame.end_time!! <= gameDB.end_time!!) return true
+        if (createGame.start_time!! <= gameDB.start_time!! && createGame.end_time!! >= gameDB.end_time!!) return true
+        if (createGame.start_time!! >= gameDB.start_time!! && createGame.end_time!! <= gameDB.end_time!!) return true*/
+        return SportsUpEventUtils.isVenueBusy(createGame, gameDB)
+
+        //return SportsUpEventUtils.isVenueBusy(createGame, gameDB) && createGame.date == gameDB.date
     }
 
     val games: MutableLiveData<List<GameModel>?> = _games

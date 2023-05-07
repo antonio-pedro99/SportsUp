@@ -3,6 +3,7 @@ package com.sigma.sportsup
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -34,21 +35,35 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_events, R.id.navigation_profile
+                R.id.navigation_home, R.id.navigation_search, R.id.navigation_events, R.id.navigation_profile
             )
         )
-        FirebaseMessaging.getInstance().subscribeToTopic("nothing")
 
+        val fcmServiceIntent = Intent(this, MyFirebaseMessagingService::class.java)
+        startService(fcmServiceIntent)
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
 
+        requestSinglePermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+
     }
 
-    override fun onResume() {
-        val fcmServiceIntent = Intent(this, MyFirebaseMessagingService::class.java)
-        startService(fcmServiceIntent)
-        super.onResume()
-    }
+    private val requestMultiplePermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { result ->
+            Log.d("Home", ": $result")
+        }
+
+    private val requestSinglePermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { _: Boolean ->
+        }
+
+
+    fun getRequestMultiplePermissionLauncher() = requestMultiplePermissionLauncher
+    fun getRequestSinglePermissionLauncher() = requestSinglePermissionLauncher
 }

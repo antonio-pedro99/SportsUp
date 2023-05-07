@@ -12,7 +12,14 @@
         android:id="@+id/navigation_home"
         android:name="com.sigma.sportsup.ui.home.HomeFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            app:popUpToSaveState="true"
+            app:restoreState="true"
+            app:launchSingleTop="false"
+            android:id="@+id/action_navigation_home_to_navigation_events"
+            app:destination="@id/navigation_events" />
+    </fragment>
 
     <fragment
 
