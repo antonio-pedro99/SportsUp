@@ -39,6 +39,8 @@ import java.util.Objects;
 import static com.google.firebase.firestore.FieldValue.arrayUnion;
 import static com.google.firebase.firestore.FieldValue.delete;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class ProfileFragment extends Fragment {
 
@@ -47,7 +49,7 @@ public class ProfileFragment extends Fragment {
     private String userId;
     private List<String> sportsList;
     private GoogleSignInClient gsc;
-    private ImageView ivProfilePic;
+    private CircleImageView ivProfilePic;
     private Button btnSave;
     TextInputEditText etAge;
     TextInputEditText tvSportsList;

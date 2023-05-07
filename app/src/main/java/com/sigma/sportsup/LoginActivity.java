@@ -54,7 +54,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private ActionBar actionBar;
 
     private FirebaseAuth mAuth;
-
     private EditText email;
     private EditText password;
     private Button signInorRegister;
@@ -103,6 +102,27 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         signInorRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //if email is null
+                if (TextUtils.isEmpty(email.getText().toString())) {
+                    email.setError("Email is Required");
+                    email.requestFocus();
+                    return;
+                }
+
+                //if password is null
+                if (TextUtils.isEmpty(password.getText().toString())) {
+                    password.setError("Password is Required");
+                    password.requestFocus();
+                    return;
+                }
+
+                //if email does not end with "iiitd.ac.in"
+                if (!email.getText().toString().endsWith("iiitd.ac.in")) {
+                    email.setError("Please enter a valid IIITD email");
+                    email.requestFocus();
+                    return;
+                }
+
                 String txt_email = email.getText().toString();
                 String txt_password = password.getText().toString();
 
