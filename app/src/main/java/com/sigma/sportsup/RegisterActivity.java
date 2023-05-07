@@ -49,7 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
             photoUrl = intent.getStringExtra("photoUrl");
         else
             //put a default photoUrl
-            photoUrl="https://www.pngarts.com/files/11/Avatar-Transparent-Images.png";
+            photoUrl="";
 
         Log.i("photoUrl in RegisterActivity", photoUrl);
 
