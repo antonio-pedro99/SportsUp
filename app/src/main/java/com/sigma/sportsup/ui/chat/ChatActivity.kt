@@ -1,17 +1,23 @@
 package com.sigma.sportsup.ui.chat
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.R
+import com.google.firebase.messaging.FirebaseMessaging
 import com.sigma.sportsup.databinding.ActivityChatBinding
 import com.sigma.sportsup.databinding.ActivityLoginBinding
 import com.sigma.sportsup.databinding.ActivityMainBinding
+import com.sigma.sportsup.system.services.MyFirebaseMessagingService
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -36,9 +42,10 @@ class ChatActivity :AppCompatActivity(){
         val name = intent.getStringExtra("name")
         val recieverUid = intent.getStringExtra("uid")
         val senderUid = FirebaseAuth.getInstance().currentUser?.uid
-        databaseRef = FirebaseDatabase.getInstance().getReference()
+        databaseRef = FirebaseDatabase.getInstance().reference
         senderRoom = recieverUid + senderUid
         recieverRoom = senderUid + recieverUid
+
 
 
 
@@ -73,14 +80,35 @@ class ChatActivity :AppCompatActivity(){
 
         sendButton.setOnClickListener{
             val message = messageBox.text.toString()
-            val messageObject = Message(message,senderUid)
+            var token:String?=null;
+            //token pf receiver needs to be retrieved form the database
+//            databaseRef.child("users").child(recieverUid!!).get().addOnSuccessListener {
+//
+//            }
+            val messageObject = Message(message,senderUid,token)
 
-            databaseRef.child("chats").child(senderRoom!!).child("messages").push()
-                .setValue(messageObject).addOnSuccessListener {
+            databaseRef.child("chats").child(senderRoom!!).child("messages").push().setValue(messageObject).addOnSuccessListener {
                     databaseRef.child("chats").child(recieverRoom!!).child("messages").push()
                         .setValue(messageObject)
-
                 }
+
+//            databaseRef.child("users").child(senderUid!!).child("deviceToken").push().s
+
+
+//            FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+//                if(!task.isSuccessful) {
+//                    Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+//                    return@OnCompleteListener
+//                }
+//
+//                val token = task.result
+
+                // Log and toast
+
+//                val msg = getString(R.string.msg_token_fmt, token)
+//                Log.d(TAG, msg)
+//                Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+//            })
             messageBox.setText("")
 
 

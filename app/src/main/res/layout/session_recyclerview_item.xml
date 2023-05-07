@@ -36,24 +36,26 @@
                 android:id="@+id/session_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/dm_sans_bold"
                 android:text="Title"
-                android:textAppearance="?attr/textAppearanceDisplayMedium"
-                android:textSize="18sp"
-                />
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textSize="18sp" />
            <LinearLayout
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:orientation="horizontal">
+
                <TextView
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:layout_marginTop="4dp"
-                   android:text="When: "
                    android:layout_marginRight="8sp"
+                   android:text="When: "
                    android:textAppearance="?attr/textAppearanceBodyMedium"
                    android:textColor="?android:attr/textColorSecondary"
                    android:textSize="12sp"
-                   />
+                   android:textStyle="bold" />
+
                <TextView
                    android:id="@+id/session_date"
                    android:layout_width="wrap_content"

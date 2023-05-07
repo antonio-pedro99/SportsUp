@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.sigma.sportsup.databinding.FragmentEventWaitingRoomBinding
-import com.sigma.sportsup.ui.search.SearchViewModel
 
 class EventWaitingRoomFragment:Fragment() {
 

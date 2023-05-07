@@ -9,11 +9,13 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatRecyclerView"
-        android:layout_above="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/linearLayout"
         android:layout_alignParentTop="true"
-        />
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -29,19 +31,24 @@
             android:id="@+id/messageBox"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:background="@color/white"
-            android:paddingStart="15dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_weight="80"
-            android:textColor="@color/black"
+            android:background="@drawable/rounded_edittext"
             android:hint="@string/type_a_message"
+
+            android:paddingStart="15dp"
+            android:textColor="@color/black"
             tools:ignore="RtlSymmetry" />
 
         <ImageView
             android:id="@+id/sentButton"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/send"
-            android:layout_weight="15"/>
+            android:layout_marginRight="10dp"
+            android:layout_weight="15"
+            android:src="@drawable/send" />
 
     </LinearLayout>
 </RelativeLayout>

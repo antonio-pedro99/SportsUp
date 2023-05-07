@@ -1,8 +1,11 @@
 package com.sigma.sportsup.ui.home
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.view.LayoutInflater
@@ -10,12 +13,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.ActivityResultCaller
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.protobuf.Empty
+import com.sigma.sportsup.MainActivity
 import com.sigma.sportsup.R
 import com.sigma.sportsup.UserViewModel
 import com.sigma.sportsup.databinding.FragmentHomeBinding
@@ -30,6 +40,11 @@ class HomeFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+
+    private lateinit var handler: ActivityResultLauncher<String>
+    private lateinit var multiplePermissionHandler : ActivityResultLauncher<Array<String>>
+    private lateinit var launcher: ActivityResultLauncher<Intent>
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -49,6 +64,21 @@ class HomeFragment : Fragment() {
         val gameRecycler = binding.gamesRecyclerview
         val sessionRecycler = binding.sessionsRecyclerview
 
+
+
+        handler = requestSinglePermissionLauncher(
+            {
+                Log.d("Home", ": denied")
+            },
+            {
+                Toast.makeText(requireContext(), "Permission denied: Please all the app not send notifications", Toast.LENGTH_SHORT).show()
+            }
+        )
+
+        multiplePermissionHandler = requestMultiplePermissionLauncher {
+
+        }
+
         sessionRecycler.setHasFixedSize(true)
         gameRecycler.setHasFixedSize(true)
 
@@ -61,8 +91,10 @@ class HomeFragment : Fragment() {
         homeViewModel.sessions.observe(viewLifecycleOwner) {
             if (it.isNotEmpty()) {
                 sessionRecycler.adapter = SessionsItemAdapter(requireContext(), it, { index ->
-                    Toast.makeText(requireContext(), it[index].toString(), Toast.LENGTH_LONG).show()
-                }, {})
+
+                }, {
+
+                })
                 sessionRecycler.layoutManager =
                     LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
                 binding.txtNoOngoingEvent.visibility = View.INVISIBLE
@@ -92,8 +124,16 @@ class HomeFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.chat_menu -> {
-                val myIntent = Intent(this@HomeFragment.context, ChatBox::class.java)
-                this@HomeFragment.startActivity(myIntent)
+                if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_CONTACTS) == PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED){
+                    val myIntent = Intent(this@HomeFragment.context, ChatBox::class.java)
+                    this@HomeFragment.startActivity(myIntent)
+                }else {
+                   multiplePermissionHandler.launch(
+                       arrayOf(
+                           Manifest.permission.WRITE_CONTACTS, Manifest.permission.READ_CONTACTS
+                       )
+                   )
+                }
                 true
             }
 
@@ -105,4 +145,29 @@ class HomeFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+    private val requestSinglePermissionLauncher = { onGranted:()->Unit , onDenied: () -> Unit->
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            if (isGranted) {
+                Log.d("Home", ": granted")
+                onGranted()
+            } else {
+                Log.d("Home", ": denied")
+                onDenied()
+            }
+        }
+    }
+
+    private  val requestMultiplePermissionLauncher = {onResult:(Map<String, Boolean>)->Unit->
+        registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { result ->
+            onResult(result)
+        }
+    }
+
+
+
 }

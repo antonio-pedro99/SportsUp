@@ -3,9 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
+
     app:startDestination="@+id/navigation_home">
 
     <fragment
+
         android:id="@+id/navigation_home"
         android:name="com.sigma.sportsup.ui.home.HomeFragment"
         android:label="@string/title_home"
@@ -19,8 +21,9 @@
     </fragment>
 
     <fragment
+
         android:id="@+id/navigation_search"
-        android:name="com.sigma.sportsup.ui.search.SearchFragment"
+        android:name="com.sigma.sportsup.ui.chatting.ChatFragment"
         android:label="@string/title_search"
         tools:layout="@layout/fragment_search" />
 
@@ -49,7 +52,15 @@
             android:id="@+id/navigation_game_create"
             android:name="com.sigma.sportsup.ui.game_creation.GameCreateFragment"
             android:label="New Game"
-            tools:layout="@layout/fragment_game_create_fragment" />
+            tools:layout="@layout/fragment_game_create_fragment" >
+            <action
+                android:id="@+id/action_navigation_game_create_to_navigation_event_my_event"
+                backStackBehavior="popTo"
+                app:destination="@id/navigation_event_my_event" />
+            <action
+                android:id="@+id/action_navigation_game_create_to_navigation_event_details"
+                app:destination="@id/navigation_event_activity" />
+        </fragment>
 
         <fragment
             android:id="@+id/navigation_event_my_event"

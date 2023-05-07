@@ -9,6 +9,7 @@
     android:orientation="vertical">
 
 
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/filledTextField2"
         style="?attr/textInputOutlinedStyle"
@@ -21,8 +22,9 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etPhone"
             android:ems="10"
+            android:layout_marginHorizontal="20dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="80dp"/>
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -31,6 +33,7 @@
         style="?attr/textInputOutlinedStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
         android:hint="@string/enter_favorite_sports"
         android:paddingTop="16dp"
         android:paddingBottom="16dp">
@@ -38,13 +41,14 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etSportsList"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="80dp"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnSave"
         android:layout_width="wrap_content"
+        android:textColor="@color/white"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="@string/save"
