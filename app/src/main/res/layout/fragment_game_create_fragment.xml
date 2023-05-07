@@ -9,15 +9,18 @@
 
     android:padding="24sp"
     tools:context=".ui.game_creation.GameCreateFragment">
+
     <TextView
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Create a new session and invite friend"
-        android:textAlignment="textStart"
-        android:textSize="20sp"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="24dp"
-        />
+        android:fontFamily="@font/dm_sans_bold"
+        android:text="Create a New Session/Invite Friend"
+        android:textAlignment="textStart"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="20sp" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/txt_event_game_name_layout"
@@ -213,6 +216,7 @@
             android:text="My Friends"
             />
     </RadioGroup>
+
     <com.google.android.material.button.MaterialButton
 
         android:id="@+id/btn_create_event"
@@ -221,16 +225,17 @@
         android:layout_height="64sp"
         android:layout_below="@id/audience_group"
         android:layout_gravity="center"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="8dp"
         android:layout_marginRight="12sp"
         android:enabled="true"
         android:gravity="center"
         android:text="@string/done"
         android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
+        android:textSize="16sp"
         app:icon="@drawable/baseline_done_24"
         app:iconGravity="textStart"
-        app:iconPadding="8sp"
-        />
+        app:iconPadding="8sp" />
+
     <com.google.android.material.button.MaterialButton
 
         android:id="@+id/btn_cancel_creating"
@@ -239,13 +244,14 @@
         android:layout_height="64sp"
         android:layout_below="@id/audience_group"
         android:layout_gravity="center"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="8dp"
+        android:layout_toEndOf="@id/btn_create_event"
         android:enabled="true"
         android:gravity="center"
-        android:text="@string/cancel"
 
-        android:layout_toEndOf="@id/btn_create_event"
+        android:text="@string/cancel"
         android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
+        android:textSize="16sp"
         app:iconGravity="textStart"
         app:iconPadding="8sp" />
 
