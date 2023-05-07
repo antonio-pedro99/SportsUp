@@ -5,24 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="24sp"
-    android:background="@color/sports_white"
     tools:context=".ui.events.EventFragment"
     android:orientation="vertical"
     android:layout_gravity="center"
     >
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.google.android.material.button.MaterialButton
 
         android:id="@+id/btn_create_event"
-        android:background="@drawable/create_button_bg"
-
+        style="@style/Widget.Material3.Button.IconButton.Filled"
         android:layout_width="200dp"
         android:layout_height="64sp"
         android:enabled="true"
         android:layout_gravity="center"
-        android:textColor="@color/white"
         android:text="@string/create_new"
-        android:textSize="20dp"
         android:textAppearance="@style/TextAppearance.Material3.LabelMedium"
         app:icon="@drawable/baseline_add_24"
         app:iconGravity="textStart"
@@ -33,7 +29,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:background="@color/white"
         android:text="@string/headline_3"
         android:textAlignment="textStart"
         android:textSize="20sp"
@@ -51,7 +46,6 @@
             android:id="@+id/edti_text_game"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
             android:text="@string/initial_game"
             android:labelFor="@id/edti_text_game"
             />
@@ -61,7 +55,6 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/events_recycler_view"
         android:layout_width="match_parent"
-        android:background="@color/white"
         android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
 

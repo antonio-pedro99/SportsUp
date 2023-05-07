@@ -2,10 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-
-    android:background="@color/sports_white"
-
+    android:layout_marginLeft="16dp"
+    android:layout_marginTop="16dp"
+    android:layout_marginRight="16dp"
+    android:layout_marginBottom="16dp"
     android:orientation="vertical">
 
 
@@ -14,10 +14,7 @@
         android:id="@+id/filledTextField2"
         style="?attr/textInputOutlinedStyle"
         android:layout_width="match_parent"
-        android:background="@color/sports_yellow"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="40dp"
         android:hint="@string/enter_phone_number"
         android:paddingTop="16dp"
         android:paddingBottom="16dp">
@@ -26,7 +23,6 @@
             android:id="@+id/etPhone"
             android:ems="10"
             android:layout_marginHorizontal="20dp"
-            android:background="@color/sports_yellow"
             android:layout_width="match_parent"
             android:layout_height="80dp"/>
     </com.google.android.material.textfield.TextInputLayout>
@@ -38,17 +34,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="30dp"
-        android:background="@color/sports_yellow"
         android:hint="@string/enter_favorite_sports"
         android:paddingTop="16dp"
         android:paddingBottom="16dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etSportsList"
-            android:background="@color/sports_yellow"
             android:layout_width="match_parent"
-            android:layout_marginHorizontal="20dp"
             android:layout_height="80dp"/>
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -56,7 +48,6 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnSave"
         android:layout_width="wrap_content"
-        android:layout_marginTop="30dp"
         android:background="@color/sports_red"
         android:textColor="@color/white"
         android:layout_height="wrap_content"

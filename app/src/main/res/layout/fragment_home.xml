@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:layout_gravity="start"
     android:padding="24sp"
-    android:background="@color/sports_white"
     tools:context=".ui.home.HomeFragment">
 
     <TextView

@@ -7,7 +7,6 @@
     app:cardCornerRadius="12sp"
     android:clickable="true"
     android:focusable="true"
-
     android:layout_margin="12sp"
     style="?attr/materialCardViewFilledStyle"
     >
@@ -15,7 +14,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/sports_yellow"
         android:orientation="horizontal">
 
         <!-- Media -->

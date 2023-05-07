@@ -16,10 +16,4 @@
     <color name="chat_back">#EDEBC9</color>
     <color name="light_green">#52B137</color>
     <color name="red">#FF0000</color>
-    <color name="sports_blue">#06B2F8</color>
-    <color name="sports_yellow">#FFC33C</color>
-    <color name="sports_white">#F9FBDC</color>
-    <color name="sports_red">#FF4C65</color>
-
-
 </resources>

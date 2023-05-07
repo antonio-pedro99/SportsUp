@@ -3,8 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/sports_white"
-
     android:layout_height="match_parent"
     tools:context=".RegisterActivity">
 
@@ -13,10 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
-        android:textColor="@color/white"
         android:fontFamily="@font/dm_sans_bold"
-        android:background="@color/sports_red"
-        android:padding="10dp"
         android:text="Fill Profile Details"
         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textSize="30sp"
@@ -39,7 +34,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Age"
-            android:background="@color/sports_yellow"
             app:boxCornerRadiusBottomEnd="15sp"
             app:boxCornerRadiusBottomStart="15sp"
             app:boxCornerRadiusTopEnd="15sp"
@@ -50,7 +44,6 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/age"
-                android:background="@color/sports_yellow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/dm_sans" />
@@ -73,7 +66,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Name"
-            android:background="@color/sports_yellow"
             app:boxCornerRadiusBottomEnd="15sp"
             app:boxCornerRadiusBottomStart="15sp"
             app:boxCornerRadiusTopEnd="15sp"
@@ -85,19 +77,17 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/name"
                 android:layout_width="match_parent"
-                android:background="@color/sports_yellow"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/dm_sans" />
 
         </com.google.android.material.textfield.TextInputLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/continue_button"
+        style="@style/Widget.Material3.Button"
         android:layout_width="189dp"
-        android:textColor="@color/white"
         android:layout_height="57dp"
-        android:background="@color/sports_red"
         android:layout_marginTop="24dp"
         android:fontFamily="@font/dm_sans_bold"
         android:text="Continue"
@@ -124,7 +114,6 @@
             app:boxCornerRadiusBottomEnd="15sp"
             app:boxCornerRadiusBottomStart="15sp"
             app:boxCornerRadiusTopEnd="15sp"
-            android:background="@color/sports_yellow"
             app:boxCornerRadiusTopStart="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -134,7 +123,6 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/fav_sports"
                 android:layout_width="match_parent"
-                android:background="@color/sports_yellow"
                 android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -155,7 +143,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Phone Number"
-            android:background="@color/sports_yellow"
             app:boxCornerRadiusBottomEnd="15sp"
             app:boxCornerRadiusBottomStart="15sp"
             app:boxCornerRadiusTopEnd="15sp"
@@ -168,7 +155,6 @@
                 android:id="@+id/number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/sports_yellow"
                 android:fontFamily="@font/dm_sans" />
 
         </com.google.android.material.textfield.TextInputLayout>

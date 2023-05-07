@@ -1,89 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-    android:background="@color/sports_white"
-    android:orientation="vertical">
+    android:layout_marginLeft="16dp"
+    android:layout_marginTop="16dp"
+    android:layout_marginRight="16dp"
+    android:layout_marginBottom="16dp">
 
     <ImageView
         android:id="@+id/ivProfilePic"
         android:layout_width="200dp"
-        android:layout_height="210dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="36dp"
+        android:layout_height="220dp"
+        android:layout_marginTop="16dp"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@+id/tvName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvName"
-        android:layout_marginTop="26dp"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/sports_yellow"
-        android:layout_marginHorizontal="10dp"
-        android:textColor="@color/white"
         android:padding="8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textSize="18sp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+        app:layout_constraintBottom_toTopOf="@+id/tvAge"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivProfilePic" />
 
     <TextView
         android:id="@+id/tvAge"
-        android:layout_marginTop="26dp"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/sports_yellow"
-        android:layout_marginHorizontal="10dp"
-        android:textColor="@color/white"
         android:padding="8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textSize="18sp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
+        app:layout_constraintBottom_toTopOf="@+id/tvPhone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvName" />
 
     <TextView
         android:id="@+id/tvPhone"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="26dp"
-        android:background="@color/sports_yellow"
-        android:layout_marginHorizontal="10dp"
-        android:textColor="@color/white"
         android:padding="8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textSize="18sp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
+        app:layout_constraintBottom_toTopOf="@+id/tvSportsList"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAge" />
 
     <TextView
         android:id="@+id/tvSportsList"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="26dp"
-        android:background="@color/sports_yellow"
-        android:layout_marginHorizontal="10dp"
-        android:textColor="@color/white"
+        android:layout_marginBottom="16dp"
         android:padding="8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
         android:textSize="18sp"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
+        app:layout_constraintBottom_toTopOf="@+id/btnEdit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPhone" />
 
-    <androidx.appcompat.widget.AppCompatButton
+
+    <Button
         android:id="@+id/btnEdit"
         android:layout_width="wrap_content"
-        android:layout_marginTop="26dp"
         android:layout_height="wrap_content"
-        android:background="@color/sports_red"
-        android:textColor="@color/white"
-        android:layout_gravity="center_horizontal"
         android:text="@string/edit_profile"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        app:layout_constraintBottom_toTopOf="@+id/btn_logout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSportsList" />
 
-    <androidx.appcompat.widget.AppCompatButton
+
+    <Button
         android:id="@+id/btn_logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:background="@color/sports_red"
-        android:textColor="@color/white"
-        android:layout_marginTop="26dp"
+        android:layout_marginBottom="24dp"
         android:text="@string/log_out"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
