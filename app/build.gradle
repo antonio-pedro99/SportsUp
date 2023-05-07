@@ -5,6 +5,15 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        config {
+            //relative path to storeFile file('C:\\Users\\aryam\\keystore\\keystore_mcproj.jks')
+            storeFile file('/keys/keystore_mcproj.jks')
+            storePassword '|C)AFZ|rPnJ@'
+            keyPassword '|C)AFZ|rPnJ@'
+            keyAlias 'key0'
+        }
+    }
     namespace 'com.sigma.sportsup'
     compileSdk 33
 
@@ -22,6 +31,8 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            debuggable true
+            signingConfig signingConfigs.config
         }
     }
     compileOptions {
