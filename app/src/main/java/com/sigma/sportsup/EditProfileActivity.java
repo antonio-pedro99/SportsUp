@@ -44,6 +44,7 @@ public class EditProfileActivity extends AppCompatActivity {
         etPhone = findViewById(R.id.etPhone);
         etSportsList = findViewById(R.id.etSportsList);
 
+
         // Fetch user data from Firestore
         mFirestore.collection("users")
                 .document(userId)
