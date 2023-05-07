@@ -31,6 +31,11 @@
                         </option>
                         <option name="myPositions">
                           <map>
+                            <entry key="action_global_navigation_event_activity">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="nav_events">
                               <value>
                                 <LayoutPositions>
@@ -78,6 +83,15 @@
                                       <option name="y" value="625" />
                                     </Point>
                                   </option>
+                                  <option name="myPositions">
+                                    <map>
+                                      <entry key="action_navigation_game_create_to_navigation_event_my_event">
+                                        <value>
+                                          <LayoutPositions />
+                                        </value>
+                                      </entry>
+                                    </map>
+                                  </option>
                                 </LayoutPositions>
                               </value>
                             </entry>
@@ -124,8 +138,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="252" />
-                            <option name="y" value="12" />
+                            <option name="x" value="269" />
+                            <option name="y" value="-364" />
                           </Point>
                         </option>
                       </LayoutPositions>

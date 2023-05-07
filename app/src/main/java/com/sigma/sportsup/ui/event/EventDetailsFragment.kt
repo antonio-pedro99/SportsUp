@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.firebase.messaging.FirebaseMessaging
 import com.sigma.sportsup.R
 import com.sigma.sportsup.UserViewModel
 import com.sigma.sportsup.data.GameEvent
@@ -28,7 +29,6 @@ class EventDetailsFragment : Fragment() {
     private val pages =  listOf(
         EventPlayersFragment(),
         EventCommentsFragment(),
-        //EventWaitingRoomFragment()
     )
 
     override fun onCreateView(
@@ -105,7 +105,6 @@ class EventDetailsFragment : Fragment() {
                     binding.fabEdt.visibility = View.VISIBLE
                     binding.fabAction.setImageResource(R.drawable.baseline_done_24)
                 } else {
-
                     eventsViewModel.gamePlayersLiveData.observe(viewLifecycleOwner) { players ->
                         if (players.any { playerUser -> playerUser.id == user.id }) {
                             binding.fabAction.setImageResource(R.drawable.baseline_free_cancellation_24)
@@ -124,8 +123,9 @@ class EventDetailsFragment : Fragment() {
                             binding.fabAction.setImageResource(R.drawable.baseline_event_24)
                             binding.fabAction.setOnClickListener {
                                 eventsViewModel.joinEvent(eventId!!, eventName!!, user)
+                                FirebaseMessaging.getInstance().subscribeToTopic(eventId)
                                 NotificationUtils().sendNotificationToTopic(
-                                    eventGame.id!!,
+                                   eventId,
                                     "New Player Joined the Game",
                                     "A new player has joined the game ${eventGame.game_event_name?: eventGame.name}")
                                 MaterialAlertDialogBuilder(requireContext())
@@ -140,7 +140,6 @@ class EventDetailsFragment : Fragment() {
 
             }
         }
-
 
     }
 

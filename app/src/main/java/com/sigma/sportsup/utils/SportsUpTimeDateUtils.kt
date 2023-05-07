@@ -72,6 +72,15 @@ class SportsUpTimeDateUtils {
             return editTime.text.toString()
         }
 
+
+        //get date time from a string date and a string time
+        fun getDateTime(date: String, time: String): Long {
+            val dateTime = "$date $time"
+            val formatter = SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.getDefault())
+            val date = formatter.parse(dateTime)!!
+            return date.time
+        }
+
         fun showDatePickerDialog(context:Context, parentFragmentManager: FragmentManager, edtDate: EditText): String {
 
             edtDate.setOnClickListener {

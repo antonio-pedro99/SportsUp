@@ -1,20 +1,34 @@
 package com.sigma.sportsup.ui.game_creation
 
+import android.Manifest
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.provider.CalendarContract
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.activity.result.ActivityResultCaller
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.firebase.messaging.FirebaseMessaging
+import com.sigma.sportsup.MainActivity
+import com.sigma.sportsup.R
 import com.sigma.sportsup.UserViewModel
 import com.sigma.sportsup.data.GameEvent
 import com.sigma.sportsup.data.UserModel
@@ -32,6 +46,8 @@ class GameCreateFragment : Fragment() {
 
     private lateinit var user: UserModel
 
+    private lateinit var handler: ActivityResultLauncher<Array<String>>
+    private lateinit var addEventToCalendarHandler: ActivityResultLauncher<Intent>
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -46,7 +62,6 @@ class GameCreateFragment : Fragment() {
         gameCreateViewModel.venues.observe(viewLifecycleOwner) { it ->
             val venues = it?.map { it.name }
             buildVenuesItem(venues as List<String>)
-
         }
 
         gameCreateViewModel.games.observe(viewLifecycleOwner) { it ->
@@ -54,6 +69,20 @@ class GameCreateFragment : Fragment() {
             buildGamesItems(games!!)
         }
 
+        handler = requestMultiplePermissionLauncher {
+            Log.d("TAG", "onCreateView: ${it.toString()}")
+        }
+
+        addEventToCalendarHandler = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+
+            Log.d("G","onCreateView: ${it.data.toString()} Code: ${it.resultCode}")
+            if (it.resultCode == AppCompatActivity.RESULT_OK) {
+                Toast.makeText(mContext, "Event added to calendar", Toast.LENGTH_SHORT).show()
+            }
+
+            findNavController().navigate(R.id.action_navigation_game_create_to_navigation_event_my_event)
+           // parentFragmentManager.popBackStack()
+        }
 
         setHasOptionsMenu(true)
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
@@ -78,8 +107,6 @@ class GameCreateFragment : Fragment() {
         val edtTime = binding.editTime
         val edtEndTime = binding.edtEndTime
         val edtGameEventName = binding.edtEventGameName
-        // val edtDurationFormat = binding.editDurationFormat
-        //val edtDuration = binding.edtDuration
 
         SportsUpTimeDateUtils.showDatePickerDialog(requireContext(), parentFragmentManager, edtDate)
         SportsUpTimeDateUtils.showTimePickerDialog(
@@ -144,14 +171,16 @@ class GameCreateFragment : Fragment() {
                         "Event created successfully",
                         Toast.LENGTH_LONG
                     ).show()*/
-                    gameCreationViewModel.createEvent(
+                  /*  gameCreationViewModel.createEvent(
                         requireContext(),
                         user = user,
                         event = event,
                         onDone = {
                             clearForm()
-                            showEventCreatedDialog()
-                        })
+                            showEventCreatedDialog(gameCreationViewModel, event)
+                        })*/
+
+                    showEventCreatedDialog(gameCreationViewModel, event)
                 } else if (venueIsBusy == true) {
                     Toast.makeText(
                         requireContext(),
@@ -174,13 +203,48 @@ class GameCreateFragment : Fragment() {
     }
 
 
-    private fun showEventCreatedDialog() {
+    private fun showEventCreatedDialog(gameCreationViewModel: GameCreationViewModel, event: GameEvent) {
+
         MaterialAlertDialogBuilder(mContext)
             .setTitle("Information")
-            .setMessage("Your Event has been created! Do you want to see it now?")
+            .setMessage("Your Event has been created! Do you want to add to your Google Calendar?")
             .setNegativeButton("No thanks") { _, _ -> findNavController().navigateUp() }
-            .setPositiveButton("Yes Please") { _, _ -> findNavController() }
+            .setPositiveButton("Yes Please") { _, _ ->
+                    addToCalendar(event, user)
+             }
             .show()
+    }
+
+    private fun addToCalendar(event: GameEvent, userModel: UserModel){
+
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_CALENDAR)
+            != PackageManager.PERMISSION_GRANTED &&
+            ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_CALENDAR)
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            handler.launch(
+                arrayOf(
+                    Manifest.permission.READ_CALENDAR,
+                    Manifest.permission.WRITE_CALENDAR
+                ))
+        } else {
+            val eventBeginTime = SportsUpTimeDateUtils.getDateTime(event.date!!, event.start_time!!)
+            val eventEndTime = SportsUpTimeDateUtils.getDateTime(event.date!!, event.end_time!!)
+
+            val intent = Intent(Intent.ACTION_INSERT)
+                .setData(CalendarContract.Events.CONTENT_URI)
+                .putExtra(CalendarContract.Events.TITLE, event.game_event_name)
+                .putExtra(CalendarContract.Events.EVENT_LOCATION, event.venue)
+                .putExtra(CalendarContract.Events.DESCRIPTION, "A ${event.name} match with your buddies")
+                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, eventBeginTime)
+                .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, eventEndTime)
+                .putExtra(CalendarContract.Events.OWNER_ACCOUNT, userModel.phone)
+                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+
+            //startActivityForResult(intent, 0)
+            addEventToCalendarHandler.launch(intent)
+        }
+
     }
 
     private fun clearForm() {
@@ -218,5 +282,27 @@ class GameCreateFragment : Fragment() {
         mContext = context
     }
 
+
+    private  val requestMultiplePermissionLauncher = {onResult:(Map<String, Boolean>)->Unit->
+        registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { result ->
+            onResult(result)
+        }
+    }
+
+    private val requestSinglePermissionLauncher = { onGranted:()->Unit , onDenied: () -> Unit->
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            if (isGranted) {
+                Log.d("Home", ": granted")
+                onGranted()
+            } else {
+                Log.d("Home", ": denied")
+                onDenied()
+            }
+        }
+    }
 
 }

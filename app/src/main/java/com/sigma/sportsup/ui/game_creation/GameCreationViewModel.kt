@@ -1,15 +1,21 @@
 package com.sigma.sportsup.ui.game_creation
 
+import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.os.Build
 import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 import com.sigma.sportsup.FirestoreCollection
+import com.sigma.sportsup.MainActivity
 import com.sigma.sportsup.data.GameEvent
 import com.sigma.sportsup.data.GameModel
 import com.sigma.sportsup.data.UserModel
@@ -65,6 +71,7 @@ class GameCreationViewModel : ViewModel() {
             .add(event)
             .addOnSuccessListener { doc ->
                 //add a game snapshot to the venues
+                FirebaseMessaging.getInstance().subscribeToTopic(doc.id)
                 db.collection("venues").whereEqualTo("name", event.venue).get()
                     .addOnSuccessListener {
                         // Toast.makeText(requireContext(), it.documents.toString(), Toast.LENGTH_LONG).show()

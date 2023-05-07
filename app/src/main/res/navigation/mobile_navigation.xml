@@ -52,7 +52,15 @@
             android:id="@+id/navigation_game_create"
             android:name="com.sigma.sportsup.ui.game_creation.GameCreateFragment"
             android:label="New Game"
-            tools:layout="@layout/fragment_game_create_fragment" />
+            tools:layout="@layout/fragment_game_create_fragment" >
+            <action
+                android:id="@+id/action_navigation_game_create_to_navigation_event_my_event"
+                backStackBehavior="popTo"
+                app:destination="@id/navigation_event_my_event" />
+            <action
+                android:id="@+id/action_navigation_game_create_to_navigation_event_details"
+                app:destination="@id/navigation_event_activity" />
+        </fragment>
 
         <fragment
             android:id="@+id/navigation_event_my_event"

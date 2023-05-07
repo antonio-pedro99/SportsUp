@@ -1,9 +1,12 @@
 package com.sigma.sportsup
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -23,6 +26,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -35,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_search, R.id.navigation_events, R.id.navigation_profile
+                R.id.navigation_home, R.id.navigation_events, R.id.navigation_profile
             )
         )
 
@@ -46,24 +50,40 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
 
-        requestSinglePermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+        requestSinglePermissionLauncher(
+           {
+                Log.d("Home", ": denied")
+            },
+            {
+                Toast.makeText(this, "Permission denied: Please all the app not send notifications", Toast.LENGTH_SHORT).show()
+            }
+        ).launch(android.Manifest.permission.POST_NOTIFICATIONS)
 
     }
 
-    private val requestMultiplePermissionLauncher =
+     private  val requestMultiplePermissionLauncher = {onResult:(Map<String, Boolean>)->Unit->
         registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()
         ) { result ->
-            Log.d("Home", ": $result")
+            onResult(result)
         }
+    }
 
-    private val requestSinglePermissionLauncher =
+   private val requestSinglePermissionLauncher = { onGranted:()->Unit , onDenied: () -> Unit->
         registerForActivityResult(
             ActivityResultContracts.RequestPermission()
-        ) { _: Boolean ->
+        ) { isGranted: Boolean ->
+            if (isGranted) {
+                Log.d("Home", ": granted")
+                onGranted()
+            } else {
+                Log.d("Home", ": denied")
+                onDenied()
+            }
         }
+    }
 
 
-    fun getRequestMultiplePermissionLauncher() = requestMultiplePermissionLauncher
-    fun getRequestSinglePermissionLauncher() = requestSinglePermissionLauncher
+    fun getRequestMultiplePermissionLauncher(onResult:(Map<String, Boolean>)->Unit) = requestMultiplePermissionLauncher(onResult)
+    fun getRequestSinglePermissionLauncher(onGranted:()->Unit , onDenied: () -> Unit) = requestSinglePermissionLauncher(onGranted, onDenied)
 }
