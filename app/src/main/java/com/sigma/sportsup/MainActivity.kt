@@ -46,6 +46,8 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
 
+        requestSinglePermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+
     }
 
     private val requestMultiplePermissionLauncher =
