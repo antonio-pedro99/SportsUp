@@ -3,6 +3,7 @@ package com.sigma.sportsup
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -46,4 +47,21 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
 
     }
+
+    private val requestMultiplePermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { result ->
+            Log.d("Home", ": $result")
+        }
+
+    private val requestSinglePermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { _: Boolean ->
+        }
+
+
+    fun getRequestMultiplePermissionLauncher() = requestMultiplePermissionLauncher
+    fun getRequestSinglePermissionLauncher() = requestSinglePermissionLauncher
 }
