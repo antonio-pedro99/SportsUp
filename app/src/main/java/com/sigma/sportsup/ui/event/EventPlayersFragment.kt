@@ -1,17 +1,12 @@
 package com.sigma.sportsup.ui.event
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.sigma.sportsup.databinding.FragmentEventPlayersBinding
-import com.sigma.sportsup.ui.events.MyEventsViewModel
-import com.sigma.sportsup.ui.search.SearchViewModel
 
 class EventPlayersFragment:Fragment() {
 

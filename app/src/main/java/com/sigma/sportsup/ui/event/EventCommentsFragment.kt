@@ -1,7 +1,6 @@
 package com.sigma.sportsup.ui.event
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.sigma.sportsup.UserViewModel
 import com.sigma.sportsup.data.Comment
 import com.sigma.sportsup.databinding.FragmentEventCommentsBinding
-import com.sigma.sportsup.ui.search.SearchViewModel
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 

@@ -3,6 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/sports_white"
+
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
@@ -19,11 +21,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/signInorRegister"
-        style="@style/Widget.Material3.Button"
         android:layout_width="189dp"
+        android:textColor="@color/white"
         android:layout_height="57dp"
+        android:background="@color/sports_red"
         android:layout_marginTop="24dp"
         android:fontFamily="@font/dm_sans_bold"
         android:text="Sign In or Register"
@@ -74,6 +77,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/email"
                 android:layout_width="match_parent"
+                android:background="@color/white"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/dm_sans" />
 
@@ -110,6 +114,7 @@
                 android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/white"
                 android:fontFamily="@font/dm_sans"
                 android:inputType="textPassword" />
 

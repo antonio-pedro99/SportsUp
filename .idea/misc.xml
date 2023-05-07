@@ -4,25 +4,42 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/drawable/btn_background.xml" value="0.1205" />
+        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/drawable/create_button_bg.xml" value="0.1155" />
         <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/drawable/msg_box_back.xml" value="0.1" />
         <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/drawable/receive_btn_background.xml" value="0.116" />
         <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/drawable/venue_background.xml" value="0.116" />
         <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/activity_chat.xml" value="0.1" />
-        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/activity_chatbox.xml" value="0.12107396149949341" />
-        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/activity_login.xml" value="0.10989583333333333" />
+        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/activity_chatbox.xml" value="0.264" />
+        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/activity_edit_profile.xml" value="0.152" />
+        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/activity_event_details.xml" value="0.23809523809523808" />
+        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/activity_register.xml" value="0.2" />
+        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/event_comment_item.xml" value="0.19927536231884058" />
+        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/event_recyclerview_item.xml" value="0.19927536231884058" />
         <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/fragment_all_sessions.xml" value="0.152" />
+        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/fragment_event.xml" value="0.19927536231884058" />
+        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/fragment_event_comments.xml" value="0.19927536231884058" />
+        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/fragment_event_players.xml" value="0.19927536231884058" />
+        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/fragment_event_waiting_room.xml" value="0.19927536231884058" />
         <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/fragment_events.xml" value="0.264" />
         <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/fragment_game_create_fragment.xml" value="0.12158054711246201" />
+        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/fragment_home.xml" value="0.2" />
         <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/fragment_invited_sessions.xml" value="0.10989583333333333" />
-        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/fragment_profile.xml" value="0.10989583333333333" />
+        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/fragment_profile.xml" value="0.176" />
         <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/fragment_search.xml" value="0.10989583333333333" />
         <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/game_recyclerview_item.xml" value="0.264" />
+        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/players_recycler_view_item.xml" value="0.19927536231884058" />
         <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/recieve.xml" value="0.536" />
         <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/sent.xml" value="0.25" />
         <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/session_recyclerview_item.xml" value="0.264" />
         <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/user_layout.xml" value="0.20512820512820512" />
+        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/layout/waiting_room_recycler_view_item.xml" value="0.19927536231884058" />
+        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/menu/bottom_nav_menu.xml" value="0.17916666666666667" />
+        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/menu/event_details_fragment_menu.xml" value="0.17916666666666667" />
+        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/menu/events_menu.xml" value="0.17916666666666667" />
+        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/menu/home_menu.xml" value="0.17916666666666667" />
+        <entry key="..\:/Users/shivi/AndroidStudioProjects/SportsUp/app/src/main/res/mipmap-anydpi-v33/ic_launcher.xml" value="0.1155" />
       </map>
     </option>
   </component>

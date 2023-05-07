@@ -26,6 +26,7 @@
             android:id="@+id/game_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/sports_yellow"
             android:layout_gravity="center"
             android:contentDescription="TODO"
 

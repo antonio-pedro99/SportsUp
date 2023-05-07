@@ -61,8 +61,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
         super.onNewToken(token)
 
         NotificationUtils.saveDeviceToken(this, token)
+        Log.d(TAG,"hellooooo");
     }
-
 
 
 

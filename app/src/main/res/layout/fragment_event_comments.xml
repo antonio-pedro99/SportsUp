@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/sports_white"
     tools:context=".ui.event.EventCommentsFragment"
     >
 
@@ -25,6 +26,7 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="250dp"
         android:layout_height="56dp"
+        android:background="@color/white"
         android:hint="Type your comment here"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -40,11 +42,13 @@
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.button.MaterialButton
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_send_comment"
         android:layout_width="80dp"
         android:layout_height="50dp"
+        android:background="@color/sports_red"
         android:text="Send"
+        android:textColor="@color/white"
         android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="@+id/new_comment_text_input_layout"
         app:layout_constraintEnd_toEndOf="parent"

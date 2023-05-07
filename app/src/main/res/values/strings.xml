@@ -11,7 +11,7 @@
     <string name="today_s_sessions">Today\'s Sessions</string>
     <string name="tab1">tab1</string>
     <string name="game">Game</string>
-    <string name="create_new">Create new</string>
+    <string name="create_new">+ Create new</string>
     <string name="initial_game">All</string>
     <string name="name">Name</string>
     <string name="age">Age</string>
@@ -56,4 +56,5 @@
     <string name="menu_item_title_my_events">My Events</string>
     <string name="event_info">No events happening around</string>
     <string name="event_name">Your event name</string>
+    <string name="chat_menu">Chat</string>
 </resources>
