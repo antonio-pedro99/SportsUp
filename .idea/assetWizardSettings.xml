@@ -23,7 +23,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="file:$USER_HOME$/Android/Sdk/icons/material/materialicons/book/baseline_book_24.xml" />
+                                      <entry key="url" value="file:/$PROJECT_DIR$/../AppData/Local/Android/Sdk/icons/material/materialicons/event_busy/baseline_event_busy_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -34,7 +34,8 @@
                         <option name="values">
                           <map>
                             <entry key="color" value="ffffff" />
-                            <entry key="outputName" value="baseline_book_24" />
+                            <entry key="outputName" value="baseline_event_busy_24" />
+                            <entry key="sourceFile" value="C:\Users\aryam\SportsUp_MC_Project" />
                           </map>
                         </option>
                       </PersistentState>
