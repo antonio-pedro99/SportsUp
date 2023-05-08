@@ -30,6 +30,10 @@
         android:hint="@string/event_name"
         android:layout_below="@id/textView2"
         android:layout_marginBottom="12sp"
+        app:boxCornerRadiusBottomEnd="15sp"
+        app:boxCornerRadiusBottomStart="15sp"
+        app:boxCornerRadiusTopEnd="15sp"
+        app:boxCornerRadiusTopStart="15sp"
         >
 
         <com.google.android.material.textfield.TextInputEditText
@@ -38,6 +42,7 @@
             android:layout_height="wrap_content"
             android:inputType="text"
             android:labelFor="@id/edt_event_game_name"
+
             />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -49,6 +54,10 @@
         android:layout_height="61dp"
         android:hint="@string/game"
         android:layout_below="@id/txt_event_game_name_layout"
+        app:boxCornerRadiusBottomEnd="15sp"
+        app:boxCornerRadiusBottomStart="15sp"
+        app:boxCornerRadiusTopEnd="15sp"
+        app:boxCornerRadiusTopStart="15sp"
         >
         <AutoCompleteTextView
             android:id="@+id/edt_game"
@@ -67,6 +76,10 @@
        android:layout_below="@id/txt_event_game_name_layout"
         android:layout_toEndOf="@id/textInputLayout"
         android:layout_marginStart="12sp"
+        app:boxCornerRadiusBottomEnd="15sp"
+        app:boxCornerRadiusBottomStart="15sp"
+        app:boxCornerRadiusTopEnd="15sp"
+        app:boxCornerRadiusTopStart="15sp"
 
         >
 
@@ -88,6 +101,11 @@
         android:layout_below="@id/textInputLayout"
         android:layout_marginBottom="12sp"
         android:layout_marginTop="12sp"
+        app:boxCornerRadiusBottomEnd="15sp"
+        app:boxCornerRadiusBottomStart="15sp"
+        app:boxCornerRadiusTopEnd="15sp"
+        app:boxCornerRadiusTopStart="15sp"
+
         >
         <AutoCompleteTextView
             android:id="@+id/edit_venue"
@@ -107,6 +125,11 @@
         android:layout_below="@id/layout2"
         app:endIconDrawable="@drawable/baseline_date_range_24"
         app:endIconMode="custom"
+        app:boxCornerRadiusBottomEnd="15sp"
+        app:boxCornerRadiusBottomStart="15sp"
+        app:boxCornerRadiusTopEnd="15sp"
+        app:boxCornerRadiusTopStart="15sp"
+
         >
 
         <com.google.android.material.textfield.TextInputEditText
@@ -150,6 +173,11 @@
         android:layout_marginTop="12sp"
         app:endIconDrawable="@drawable/baseline_access_time_filled_24"
         app:endIconMode="custom"
+        app:boxCornerRadiusBottomEnd="15sp"
+        app:boxCornerRadiusBottomStart="15sp"
+        app:boxCornerRadiusTopEnd="15sp"
+        app:boxCornerRadiusTopStart="15sp"
+
         >
 
         <com.google.android.material.textfield.TextInputEditText
@@ -172,6 +200,11 @@
         android:layout_toEndOf="@id/layout3"
         app:endIconDrawable="@drawable/baseline_access_time_filled_24"
         app:endIconMode="custom"
+        app:boxCornerRadiusBottomEnd="15sp"
+        app:boxCornerRadiusBottomStart="15sp"
+        app:boxCornerRadiusTopEnd="15sp"
+        app:boxCornerRadiusTopStart="15sp"
+
         >
 
         <com.google.android.material.textfield.TextInputEditText
