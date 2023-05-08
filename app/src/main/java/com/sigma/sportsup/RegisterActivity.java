@@ -49,7 +49,7 @@ public class RegisterActivity extends AppCompatActivity {
             photoUrl = intent.getStringExtra("photoUrl");
         else
             //put a default photoUrl
-            photoUrl="https://www.pngarts.com/files/11/Avatar-Transparent-Images.png";
+            photoUrl="";
 
         Log.i("photoUrl in RegisterActivity", photoUrl);
 
@@ -58,6 +58,7 @@ public class RegisterActivity extends AppCompatActivity {
         number = findViewById(R.id.number);
         fav_sports = findViewById(R.id.fav_sports);
         continue_button = findViewById(R.id.continue_button);
+
         mAuth = FirebaseAuth.getInstance();
 
         continue_button.setOnClickListener(new View.OnClickListener() {
@@ -66,10 +67,39 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if(mAuth.getCurrentUser() != null){
                     HashMap<String, Object> user = new HashMap<>();
+
+                    //if name is null or name contains non alphabetic characters(excluding whitespace) then show error
+                    if(name.getText().toString().isEmpty() || !name.getText().toString().matches("[a-zA-Z\\s]+")){
+                        name.setError("Please enter a valid name");
+                        name.requestFocus();
+                        return;
+                    }
                     user.put("name", name.getText().toString());
+
+                    //if age is null or age is not a number or age is less than 18 or age greater than 100 then show error
+                    if(age.getText().toString().isEmpty() || !age.getText().toString().matches("[0-9]+") || Integer.parseInt(age.getText().toString()) < 18 || Integer.parseInt(age.getText().toString()) > 100){
+                        age.setError("Please enter a valid age");
+                        age.requestFocus();
+                        return;
+                    }
                     user.put("age", Integer.parseInt(age.getText().toString()));
+
+                    //if number is null or  number is not 10 digits then show error
+                    if(number.getText().toString().isEmpty() || !number.getText().toString().matches("[0-9]+") || number.getText().toString().length() != 10){
+                        number.setError("Please enter a valid number");
+                        number.requestFocus();
+                        return;
+                    }
                     user.put("phone", number.getText().toString());
                     user.put("photoUrl", photoUrl);
+
+                    //if fav_sports is null or fav_sports contains non alphabetic characters(excluding whitespace and comma) then show error
+                    if(fav_sports.getText().toString().isEmpty() || !fav_sports.getText().toString().matches("[a-zA-Z\\s,]+")){
+                        fav_sports.setError("Please enter a valid sports");
+                        fav_sports.requestFocus();
+                        return;
+                    }
+
                     String[] userSports = fav_sports.getText().toString().split(",");
                     //remove spaces
                     for(int i = 0; i < userSports.length; i++){
