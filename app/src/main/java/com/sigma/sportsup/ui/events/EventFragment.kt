@@ -34,6 +34,8 @@ class EventFragment : Fragment() {
     // onDestroyView.
     private val binding get() = _binding!!
 
+    private var gotArguments = false
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -41,7 +43,7 @@ class EventFragment : Fragment() {
     ): View {
         val eventsViewModel =
             ViewModelProvider(this).get(EventsViewModel::class.java)
-        setHasOptionsMenu(true)
+        setHasOptionsMenu(arguments == null)
 
         val gameNames = mutableListOf<String>("All")
         _binding = FragmentEventsBinding.inflate(inflater, container, false)
@@ -50,21 +52,38 @@ class EventFragment : Fragment() {
         eventsViewModel.games.observe(viewLifecycleOwner) { it ->
             gameNames.addAll(1, it?.map { it.name } as MutableList<String>)
             buildGamesItem(gameNames)
+        }
+
+
+        if (arguments != null){
+            val gameName = arguments?.getString("gameName")!!
+            gotArguments = true
+            binding.edtiTextGame.setText(gameName)
 
         }
 
         eventsViewModel.events.observe(viewLifecycleOwner) {it->
 
-            buildEventsList(it)
+            if (arguments != null){
+                val gameName = arguments?.getString("gameName")!!
+                buildEventsList(it.filter { event-> event.name!!.lowercase() == gameName.lowercase() })
+            } else {
+                arguments = null
+                buildEventsList(it)
+            }
             binding.edtiTextGame.setOnItemClickListener { _, _, position, _ ->
                 if (position == 0){
                     buildEventsList(it)
                 } else {
-                    buildEventsList(it.filter { event-> event.name == gameNames[position] })
-                    it.forEach {
-                        Log.d("IT", it.name!!)
+                    if (arguments != null){
+                        val gameName = arguments?.getString("gameName")!!
+                        buildEventsList(it.filter { event-> event.name!!.lowercase() == gameName.lowercase() })
+                    } else {
+                        arguments = null
+                        buildEventsList(it.filter { event-> event.name!!.lowercase() == gameNames[position].lowercase() })
                     }
                 }
+                arguments = null
             }
 
         }
@@ -77,8 +96,18 @@ class EventFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val btnCreateNewEvent = binding.btnCreateEvent
 
+        if (arguments != null){
+            binding.btnCreateEvent.visibility = View.GONE
+        }
         btnCreateNewEvent.setOnClickListener {
-            findNavController(this).navigate(R.id.action_navigation_events_to_navigation_game_create)
+            if (gotArguments){
+                Log.d("EVENTS", "got arguments")
+
+                it.findNavController().navigate(R.id.action_eventFragment_to_gameCreateFragment)
+            } else {
+                Log.d("EVENTS", "no arguments")
+                findNavController(this).navigate(R.id.action_navigation_events_to_navigation_game_create)
+            }
         }
 
     }

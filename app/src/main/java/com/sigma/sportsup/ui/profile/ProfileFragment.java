@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -12,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
@@ -61,6 +65,8 @@ public class ProfileFragment extends Fragment {
                 .requestEmail()
                 .build();
 
+
+        setHasOptionsMenu(true);
         // Build a GoogleSignInClient with the options specified by gso.
         gsc = GoogleSignIn.getClient(getActivity(), gso);
         btnLogout.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +86,31 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.profile_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.logout_item:
+                //logout
+                if (mAuth.getCurrentUser() != null) {
+                    mAuth.signOut();
+                    gsc.signOut();
+                }
+
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {

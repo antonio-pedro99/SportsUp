@@ -161,6 +161,38 @@ class EventDetailsViewModel : ViewModel() {
        }
     }
 
+    // delete event from database and from venue collection also
+    fun deleteEvent(documentId: String, eventName: String) {
+        val query = getQuery(documentId, eventName)
+        query.get().addOnSuccessListener {
+            for (doc in it) {
+                doc.reference.delete()
+                doc.reference.collection("players").get().addOnSuccessListener { q ->
+                    for (player in q) {
+                        player.reference.delete()
+                    }
+                }
+                doc.reference.collection("waiting_room").get().addOnSuccessListener { q ->
+                    for (player in q) {
+                        player.reference.delete()
+                    }
+                }
+
+                //delete event from venue collection
+                val venueId = doc.data["venue"].toString()
+                //get the venue collection document
+                val venueQuery = FirebaseFirestore.getInstance().collection("venues").document(venueId)
+                venueQuery.get().addOnSuccessListener { venue ->
+                    venue.reference.collection("events").whereEqualTo("id", doc.id).get().addOnSuccessListener { q ->
+                        for (event in q) {
+                            event.reference.delete()
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 
     fun joinEvent(documentId:String, eventName:String, user:UserModel){
         playersLiveData.apply {

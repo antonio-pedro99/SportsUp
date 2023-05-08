@@ -189,7 +189,7 @@
         app:layout_anchorGravity="end|bottom"
         app:fabSize="normal"
         android:layout_marginEnd="100dp"
-        android:src="@drawable/baseline_edit_calendar_24"
+        android:src="@drawable/baseline_event_busy_24"
         android:baselineAlignBottom="false"
         android:clickable="true"
         android:backgroundTint="@color/logo_red"

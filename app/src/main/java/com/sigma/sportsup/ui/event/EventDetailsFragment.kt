@@ -7,10 +7,14 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.messaging.FirebaseMessaging
+import com.sigma.sportsup.EventDetailsActivity
+import com.sigma.sportsup.MainActivity
 import com.sigma.sportsup.R
 import com.sigma.sportsup.UserViewModel
 import com.sigma.sportsup.data.GameEvent
@@ -104,6 +108,22 @@ class EventDetailsFragment : Fragment() {
                     Log.d("Fab", user.id!!)
                     binding.fabEdt.visibility = View.VISIBLE
                     binding.fabAction.setImageResource(R.drawable.baseline_done_24)
+                    binding.fabEdt.setOnClickListener() {
+
+                        MaterialAlertDialogBuilder(requireContext())
+                            .setTitle("Confirmation")
+                            .setMessage("Are you sure you want to delete the Game?")
+                            .setNegativeButton("Yes") { _, _ ->
+                                eventsViewModel.deleteEvent(eventId!!, eventName!!)
+                                //delete the event from the calendar
+
+
+
+                                (activity as EventDetailsActivity).finish()
+                            }
+                            .setPositiveButton("No") { _, _ -> }
+                            .show()
+                    }
                 } else {
                     eventsViewModel.gamePlayersLiveData.observe(viewLifecycleOwner) { players ->
                         if (players.any { playerUser -> playerUser.id == user.id }) {

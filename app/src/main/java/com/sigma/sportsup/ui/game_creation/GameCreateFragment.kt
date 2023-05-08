@@ -171,16 +171,14 @@ class GameCreateFragment : Fragment() {
                         "Event created successfully",
                         Toast.LENGTH_LONG
                     ).show()*/
-                  /*  gameCreationViewModel.createEvent(
+                  gameCreationViewModel.createEvent(
                         requireContext(),
                         user = user,
                         event = event,
                         onDone = {
                             clearForm()
                             showEventCreatedDialog(gameCreationViewModel, event)
-                        })*/
-
-                    showEventCreatedDialog(gameCreationViewModel, event)
+                        })
                 } else if (venueIsBusy == true) {
                     Toast.makeText(
                         requireContext(),

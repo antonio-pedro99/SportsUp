@@ -7,7 +7,6 @@
     app:startDestination="@+id/navigation_home">
 
     <fragment
-
         android:id="@+id/navigation_home"
         android:name="com.sigma.sportsup.ui.home.HomeFragment"
         android:label="@string/title_home"
@@ -21,13 +20,6 @@
     </fragment>
 
     <fragment
-
-        android:id="@+id/navigation_search"
-        android:name="com.sigma.sportsup.ui.chatting.ChatFragment"
-        android:label="@string/title_search"
-        tools:layout="@layout/fragment_search" />
-
-    <fragment
         android:id="@+id/navigation_profile"
         android:name="com.sigma.sportsup.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
@@ -35,6 +27,17 @@
 
     <navigation android:id="@+id/navigation_events"
         app:startDestination="@id/nav_events">
+
+        <activity
+            android:id="@+id/eventsActivity"
+            android:name="com.sigma.sportsup.EventsActivity"
+            android:label="activity_events"
+            tools:layout="@layout/activity_events"
+            >
+
+        </activity>
+
+
         <fragment
             android:id="@+id/nav_events"
             android:name="com.sigma.sportsup.ui.events.EventFragment"
@@ -79,4 +82,5 @@
             android:name="event_id"
             app:argType="string" />
     </activity>
+
 </navigation>

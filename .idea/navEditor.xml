@@ -31,9 +31,16 @@
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_global_navigation_event_activity">
+                            <entry key="eventsActivity">
                               <value>
-                                <LayoutPositions />
+                                <LayoutPositions>
+                                  <option name="myPosition">
+                                    <Point>
+                                      <option name="x" value="-112" />
+                                      <option name="y" value="-101" />
+                                    </Point>
+                                  </option>
+                                </LayoutPositions>
                               </value>
                             </entry>
                             <entry key="nav_events">
@@ -85,6 +92,11 @@
                                   </option>
                                   <option name="myPositions">
                                     <map>
+                                      <entry key="action_navigation_game_create_to_navigation_event_details">
+                                        <value>
+                                          <LayoutPositions />
+                                        </value>
+                                      </entry>
                                       <entry key="action_navigation_game_create_to_navigation_event_my_event">
                                         <value>
                                           <LayoutPositions />
@@ -138,8 +150,85 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="269" />
-                            <option name="y" value="-364" />
+                            <option name="x" value="-331" />
+                            <option name="y" value="-319" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </LayoutPositions>
+          </value>
+        </entry>
+        <entry key="nav_secondary.xml">
+          <value>
+            <LayoutPositions>
+              <option name="myPositions">
+                <map>
+                  <entry key="eventDetailsActivity">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="213" />
+                            <option name="y" value="49" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="eventFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-101" />
+                            <option name="y" value="-93" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_eventFragment_to_eventDetailsActivity">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_eventFragment_to_gameCreateFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_eventFragment_to_myEventsFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="gameCreateFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="12" />
+                            <option name="y" value="237" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="myEventsFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="118" />
+                            <option name="y" value="-312" />
                           </Point>
                         </option>
                       </LayoutPositions>

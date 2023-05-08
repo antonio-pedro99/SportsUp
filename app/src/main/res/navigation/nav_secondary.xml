@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_secondary"
+    app:startDestination="@id/eventFragment"
+    >
+
+    <fragment
+        android:id="@+id/eventFragment"
+        android:name="com.sigma.sportsup.ui.events.EventFragment"
+        android:label="Events"
+        tools:layout="@layout/fragment_events" >
+        <action
+            android:id="@+id/action_eventFragment_to_eventDetailsActivity"
+            app:destination="@id/eventDetailsActivity" />
+        <action
+            android:id="@+id/action_eventFragment_to_myEventsFragment"
+            app:destination="@id/myEventsFragment" />
+        <action
+            android:id="@+id/action_eventFragment_to_gameCreateFragment"
+            app:destination="@id/gameCreateFragment" />
+    </fragment>
+    <activity
+        android:id="@+id/eventDetailsActivity"
+        android:name="com.sigma.sportsup.EventDetailsActivity"
+        android:label="activity_event_details"
+        tools:layout="@layout/activity_event_details" />
+    <fragment
+        android:id="@+id/gameCreateFragment"
+        android:name="com.sigma.sportsup.ui.game_creation.GameCreateFragment"
+        android:label="fragment_game_create_fragment"
+        tools:layout="@layout/fragment_game_create_fragment" />
+    <fragment
+        android:id="@+id/myEventsFragment"
+        android:name="com.sigma.sportsup.ui.events.my_events.MyEventsFragment"
+        android:label="fragment_my_events"
+        tools:layout="@layout/fragment_my_events" />
+</navigation>

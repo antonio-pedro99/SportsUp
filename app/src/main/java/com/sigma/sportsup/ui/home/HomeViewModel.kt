@@ -41,7 +41,11 @@ class HomeViewModel : ViewModel() {
 
 
             Log.d("F", snapshot?.documents.toString())
-            val items = snapshot?.documents?.mapNotNull { doc-> doc.toObject(GameEvent::class.java)}
+            val items = snapshot?.documents?.mapNotNull { doc-> doc.toObject(GameEvent::class.java).also {
+                if (it != null) {
+                    it.id = doc.id
+                }
+            } }
             value = items?.filter { it.date == currentDate }
         }
     }
