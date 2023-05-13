@@ -18,13 +18,14 @@ import com.sigma.sportsup.MainActivity
 import com.sigma.sportsup.R
 import com.sigma.sportsup.UserViewModel
 import com.sigma.sportsup.data.GameEvent
+import com.sigma.sportsup.data.NotificationService
 import com.sigma.sportsup.databinding.FragmentEventBinding
 import com.sigma.sportsup.system.NotificationUtils
 
 class EventDetailsFragment : Fragment() {
 
     private var _binding: FragmentEventBinding? = null
-
+    private val notificationService = NotificationService()
     private val binding get() = _binding!!
 
     private lateinit var eventsViewModel: EventDetailsViewModel
@@ -50,6 +51,8 @@ class EventDetailsFragment : Fragment() {
 
         eventsViewModel = ViewModelProvider(this).get(EventDetailsViewModel::class.java)
         userViewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+
+
 
         setHasOptionsMenu(true)
 
@@ -109,16 +112,14 @@ class EventDetailsFragment : Fragment() {
                     binding.fabEdt.visibility = View.VISIBLE
                     binding.fabAction.setImageResource(R.drawable.baseline_done_24)
                     binding.fabEdt.setOnClickListener() {
-
                         MaterialAlertDialogBuilder(requireContext())
                             .setTitle("Confirmation")
                             .setMessage("Are you sure you want to delete the Game?")
                             .setNegativeButton("Yes") { _, _ ->
                                 eventsViewModel.deleteEvent(eventId!!, eventName!!)
                                 //delete the event from the calendar
-
-
-
+                                Log.d("G", "onViewCreated: ${eventId.lowercase()}")
+                                FirebaseMessaging.getInstance().unsubscribeFromTopic(eventId.lowercase())
                                 (activity as EventDetailsActivity).finish()
                             }
                             .setPositiveButton("No") { _, _ -> }
@@ -134,6 +135,8 @@ class EventDetailsFragment : Fragment() {
                                     .setMessage("You already part of the Game! Would you like to leave?")
                                     .setNegativeButton("Yes") { _, _ ->
                                        eventsViewModel.leaveEvent(eventId!!, eventName!!, user)
+                                        Log.d("G", "onViewCreated: ${eventId.lowercase()}")
+                                        FirebaseMessaging.getInstance().unsubscribeFromTopic(eventId.lowercase())
                                     }
                                     .setPositiveButton("No") { _, _ -> }
                                     .show()
@@ -143,7 +146,13 @@ class EventDetailsFragment : Fragment() {
                             binding.fabAction.setImageResource(R.drawable.baseline_event_24)
                             binding.fabAction.setOnClickListener {
                                 eventsViewModel.joinEvent(eventId!!, eventName!!, user)
-                                FirebaseMessaging.getInstance().subscribeToTopic(eventId)
+                                FirebaseMessaging.getInstance().subscribeToTopic(eventId.lowercase())
+
+                                notificationService.sendNotificationToTopic(
+                                    eventId,
+                                    "New Player Joined the Game",
+                                    "A new player has joined the game ${eventGame.game_event_name?: eventGame.name}")
+
                                 NotificationUtils().sendNotificationToTopic(
                                    eventId,
                                     "New Player Joined the Game",

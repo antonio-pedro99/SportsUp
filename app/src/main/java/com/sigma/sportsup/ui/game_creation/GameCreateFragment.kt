@@ -31,6 +31,7 @@ import com.sigma.sportsup.MainActivity
 import com.sigma.sportsup.R
 import com.sigma.sportsup.UserViewModel
 import com.sigma.sportsup.data.GameEvent
+import com.sigma.sportsup.data.GameModel
 import com.sigma.sportsup.data.UserModel
 import com.sigma.sportsup.databinding.FragmentGameCreateFragmentBinding
 import com.sigma.sportsup.utils.SportsUpEventUtils
@@ -48,6 +49,11 @@ class GameCreateFragment : Fragment() {
 
     private lateinit var handler: ActivityResultLauncher<Array<String>>
     private lateinit var addEventToCalendarHandler: ActivityResultLauncher<Intent>
+    private  var selectedGameImage: String?= null
+
+
+    private var games = mutableListOf<GameModel>()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -64,9 +70,13 @@ class GameCreateFragment : Fragment() {
             buildVenuesItem(venues as List<String>)
         }
 
+
+
         gameCreateViewModel.games.observe(viewLifecycleOwner) { it ->
-            val games = it?.map { it.name }
-            buildGamesItems(games!!)
+
+            games = it as MutableList<GameModel>
+            Log.d("G", "buildGamesItems: $games")
+            buildGamesItems(it as List<GameModel>)
         }
 
         handler = requestMultiplePermissionLauncher {
@@ -80,7 +90,6 @@ class GameCreateFragment : Fragment() {
                 Toast.makeText(mContext, "Event added to calendar", Toast.LENGTH_SHORT).show()
             }
 
-            findNavController().navigate(R.id.action_navigation_game_create_to_navigation_event_my_event)
            // parentFragmentManager.popBackStack()
         }
 
@@ -89,6 +98,11 @@ class GameCreateFragment : Fragment() {
         userViewModel.currentUser.observe(viewLifecycleOwner) { user = it }
         val root: View = _binding!!.root
         return root
+    }
+
+
+    private fun getGameImage(gameName: String, games:List<GameModel>):String{
+        return games.find { it.name == gameName }?.image ?: ""
     }
 
 
@@ -158,6 +172,9 @@ class GameCreateFragment : Fragment() {
                 event.current_players = 1
                 event.game_event_name = edtGameEventName.text.toString()
 
+                event.event_image = getGameImage(eventName, gameCreationViewModel.games.value!!)
+                Log.d("G", "onViewCreated: ${event.event_image}")
+
                 val eventStatus = SportsUpEventUtils.isEventValid(event)
                 gameCreationViewModel.checkVenueAvailability(event)
                 val venueIsBusy = gameCreationViewModel.venueAvailability.value
@@ -178,7 +195,13 @@ class GameCreateFragment : Fragment() {
                         onDone = {
                             clearForm()
                             showEventCreatedDialog(gameCreationViewModel, event)
-                        })
+                            Log.d("G", "onViewCreated: ${event.id}")
+
+                        }).also {
+                      if (it != null) {
+                          FirebaseMessaging.getInstance().subscribeToTopic(it.lowercase())
+                      }
+                  }
                 } else if (venueIsBusy == true) {
                     Toast.makeText(
                         requireContext(),
@@ -263,11 +286,14 @@ class GameCreateFragment : Fragment() {
     }
 
 
-    private fun buildGamesItems(data: List<String>) {
+    private fun buildGamesItems(data: List<GameModel>) {
         val selectedGame = binding.edtGame
+        val gamesName = data.map { it.name }
         val adapter =
-            ArrayAdapter<String>(mContext, android.R.layout.simple_dropdown_item_1line, data);
+            ArrayAdapter<String>(mContext, android.R.layout.simple_dropdown_item_1line, gamesName);
         selectedGame.setAdapter(adapter)
+        games = data.toMutableList()
+
     }
 
     override fun onDestroyView() {

@@ -63,8 +63,11 @@ class GameCreationViewModel : ViewModel() {
         }
     }
 
-    fun createEvent(context: Context, event: GameEvent, user: UserModel, onDone: ()->Any) {
+
+
+    fun createEvent(context: Context, event: GameEvent, user: UserModel, onDone: ()->Any):String? {
         val db = Firebase.firestore
+        var eventId: String? = null
         db.collection("games")
             .document(event.name.toString())
             .collection("items")
@@ -74,6 +77,7 @@ class GameCreationViewModel : ViewModel() {
                 FirebaseMessaging.getInstance().subscribeToTopic(doc.id)
                 db.collection("venues").whereEqualTo("name", event.venue).get()
                     .addOnSuccessListener {
+                        eventId = doc.id
                         // Toast.makeText(requireContext(), it.documents.toString(), Toast.LENGTH_LONG).show()
                         for (document in it) {
                             val gameSessionVenue = hashMapOf(
@@ -115,6 +119,8 @@ class GameCreationViewModel : ViewModel() {
                 Toast.makeText(context, "Failed with ${exception.message}", Toast.LENGTH_LONG)
                     .show()
             }
+
+        return eventId
     }
 
     private val _venues = MutableLiveData<List<VenueModel>?>().apply {

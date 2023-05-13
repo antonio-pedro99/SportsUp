@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_gravity="center"
-
     android:padding="24sp"
     tools:context=".ui.game_creation.GameCreateFragment">
 

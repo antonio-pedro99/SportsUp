@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.database.R
 import com.google.firebase.messaging.FirebaseMessaging
+import com.sigma.sportsup.data.NotificationService
 import com.sigma.sportsup.databinding.ActivityChatBinding
 import com.sigma.sportsup.databinding.ActivityLoginBinding
 import com.sigma.sportsup.databinding.ActivityMainBinding
@@ -33,6 +34,9 @@ class ChatActivity :AppCompatActivity(){
     var senderRoom:String? = null
 
     private lateinit var binding: ActivityChatBinding
+    private val notificationService = NotificationService()
+
+    private lateinit var me: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,11 +50,10 @@ class ChatActivity :AppCompatActivity(){
         senderRoom = recieverUid + senderUid
         recieverRoom = senderUid + recieverUid
 
-
-
+        me = FirebaseAuth.getInstance().currentUser?.displayName.toString()
 
         if (name != null) {
-            supportActionBar?.title = name.toUpperCase(Locale.ROOT)
+            supportActionBar?.title = name.split("2")[0].capitalize()
         }
         chatRecyclerView = binding.chatRecyclerView
         messageBox = binding.messageBox
@@ -63,8 +66,11 @@ class ChatActivity :AppCompatActivity(){
 
         databaseRef.child("chats").child(senderRoom!!).child("messages").addValueEventListener(object:
             ValueEventListener {
+            //subscribe to topic
+
             override fun onDataChange(snapshot: DataSnapshot) {
                 messageList.clear()
+                FirebaseMessaging.getInstance().subscribeToTopic(senderUid!!)
                 for(postSnapshot in snapshot.children){
                     val message = postSnapshot.getValue(Message::class.java)
                     messageList.add(message!!)
@@ -90,6 +96,13 @@ class ChatActivity :AppCompatActivity(){
             databaseRef.child("chats").child(senderRoom!!).child("messages").push().setValue(messageObject).addOnSuccessListener {
                     databaseRef.child("chats").child(recieverRoom!!).child("messages").push()
                         .setValue(messageObject)
+
+                notificationService.sendNotificationToTopic(
+                    recieverUid!!,
+                    me,
+                    message
+                )
+
                 }
 
 //            databaseRef.child("users").child(senderUid!!).child("deviceToken").push().s
